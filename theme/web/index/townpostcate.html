@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-dpr="1" style="font-size: 42.5px;">
+<head>
+<meta charset="UTF-8">
+<title>发布</title>
+<meta http-equiv="Content-Type" content="text/html;">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="address=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="/theme/web/style/townpostcate.css" rel="stylesheet">
+</head>
+<body style="font-size: 12px;">
+<style>
+	.town-item-con{
+		display: none;
+	}
+</style>
+<div id="app">
+	<div class="town-tab-module">
+		<div class="town-list">
+			{volist name="sort" id="vo" mod="2" key="k" }
+			<div class="town-list-con" {if $vo.charge == 0 && !isset($sup[$vo.id]['charge'])}data-charge="{$vo.charge}"{else}data-charge="1"{/if}>
+				<div class="town-nav-item">
+					<div class="town-item-detail">
+						<i class="town_post_cate_{$vo.rank}{if $vo.charge == 0 && !isset($sup[$vo.id]['charge'])} on{/if}"></i>{$vo.name}<span class="town-arrow{if $vo.charge == 0} hide{/if} "></span>
+					</div>
+				</div>
+				<div class="town-item-con on">
+					{volist name="vo['sup']" id="sub"}
+					<span class="nav-item-list" data-id="{$sub.id}">{$sub.name}</span>
+					{/volist}
+		
+				</div>
+			</div>
+			{/volist}	
+		</div>
+	
+		<div class="code-module">
+			<div class="code-con">
+				<span class="code-close"></span>
+				<div class="code-detail">
+					<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+					<span class="code-img">
+						<img src="{$agent.qcode}" alt="本站还没有站长请联系站长">
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src="/theme/web/js/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".town-list-con").click(function(){
+		
+			if($(this).data('charge')==0)
+			{
+				$(".code-module").show();
+			}else{
+				$(".town-list-con .town-nav-item .town-item-detail .town-arrow").removeClass("on");
+				$(".town-list-con .town-item-con").removeClass("on");
+				$(".town-list-con .town-item-con").hide();
+
+				$(this).find(".town-nav-item .town-item-detail .town-arrow").addClass("on");
+				$(this).find(".town-item-con").addClass("on");
+				$(this).find(".town-item-con").show();
+			}
+			
+		});
+		
+		$(".code-module").hide();
+		
+		//关闭站长二维码
+		$(".code-close").click(function(){
+			$(".code-module").hide();
+		});
+		
+		$(".nav-item-list").click(function(){
+			var id = $(this).data('id');
+			window.location.href = "/web/index/edit/aid/{$area.id}/sid/"+id;
+		})
+		
+		
+	});
+</script>
+</body>
+</html>

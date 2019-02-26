@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-dpr="1" style="font-size: 42.5px;">
+<head>
+    <meta charset="UTF-8">
+    <title>简历登记</title>
+    <meta http-equiv="Content-Type" content="text/html;">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="address=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="/theme/web/style/resumepublish.css" rel="stylesheet">
+	<style type="text/css">.datepicker-modal {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 999;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.datepicker {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+    font-size: 16px;
+    text-align: center;
+    font-family: arial,verdana,sans-serif;
+    -webkit-box-sizing: content-box;
+            box-sizing: content-box;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.datepicker .datepicker-header {
+        padding: 0 .5em;
+        min-height: 2em;
+        line-height: 2em;
+        font-size: 1.125em;
+    }
+
+.datepicker .datepicker-navbar {
+        padding: 0 .5em .5em .5em;
+        overflow: hidden;
+    }
+
+.datepicker .datepicker-navbar-btn {
+        height: 2.5em;
+        line-height: 2.5em;
+        float: right;
+        padding: 0 1em;
+        cursor: pointer;
+    }
+
+.datepicker .datepicker-content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding: .5em .25em;
+    }
+
+.datepicker .datepicker-col-1 {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        margin: 0 .25em;
+    }
+
+.datepicker .datepicker-viewport {
+        height: 200px;
+        position: relative;
+        overflow: hidden
+    }
+
+.datepicker .datepicker-viewport::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.datepicker .datepicker-wheel {
+        position: absolute;
+        height: 40px;
+        top: 50%;
+        margin-top: -20px;
+        width: 100%;
+    }
+
+.datepicker .datepicker-scroll {
+        list-style-type: none;
+        padding: 0
+    }
+
+.datepicker .datepicker-scroll>li {
+    height: 40px;
+    line-height: 40px;
+    font-size: 1.375em;
+    cursor: pointer;
+}
+
+.datepicker {
+
+    /* default */
+}
+
+.datepicker.default {
+    background-color: #f7f7f7;
+}
+
+.datepicker.default .datepicker-header {
+            color: #4eccc4;
+}
+
+.datepicker.default .datepicker-wheel {
+            border-top: 1px solid #4eccc4;
+            border-bottom: 1px solid #4eccc4;
+}
+
+.datepicker.default .datepicker-scroll li {
+                color: rgb(59, 59, 59);
+            }
+
+.datepicker.default .datepicker-scroll li.disabled {
+                color: rgb(191, 191, 191);
+            }
+
+.datepicker.default .datepicker-navbar-btn {
+            color: #4eccc4;
+}
+
+.datepicker {
+
+    /* dark */
+}
+
+.datepicker.dark {
+    background-color: #263238;
+}
+
+.datepicker.dark .datepicker-header {
+            color: #50ccc4;
+}
+
+.datepicker.dark .datepicker-wheel {
+            border-top: 1px solid #50ccc4;
+            border-bottom: 1px solid #50ccc4;
+}
+
+.datepicker.dark .datepicker-scroll li {
+                color: rgb(201, 203, 204);
+            }
+
+.datepicker.dark .datepicker-scroll li.disabled {
+                color: rgb(87, 96, 100);
+            }
+
+.datepicker.dark .datepicker-navbar-btn {
+            color: #50ccc4;
+}
+
+.datepicker {
+
+    /* ios */
+}
+
+.datepicker.ios {
+    background-color: #f7f7f7;
+}
+
+.datepicker.ios .datepicker-col-1 {margin: 0;
+}
+
+.datepicker.ios .datepicker-header {
+            color: rgb(59, 59, 59);
+            padding: 0 3.5em;
+}
+
+.datepicker.ios .datepicker-viewport::after {
+    background: -webkit-gradient(linear,left top, left bottom,from(#f7f7f7),color-stop(52%, rgba(245, 245, 245, 0)),color-stop(48%, rgba(245, 245, 245, 0)),to(#f7f7f7));
+    background: linear-gradient(#f7f7f7,rgba(245, 245, 245, 0)52%,rgba(245, 245, 245, 0)48%,#f7f7f7);
+}
+
+.datepicker.ios .datepicker-wheel {
+            border-top: 1px solid #dbdbdb;
+            border-bottom: 1px solid #dbdbdb;
+}
+
+.datepicker.ios .datepicker-scroll li {
+                color: rgb(59, 59, 59);
+            }
+
+.datepicker.ios .datepicker-scroll li.disabled {
+                color: rgb(191, 191, 191);
+            }
+
+.datepicker.ios .datepicker-navbar {
+            position: absolute;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0;
+            border-bottom: 1px solid #acacac;
+}
+
+.datepicker.ios .datepicker-navbar-btn {
+            color: #007aff;
+}
+
+.datepicker.ios .datepicker-navbar-btn:nth-child(2) {
+    float: left;
+}
+
+.datepicker.ios .datepicker-content {
+            padding-top: 48px;
+}
+
+.datepicker.ios .datepicker-header + .datepicker-content {
+          padding-top: 0;
+}
+
+.datepicker {
+
+    /* android */
+}
+
+.datepicker.android, .datepicker.android-dark {
+    background-color: #f5f5f5;
+}
+
+.datepicker.android .datepicker-header, .datepicker.android-dark .datepicker-header {
+            color: #31b6e7;
+            border-bottom: 2px solid #31b6e7;
+}
+
+.datepicker.android .datepicker-col-1, .datepicker.android-dark .datepicker-col-1 {margin: 0 .625em;
+}
+
+.datepicker.android .datepicker-viewport::after, .datepicker.android-dark .datepicker-viewport::after {
+    background-image: -webkit-gradient(linear,left top, left bottom,from(#f5f5f5),color-stop(52%, rgba(245, 245, 245, 0)),color-stop(48%, rgba(245, 245, 245, 0)),to(#f5f5f5));
+    background-image: linear-gradient(#f5f5f5,rgba(245, 245, 245, 0)52%,rgba(245, 245, 245, 0)48%,#f5f5f5);
+}
+
+.datepicker.android .datepicker-wheel, .datepicker.android-dark .datepicker-wheel {
+            border-top: 2px solid #31b6e7;
+            border-bottom: 2px solid #31b6e7;
+}
+
+.datepicker.android .datepicker-scroll li, .datepicker.android-dark .datepicker-scroll li {
+                font-size: 1.125em;
+                color: rgb(56, 56, 56);
+            }
+
+.datepicker.android .datepicker-scroll li.disabled, .datepicker.android-dark .datepicker-scroll li.disabled {
+                color: rgb(188, 188, 188);
+            }
+
+.datepicker.android .datepicker-navbar, .datepicker.android-dark .datepicker-navbar {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            border-top: 1px solid #d9d4d4;
+            padding: 0;
+}
+
+.datepicker.android .datepicker-navbar-btn, .datepicker.android-dark .datepicker-navbar-btn {
+            padding: 0;
+            color: #000;
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+}
+
+.datepicker.android .datepicker-navbar-btn:nth-child(2), .datepicker.android-dark .datepicker-navbar-btn:nth-child(2) {
+    border-left: 1px solid #d9d4d4;
+}
+
+.datepicker {
+
+    /* android-dark */
+}
+
+.datepicker.android-dark {
+    background-color: #292829;
+}
+
+.datepicker.android-dark .datepicker-viewport::after {
+    background-image: -webkit-gradient(linear,left top, left bottom,from(#282828),color-stop(52%, rgba(40, 40, 40, 0)),color-stop(48%, rgba(40, 40, 40, 0)),to(#282828));
+    background-image: linear-gradient(#282828,rgba(40, 40, 40, 0)52%,rgba(40, 40, 40, 0)48%,#282828);
+}
+
+.datepicker.android-dark .datepicker-scroll li {
+                color: rgb(199, 199, 199);
+            }
+
+.datepicker.android-dark .datepicker-scroll li.disabled {
+                color: rgb(88, 88, 88);
+            }
+
+.datepicker.android-dark .datepicker-navbar { border-color: #424542;
+}
+
+.datepicker.android-dark .datepicker-navbar-btn {
+            color: #fff;
+}
+
+.datepicker.android-dark .datepicker-navbar-btn:nth-child(2) {
+    border-color: #424542;
+}
+</style></head>
+
+<body>
+
+<div id="app">
+	<div class="publish_wrap">
+		<div class="tips">登记简历,可以第一时间掌握适合你的工作机会,等工作来找你！</div>
+		<form method="post" name="myForm" class="form-horizontal form-bordered">
+		<div class="wrap_list">
+			<span class="list_name">姓名</span>
+			<input type="text" name="name" placeholder="请填写真实姓名" value="">
+		</div>
+		<div class="wrap_list">
+			<span class="list_name">性别</span>
+			<div class="sex_wrap">
+				<div>
+					<label class="defalutClass chooseMale"><span><input type="radio" name="sex" value="0" checked="checked"></span><span>男</span></label>
+					<label class="defalutClass femaleClass"><span><input type="radio" name="sex" value="1"></span><span>女</span></label>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_list clear">
+			<span class="list_name">出生年份</span>
+			<input type="date" name="birth" placeholder="请填出生年份" value="">
+		</div>
+		<div class="wrap_list2 clear">
+			<span class="list_name">期望职位</span>
+			<input type="text" name="position" placeholder="请填期望职位" value="">
+			<p class="mock_text null_text" style="display: none">请选择</p>
+			<div class="resume_wrap" style="display: none">
+				<div class="joblist">
+					<h3>选择期望职位（最多3个）<span>取消</span><span id=""> 确定</span></h3>
+					<div class="choose_tips clear">
+						<span class="tips_title">已选</span>
+						<div class="tip_wrap"><span class="tip_text">月嫂</span><em>×</em></div>
+						<div class="tip_wrap"><span class="tip_text">保安</span><em>×</em></div>
+						<div class="tip_wrap"><span class="tip_text">护士/护理</span><em>×</em></div>
+					</div>
+					<div class="job_list">
+						<div class="list_wrap">
+							<h3>生活服务业</h3>
+							<div class="list_detail">
+								<span class="">服务员<em></em></span>
+								<span class="">厨师<em></em></span>
+								<span class="">迎宾/接待<em></em></span>
+								<span class="">保洁<em></em></span>
+								<span class="chooseOne">保安<em></em></span>
+								<span class="chooseOne">月嫂<em></em></span>
+								<span class="">出租车司机<em></em></span>
+								<span class="">货运司机<em></em></span>
+								<span class="">特种车司机<em></em></span>
+								<span class="">会计/会计师<em></em></span>
+								<span class="chooseOne">护士/护理<em></em></span>
+							</div>
+						</div>
+						<div class="list_wrap">
+							<h3>销售市场</h3>
+							<div class="list_detail">
+								<span class="">销售代表<em></em></span>
+								<span class="">市场专员/助理<em></em></span>
+								<span class="">店员/营业员<em></em></span>
+								<span class="">客服<em></em></span>
+								<span class="">平面设计<em></em></span>
+							</div>
+						</div>
+						<div class="list_wrap">
+							<h3>工农业</h3>
+							<div class="list_detail">
+								<span class="">普工<em></em></span>
+								<span class="">电工<em></em></span>
+								<span class="">木工<em></em></span>
+								<span class="">切割/焊工<em></em></span>
+								<span class="">油漆工<em></em></span>
+								<span class="">瓦工<em></em></span>
+								<span class="">综合维修工<em></em></span>
+								<span class="">学徒工<em></em></span>
+								<span class="">养殖人员<em></em></span>
+								<span class="">仓库管理员<em></em></span>
+								<span class="">建筑类<em></em></span>
+								<span class="">其他<em></em></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap_list clear">
+			<span class="list_name">工作地点</span>
+			<input type="text" name="address" placeholder="请填工作地点" value="">
+		</div>
+		<div class="wrap_list">
+			<span class="list_name">手机号码</span>
+			<input type="text" name="phone" placeholder="请填写手机号码">
+		</div>
+	
+		<div class="other_advice">
+			<div class="other_title">其他介绍 <!--<span>(<strong class="">0</strong>/100字)</span>--></div>
+			<textarea name="content" placeholder="选填，点击标签可快速输入"></textarea>
+			<div class="tag_wrap"></div>
+		</div>
+		<div class="submit-wrap"><a>完成</a></div>
+		</form>
+		{if isset($res)}
+		<div class="alert_wrap">
+			<div class="alert_con">
+				<div class="alert_msg">您已经登记过简历啦无需重复登记</div>
+				<div class="alert_btn_con">
+					<div class="alert-btn">好的</div>
+				</div>
+			</div>
+		</div>
+		{/if}
+	</div>
+</div>
+<script src="/theme/web/js/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		//男   chooseMale选中   maleClass未选中
+		//女   chooseFemale 选中  femaleClass未选中
+		$(".sex_wrap div label").click(function(){
+			
+			var index = $(".sex_wrap div label").index(this);
+			if(index == 0)
+			{
+				$(this).addClass("chooseMale");
+				$(this).removeClass("maleClass");
+				$(this).next().removeClass("chooseFemale");
+				$(this).next().addClass("femaleClass");	
+				$("#radio2").removeAttr("checked");  
+				$(':radio[name="sex"]').eq(0).attr("checked",true);
+				$(':radio[name="sex"]').eq(1).removeAttr("checked");
+			}else if(index == 1){
+				$(this).addClass("chooseFemale");
+				$(this).removeClass("femaleClass");
+				$(this).prev().removeClass("chooseMale");
+				$(this).prev().addClass("maleClass");
+				$(':radio[name="sex"]').eq(1).attr("checked",true);
+				$(':radio[name="sex"]').eq(0).removeAttr("checked");
+			}
+		})	
+		$(".submit-wrap").click(function(){
+			$("form").submit();
+		});
+		$(".alert-btn").click(function(){
+			window.location.href = "/web/index/detail/aid/{$aid}/id/{$id}";
+		});
+	});
+</script>
+</body>
+</html>

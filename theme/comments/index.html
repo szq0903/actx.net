@@ -1,0 +1,65 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 评论管理 <!--<a class="btn btn-danger" href="{:url('index/comments/add')}">添加评论</a>--></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/comments">评论管理</a></li>
+          <li class="active">评论管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>会员</th>
+                        <th>内容</th>
+                       	<th>时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.member.nickname}</td>
+                        <td>{$vo.comment}</td>
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        <td><!--<a class="fa fa-edit" href="{:url('index/comments/edit',['id'=>$vo.id])}"></a>-->   <a class="fa fa-trash-o" href="{:url('index/comments/del',['id'=>$vo.id])}"></a></td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+
+{include file="Public/footer_base" /}

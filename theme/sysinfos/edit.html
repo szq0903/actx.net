@@ -1,0 +1,219 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+<script src="/template/js/jquery-1.11.1.min.js"></script>
+<link href="/template/fileinput/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<style>
+    .form-control.file-caption.kv-fileinput-caption{
+        padding: 7px;
+    }
+    .form-control.file-caption.kv-fileinput-caption  .file-caption-name
+    {
+        line-height: 25px;
+    }
+</style>
+<script src="/template/fileinput/fileinput.js" type="text/javascript"></script>
+<script src="/template/fileinput/zh.js" type="text/javascript"></script>
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 系统配置 </h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/sysinfos">系统配置</a></li>
+          <li class="active">系统配置</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="" class="panel-close">×</a>
+            <a href="" class="minimize">−</a>
+          </div>
+          <h4 class="panel-title">用户编辑</h4>
+         
+        </div>
+        <div class="panel-body panel-body-nopadding" style="display: block;">
+          
+          <form method="post" name="myForm" class="form-horizontal form-bordered">
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">网站名：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="网站名" name="webname" value="{if isset($temp['webname'])}{$temp['webname']}{/if}" class="form-control">
+              </div>
+            </div>
+            
+           <div class="form-group">
+              <label class="col-sm-3 control-label">域名：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="域名" name="site" value="{if isset($temp['site'])}{$temp['site']}{/if}" class="form-control">
+              </div>
+            </div>
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">网站标题：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="网站标题" name="title" value="{if isset($temp['title'])}{$temp['title']}{/if}" class="form-control">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">关键词：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="关键词" name="keywords" value="{if isset($temp['keywords'])}{$temp['keywords']}{/if}" class="form-control">
+              </div>
+            </div>
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">描述：</label>
+              <div class="col-sm-6">
+               	<textarea class="form-control" name="description" rows="5">{if isset($temp['description'])}{$temp['description']}{/if}</textarea>
+              
+              </div>
+            </div>
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">最低提现额度：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="最低提现额度" name="withdrawals" value="{if isset($temp['withdrawals'])}{$temp['withdrawals']}{/if}" class="form-control">
+                <span class="help-block">单位为元。</span>
+              </div>
+            </div>
+                                  
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">AppID：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="AppID" name="appid" value="{if isset($temp['appid'])}{$temp['appid']}{/if}" class="form-control">
+                <div class="help-block">在微信开放平台注册且审核通过后可以获取到AppId</div>
+              </div>
+            </div>
+                                  
+                                  
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">AppSecret：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="AppSecret" name="appsecret" value="{if isset($temp['appsecret'])}{$temp['appsecret']}{/if}" class="form-control">
+                <div class="help-block">在微信开放平台注册且审核通过后可以获取到AppSecret</div>
+              </div>
+            </div>
+                                  
+                                  
+            <div class="form-group">
+              <label class="col-sm-3 control-label">微信支付商户号(MchId)：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="微信支付商户号(MchId)" name="mchid" value="{if isset($temp['mchid'])}{$temp['mchid']}{/if}" class="form-control">
+                <div class="help-block">公众号支付请求中用于加密的密钥Key</div>
+              </div>
+            </div>
+            
+			<script type="text/javascript">
+				function tokenGen1() {
+					var letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+					var token = '';
+					for(var i = 0; i < 32; i++) {
+						var j = parseInt(Math.random() * (31 + 1));
+						token += letters[j];
+					}
+					$(':text[name="apikey"]').val(token);
+				}
+			</script>
+
+            <div class="form-group">
+               <label class="col-sm-3 control-label">商户支付密钥(API密钥)：</label>
+               <div class="col-sm-6 col-xs-12">
+					<div class="input-group">
+						<input type="text" name="apikey" id="apikey" class="form-control" maxlength="32" value="e10adc3949ba59abbe56e057f20f883e" autocomplete="off">
+						<span onclick="tokenGen1();" style="cursor:pointer" class="input-group-addon">生成新的</span>
+					</div>
+					<span class="help-block">此值需要手动在微信商户后台API密钥保持一致。</span>
+				</div>
+            </div>
+
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">浏览单价：</label>
+                  <div class="col-sm-6">
+                      <input type="text" placeholder="浏览单价" name="everyprice" value="{if isset($temp['everyprice'])}{$temp['everyprice']}{/if}" class="form-control">
+                      <span class="help-block">单位为元。</span>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">置顶单价：</label>
+                  <div class="col-sm-6">
+                      <input type="text" placeholder="置顶单价" name="stickprice" value="{if isset($temp['stickprice'])}{$temp['stickprice']}{/if}" class="form-control">
+                      <span class="help-block">单位为元。</span>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">关注二维码：</label>
+                  <div class="col-sm-6">
+                      {$html['qcode']}
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">联系二维码：</label>
+                  <div class="col-sm-6">
+                      {$html['er']}
+                  </div>
+              </div>
+
+            <div class="panel-footer" style="display: block;">
+				 <div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
+				
+					  <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+					  <button class="btn btn-default" type="reset">取消</button>
+					</div>
+				 </div>
+			  </div><!-- panel-footer -->
+
+		  </div>
+            
+          </form>
+          
+      </div><!-- panel-body -->
+        
+        
+      <!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+</section>
+
+<script src="/template/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/template/js/jquery-ui-1.10.3.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/modernizr.min.js"></script>
+<script src="/template/js/jquery.sparkline.min.js"></script>
+<script src="/template/js/toggles.min.js"></script>
+<script src="/template/js/retina.min.js"></script>
+<script src="/template/js/jquery.cookies.js"></script>
+
+<!--<script src="/template/js/flot/jquery.flot.min.js"></script>
+<script src="/template/js/flot/jquery.flot.resize.min.js"></script>
+<script src="/template/js/flot/jquery.flot.spline.min.js"></script>-->
+<script src="/template/js/morris.min.js"></script>
+<script src="/template/js/raphael-2.1.0.min.js"></script>
+<script src="/template/js/custom.js"></script>
+<!--<script src="/template/js/dashboard.js"></script>-->
+
+
+</body>
+</html>
+
+

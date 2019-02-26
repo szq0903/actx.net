@@ -1,0 +1,68 @@
+	<div class="leftpanel">
+		<div class="logopanel">
+        	<h1><span>[</span> 爱臣同乡 <span>]</span></h1>
+		</div><!-- logopanel -->
+
+		<div class="leftpanelinner">
+
+			<!-- This is only visible to small devices -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media userlogged">
+                    <img alt="" src="/template/images/photos/loggeduser.png" class="media-object">
+                    <div class="media-body">
+                        <h4>{:session('user')}</h4>
+                        <span>"生活就是这样…"</span>
+                    </div>
+                </div>
+
+				<h5 class="sidebartitle actitle">帐户</h5>
+            	<ul class="nav nav-pills nav-stacked nav-bracket mb30">
+              		<li><a href="/account/edit/id/{:session('id')}.html"><i class="fa fa-cog"></i> <span>帐户设置</span></a></li>
+              		<li><a href="{:url('index/index/quit')}"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+            	</ul>
+        	</div>
+
+     		<h5 class="sidebartitle">导航</h5>
+     		<ul class="nav nav-pills nav-stacked nav-bracket">
+       			
+        		<li {if $act=='Index'}class="active"{/if}><a href="/index"><i class="fa fa-home"></i> <span>系统首页</span></a></li>
+        		
+        		<li {if $act=='Magents'}class="active"{/if}><a href="/sysinfos"><i class="fa fa-cogs"></i> <span>系统设置</span></a></li> 
+         		
+            	<li {if $act=='Account'}class="active"{/if}><a href="/account"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
+            	
+     			<li {if $act=='Magents'}class="active"{/if}><a href="/magents"><i class="fa fa-users"></i> <span>代理管理</span></a></li> 
+     			
+     			<li {if $act=='Members'}class="active"{/if}><a href="/members"><i class="fa fa-user-md"></i> <span>会员管理</span></a></li> 
+     			
+     			<li {if $act=='Areas'}class="active"{/if}><a href="{:url('index/areas')}"><i class="fa fa-cubes"></i> <span>地区管理</span></a></li> 
+     			
+     			<li {if $act=='Withdraws'}class="active"{/if}><a href="{:url('index/withdraws')}"><i class="fa fa-money"></i> <span>提现管理</span></a></li> 
+    			                
+    			<li {if $act=='Sorts'}class="active"{/if}><a href="{:url('index/sorts')}"><i class="fa fa-sitemap"></i> <span>栏目管理</span></a></li>
+    			                
+    			<li {if $act=='Articles'}class="active"{/if}><a href="/articles"><i class="fa fa-file-text-o"></i> <span>文章管理</span></a></li> 
+    			 
+    			<li {if $act=='Resumes'}class="active"{/if}><a href="/resumes"><i class="fa fa-list-alt"></i> <span>简历管理</span></a></li>
+    			
+    			<li {if $act=='Comments'}class="active"{/if}><a href="/comments"><i class="fa fa-list-alt"></i> <span>评论管理</span></a></li>
+    			
+    			<li {if $act=='Clear'}class="active"{/if}><a href="/clear"><i class="fa fa-trash-o"></i> <span>清理缓存</span></a></li>
+
+				<li  style="display: none;" {if $act=='Moulds' || $act=='Fields'}class="active"{/if}><a href="/moulds"><i class="fa fa-trash-o"></i> <span>模型管理</span></a></li>
+
+				<li {if $act=='Headsorts'}class="active"{/if}><a href="/headsorts"><i class="fa fa-trash-o"></i> <span>头条栏目管理</span></a></li>
+
+				<li {if $act=='Headarts'}class="active"{/if}><a href="/headarts"><i class="fa fa-trash-o"></i> <span>头条文章管理</span></a></li>
+
+				<li {if $act=='Categorys'}class="active"{/if}><a href="/categorys"><i class="fa fa-trash-o"></i> <span>类目管理</span></a></li>
+
+				<li {if $act=='Catearts'}class="active"{/if}><a href="/catearts"><i class="fa fa-trash-o"></i> <span>类目文章管理</span></a></li>
+
+				<li {if $act=='MoneyLogs'}class="active"{/if}><a href="/money_logs"><i class="fa fa-trash-o"></i> <span>充值记录</span></a></li>
+
+				<li {if $act=='Messages'}class="active"{/if}><a href="/messages"><i class="fa fa-trash-o"></i> <span>周边留言</span></a></li>
+
+			</ul>
+    	</div><!-- leftpanelinner -->
+	</div><!-- leftpanel -->

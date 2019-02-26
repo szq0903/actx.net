@@ -1,0 +1,103 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 财务记录 <a class="btn btn-danger" >余额：{$temp.cash}元</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="{:url('/agent/cashlog')}/agent/">财务记录</a></li>
+          <li class="active">财务记录</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>代理id</th>
+						<th>金额</th>
+                        <th>备注</th>
+                        <th>添加时间</th>
+                     
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.agent.name}</td>
+                        <td>{$vo.money}元</td>
+                        
+                        <td>{$vo.msg}</td>
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+<script type="text/javascript">
+	var u ={};
+	u.payment = function(id){
+		var id = parseInt(id);
+		if(isNaN(id)) {
+			return;
+		}
+		if(!confirm('确认要支付吗? ')) {
+			return;
+		}
+		$.post('/withdraws/setStatus/id/'+id, {status: 1}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				util.message('操作失败, ' + dat);
+			}
+		});
+	};
+	u.refuse = function(id){
+		var id = parseInt(id);
+		if(isNaN(id)) {
+			return;
+		}
+		if(!confirm('确认要拒绝支付吗? ')) {
+			return;
+		}
+		$.post('/withdraws/setStatus/id/'+id, {status: 2}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				util.message('操作失败, ' + dat);
+			}
+		});
+	};
+</script>
+
+{include file="Public/footer_base" /}

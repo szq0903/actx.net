@@ -1,0 +1,126 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 会员管理 <a class="btn btn-danger" href="{:url('index/members/add')}">添加会员</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/members">会员管理</a></li>
+          <li class="active">会员管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="" class="panel-close">×</a>
+            <a href="" class="minimize">−</a>
+          </div>
+          <h4 class="panel-title">搜索</h4>
+        </div>
+        <div method="post" class="panel-body">
+      
+           <form method="post" name="myForm" class="form-inline">
+            <div class="form-group">
+              <label class="sr-only" for="exampleInputEmail2">昵称</label>
+              <input type="text" name="nickname" class="form-control" id="exampleInputEmail2" placeholder="昵称">
+            </div>
+          
+			<button type="submit" class="btn btn-primary">搜索</button>
+            
+          </form>
+        </div><!-- panel-body -->
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>昵称</th>
+                        <th>余额</th>
+                        <th>头像</th>
+                          <th>审核状态</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.nickname}</td>
+                         <td>{$vo.money}元</td>
+                        <td>
+                        	<div class="thmb-prev">
+                  			<a href="{$vo.headimgurl}" class="fa fa-file-image-o" data-rel="prettyPhoto">
+                    			
+                  			</a>
+							</div>
+                        </td>
+                         <td>{if $vo.status==0}未审核{else}已审核{/if}</td>
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        <td>
+                            <a class="fa fa-edit" href="{:url('index/members/edit',['id'=>$vo.id])}"></a>
+                            <a class="fa fa-money" title="充值" href="{:url('index/members/setMoney',['id'=>$vo.id])}" data-toggle="modal" data-target=".bs-example-modal-photo"></a>
+                            <a class="fa fa-gears" title="开通" href="{:url('index/members/setAuth',['id'=>$vo.id])}" data-toggle="modal" data-target=".bs-example-modal-photo"></a>
+                            <a class="fa fa-trash-o" href="{:url('index/members/del',['id'=>$vo.id])}"></a>
+                        </td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+<div id="myModal" class="modal fade bs-example-modal-photo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+        </div>
+    </div>
+</div>
+
+
+
+{include file="Public/footer_base" /}
+
+<script src="/template/js/jquery.prettyPhoto.js"></script>
+
+
+<script>
+  jQuery(document).ready(function(){
+	 
+    jQuery("a[data-rel^='prettyPhoto']").prettyPhoto();
+
+    $("#myModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+
+  });
+  
+</script>

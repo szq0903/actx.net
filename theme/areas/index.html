@@ -1,0 +1,106 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 地区管理 <a class="btn btn-danger" href="{:url('index/areas/add',['parent_id'=>$parent_id,'level'=>$level])}">添加地区</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/areas">地区管理</a></li>
+          <li class="active">地区管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      
+    	<div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="" class="panel-close">×</a>
+            <a href="" class="minimize">−</a>
+          </div>
+          <h4 class="panel-title">地区管理</h4>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+          	  
+          	  {volist name="list" id="vo" mod="5"}
+           	  <div class="btn-group mr5">
+               <a href="{:url('index/areas/index',['id'=>$vo.id])}"
+                {eq name="mod" value="0"}
+                type="button" class="btn btn-primary" >
+                {/eq}
+                {eq name="mod" value="1"}
+                type="button" class="btn btn-info">
+                {/eq}
+                {eq name="mod" value="2"}
+                type="button" class="btn btn-success">
+                {/eq}
+                {eq name="mod" value="3"}
+                 type="button" class="btn btn-warning">
+                {/eq}
+                {eq name="mod" value="4"}
+                type="button" class="btn btn-danger">
+                {/eq}
+                  {$vo.name}
+                </a>
+               
+              </div>
+              {/volist}
+          </div>
+        </div><!-- panel-body -->
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+           
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>排序</th>
+                        <th>地区</th>
+                        <th>简称</th>
+                        <th>等级</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.sort}</td>
+                        <td>{$vo.name}</td>
+                     	<td>{$vo.short_name}</td>
+                        <td>{if $vo.level ==1}省/直辖市{elseif $vo.level ==2}地级市{elseif $vo.level ==3}区县{elseif $vo.level ==4}镇/街道{/if}</td>
+                        <td><a class="fa fa-edit" href="{:url('index/areas/edit',['id'=>$vo.id])}"></a>   <a class="fa fa-trash-o" href="{:url('index/areas/del',['id'=>$vo.id])}"></a></td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+
+{include file="Public/footer_base" /}

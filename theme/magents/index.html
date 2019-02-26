@@ -1,0 +1,95 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 代理管理 <a class="btn btn-danger" href="{:url('index/magents/add')}">添加代理</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/magents">代理管理</a></li>
+          <li class="active">代理管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>用户名</th>
+                        <th>微信号</th>
+                        <th>二维码</th>
+                        <th>手机</th>
+                        <th>地区</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>状态</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.wechat}</td>
+                        <td>
+                        	<div class="thmb-prev">
+                  			<a href="{$vo.qcode}" class="fa fa-qrcode" data-rel="prettyPhoto">
+                    			
+                  			</a>
+							</div>
+                        </td>
+                        <td>{$vo.phone}</td>
+                        <td>{$vo.area.name}</td>
+                        <td>{:date('Y-m-d',$vo.starttime)}</td>
+                        <td>{:date('Y-m-d',$vo.endtime)}</td>
+                        <td>{if $vo.status==0}开启{else}禁用{/if}</td>
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        <td><a class="fa fa-edit" href="{:url('index/magents/edit',['id'=>$vo.id])}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="fa fa-trash-o" href="{:url('index/magents/del',['id'=>$vo.id])}"></a></td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+
+
+{include file="Public/footer_base" /}
+
+<script src="/template/js/jquery.prettyPhoto.js"></script>
+
+
+<script>
+  jQuery(document).ready(function(){
+	 
+    jQuery("a[data-rel^='prettyPhoto']").prettyPhoto();
+  });
+  
+</script>

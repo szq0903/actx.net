@@ -1,0 +1,69 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+   <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 提现管理 <a class="btn btn-danger" href="{:url('/agent/withdraws/add')}">添加提现</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/agent/withdraws">提现管理</a></li>
+          <li class="active">提现管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="panel-btns">
+            <a href="" class="panel-close">×</a>
+            <a href="" class="minimize">−</a>
+          </div>
+          <h4 class="panel-title">提现编辑</h4>
+         
+        </div>
+        <div class="panel-body panel-body-nopadding" style="display: block;">
+          
+          <form method="post" name="myForm" class="form-horizontal form-bordered">
+            
+            <div class="form-group">
+              <label class="col-sm-3 control-label">提现金额：</label>
+              <div class="col-sm-6">
+                <input type="text" placeholder="提现金额" name="money" value="{if isset($temp['money'])}{$temp['money']}{/if}" class="form-control">
+                <div class="help-block">最低提现额度{$temp['withdrawals']}元。</div>
+              </div>
+            </div>
+            
+         	
+                                   
+            <div class="panel-footer" style="display: block;">
+				 <div class="row">
+					<div class="col-sm-6 col-sm-offset-3">
+					  <input type="hidden" name="aid" value="{if isset($temp['aid'])}{$temp['aid']}{/if}">
+					  <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+					  <button class="btn btn-default" type="reset">取消</button>
+					</div>
+				 </div>
+			  </div><!-- panel-footer -->
+
+		  </div>
+            
+          </form>
+          
+      </div><!-- panel-body -->
+        
+        
+      <!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+{include file="Public/footer_base" /}
+
+

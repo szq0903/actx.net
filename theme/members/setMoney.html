@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+    <h4 class="modal-title">用户充值</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" name="myForm" class="form-horizontal form-bordered" action="{:url('index/members/setMoney',['id'=>$temp.id])}">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">充值：</label>
+                    <div class="col-sm-7">
+                        <input type="text" placeholder="充值金额" name="addmoney" id="addmoney" value="0" class="form-control">
+                    </div>
+                </div>
+                <div class="panel-footer" style="display: block;">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <button class="btn btn-primary" id="updata" type="submit">提交</button>&nbsp;
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div><!-- panel-footer -->
+            </form>
+        </div>
+    </div>
+    <!-- col-md-12 -->
+</div>
+</div>

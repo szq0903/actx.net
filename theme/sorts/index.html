@@ -1,0 +1,108 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 栏目管理 <a class="btn btn-danger" href="{:url('index/sorts/add')}">添加栏目</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/sorts">栏目管理</a></li>
+          <li class="active">栏目管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+						<th>排序</th>
+                      	<th>栏目名称</th>
+						<th>模型</th>
+                        <th>是否收费</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.rank}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.sorttype.name}</td>
+                        <td>{if $vo.charge ==0}收费{else}不收费{/if}</td>
+                   
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        <td>
+                        	<a class="fa fa-edit" href="{:url('index/sorts/edit',['id'=>$vo.id])}"></a>
+                        	<a class="fa fa-trash-o" href="{:url('index/sorts/del',['id'=>$vo.id])}"></a>
+                        </td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+             
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+<script type="text/javascript">
+	var u ={};
+	u.payment = function(id){
+		var id = parseInt(id);
+		if(isNaN(id)) {
+			return;
+		}
+		if(!confirm('确认要支付吗? ')) {
+			return;
+		}
+		$.post('/withdraws/setStatus/id/'+id, {status: 1}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				util.message('操作失败, ' + dat);
+			}
+		});
+	};
+	u.refuse = function(id){
+		var id = parseInt(id);
+		if(isNaN(id)) {
+			return;
+		}
+		if(!confirm('确认要拒绝支付吗? ')) {
+			return;
+		}
+		$.post('/withdraws/setStatus/id/'+id, {status: 2}, function(dat){
+			if(dat == 'success') {
+				location.href = location.href;
+			} else {
+				util.message('操作失败, ' + dat);
+			}
+		});
+	};
+</script>
+
+{include file="Public/footer_base" /}

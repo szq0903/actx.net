@@ -1,0 +1,54 @@
+{include file="Public/head_base" /}
+ 
+  {include file="Public/menu" /}
+  <div class="mainpanel">
+	{include file="Public/headerbar" /}
+    <div class="pageheader">
+      <h2><i class="fa fa-home"></i> 首页 <span>字幕在这里…</span></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="index.html">首页</a></li>
+          <li class="active">系统首页</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="contentpanel">
+
+		<div class="row">
+
+      		<div class="col-md-12">
+ 
+            	<div class="panel panel-default widget-messaging">
+              		<div class="panel-heading">
+                		<div class="panel-btns">
+                  			<a href="" class="panel-close">×</a>
+                  			<a href="" class="minimize">−</a>
+                		</div>
+                		<h4 class="panel-title">系统信息</h4>
+              		</div>
+              		<div class="panel-body">
+              			<ul>
+              				{volist name="info" id="vo" mod="2"}
+							<li>
+								<p>{$key}:{$vo}</p>
+							</li>
+               				{/volist}
+                		</ul>
+              		</div><!-- panel-body -->
+              		<div class="panel-footer">
+                		
+              		</div><!-- panel-footer -->
+            	</div><!-- panel-default -->
+   
+            
+        	</div>
+
+      </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+  </div><!-- mainpanel -->
+
+{include file="Public/footer_base" /}

@@ -1,0 +1,108 @@
+{include file="Public/head_base" /}
+
+{include file="Public/menu" /}
+
+<div class="mainpanel">
+
+    {include file="Public/headerbar" /}
+    <div class="pageheader">
+        <h2><i class="fa fa-table"></i> 字段管理 <a class="btn btn-danger" href="{:url('index/fields/add',['mid'=>$mid])}">添加字段</a></h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">当前位置:</span>
+            <ol class="breadcrumb">
+                <li><a href="{:url('index/fields/index',['mid'=>$mid])}">字段管理</a></li>
+                <li class="active">字段管理</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="contentpanel">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-btns">
+                    <a href="" class="panel-close">×</a>
+                    <a href="" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">字段编辑</h4>
+
+            </div>
+            <div class="panel-body panel-body-nopadding" style="display: block;">
+                <form method="post" name="myForm" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">表单提示文字：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="表单提示文字" name="itemname" value="{if isset($temp1['itemname'])}{$temp1['itemname']}{/if}" class="form-control">
+                            <span class="help-block">发布内容时显示的提示文字</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">字段名称：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="字段名称" name="fieldname" value="{if isset($temp1['fieldname'])}{$temp1['fieldname']}{/if}" class="form-control">
+                            <span class="help-block">只能用英文字母或数字，数据表的真实字段名。</span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">排序：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="排序" name="rank" value="{if isset($temp1['rank'])}{$temp1['rank']}{/if}" class="form-control">
+                            <span class="help-block">排序会影响表单的顺序。</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">数据类型：</label>
+                        <div class="col-sm-6">
+                            {volist name="inputlist" id="vo" key="k"}
+                            <div class="rdio rdio-success col-sm-3">
+                                <input type="radio" name="dtype" value="{$key}" id="radio{$key}" {if isset($temp1) && $key == $temp1['dtype'] || !isset($temp1)&&$k==1  }checked{/if}>
+                                <label for="radio{$key}">{$vo.name}</label>
+                            </div>
+                            {/volist}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">默认值：</label>
+                        <div class="col-sm-6">
+                            <textarea class="form-control" name="vdefault"  rows="5">{if isset($temp1['vdefault'])}{$temp1['vdefault']}{/if}</textarea>
+                            <span class="help-block">如果定义数据类型为select、radio、checkbox时，此处填写被选择的项目(用“,”分开，如“男,女,人妖”)。如果时间类型时格式为YYYY-mm-dd HH:mm:ss。</span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">最大长度：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="最大长度" name="maxlength" value="{if isset($temp1['maxlength'])}{$temp1['maxlength']}{else}255{/if}" class="form-control">
+                            <span class="help-block">文本数据必须填写，大于255为text类型</span>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer" style="display: block;">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+
+                                <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+                                <button class="btn btn-default" type="reset">取消</button>
+                            </div>
+                        </div>
+                    </div><!-- panel-footer -->
+
+                </form>
+            </div>
+        </div><!-- panel-body -->
+
+
+        <!-- row -->
+    </div><!-- contentpanel -->
+
+</div><!-- mainpanel -->
+
+
+{include file="Public/footer_base" /}
+
+
+

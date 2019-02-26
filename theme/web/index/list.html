@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" data-dpr="1" style="font-size: 42.5px;">
+<head>
+<meta charset="UTF-8">
+<title>爱臣同乡-{$temp.name}</title>  
+<meta name="keywords" content="{$area.name}招聘网,{$area.name}找工作,{$area.name}求职">   
+<meta name="descripiton" content="爱臣同乡{$area.name}招聘求职频道是专业的{$area.name}招聘求职信息查询和发布平台,提供海量{$area.name}招聘求职信息,爱臣同乡{$area.name}招聘求职网是您找工作的明智选择."/>
+<meta http-equiv="Content-Type" content="text/html;">
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<meta name="format-detection" content="address=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="/theme/web/style/tongzhenlist.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+	<div class="list-wrap show-return-module">
+		<div class="return-module">
+			<div class="return-con">
+				<div class="return-btn">返回</div>
+				<div class="return-other-con">
+					<div class="home-con"><div class="return-home">首页</div></div>
+					<div class="follow-btn post-btn">发布</div>
+					<div class="follow-module">
+						<div class="follow-btn">+ 关注</div>
+						<div class="code-module hide">
+							<div class="code-con">
+								<span class="code-close"></span>
+								<div class="code-detail">
+									<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+									<span class="code-img">
+										<img src="{$agent.qcode}" alt="本站还没有站长请联系站长">
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="list-page-con">
+			<div class="tab-panel">
+				<div class="nav-con onepx">
+					<div class="nav-tab-item active" data-sid="{$sid}">全部</div>
+					{volist name="sort" id="vo" mod="2" key="k" }
+					<div class="nav-tab-item" data-sid="{$vo.id}">{$vo.name}</div>
+					{/volist}
+		
+				</div>
+				<div class="tab-list-con">
+					<ul>
+						{volist name="article" id="vo" mod="2" key="k" }
+						<li class="info-item" data-infoid="{$vo.id}">
+							<div class="info-detail">
+								<h3 class="info-title">{$vo.content}</h3>
+								<div class="info-msg">
+									<span class="info-cate">{$vo.sort.name}</span>
+									<span class="info-time left">{$vo.addtime}</span>
+								</div>
+							</div>
+							{if !empty($vo.img)}
+							<div class="info-image"><img src="{$vo.img}"></div>
+							{/if}
+						</li>
+						{/volist}
+					</ul>
+				</div>
+			</div>
+		</div>
+	<div class="scroll-top-con"></div>
+</div>
+
+</div>
+<script src="/theme/web/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//关闭站长二维码
+		$(".code-close").click(function(){
+			$(this).parent().parent().addClass("hide").removeClass("show");
+		});
+		//打开站长二维码
+		$(".follow-module .follow-btn").eq(0).click(function(){
+			$(".code-module").addClass("show");
+		});
+		//发布文章
+		$(".follow-btn.post-btn").click(function(){
+			window.location.href = "/web/index/townpostcate/aid/{$area.id}";
+		});
+		
+		//返回上一页
+		$('.return-btn').click(function(){
+			window.history.go(-1);
+		});
+		//返回首页
+		$('.return-home').click(function(){
+			window.location.href = "/web/index/index/aid/{$area.id}";
+		});
+		
+		//更多文章点击
+		
+		 $(".tab-list-con").on("click",".info-item",function(){
+			var id = $(this).data('infoid');
+			window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+		});
+		
+		
+		var page=2;
+		//下拉加载
+		$(window).scroll(function(){
+			
+			if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
+     
+				var sid = $(".nav-con.onepx .active").data("sid");
+				//到达底部获取json数组
+				$.get("/web/index/getData/sid/"+sid+"/aid/{$area.id}/page/"+page,function(data,status){
+					if(data !='')
+					{
+						re = JSON.parse(data);
+						for(var i=0;i<re.length;i++){  
+							var html ='';
+							html +='<li class="info-item" data-infoid="'+re[i].id+'">';
+							html +='<div class="info-detail">';
+							html +='<h3 class="info-title">'+re[i].content+'</h3>';
+							html +='<div class="info-msg">';
+							html +='<span class="info-cate">'+re[i].sortname+'</span>';
+							html +='<span class="info-time left">'+re[i].addtime+'</span>';
+							html +='</div>';
+							html +='</div>';
+							if(re[i].img != '')
+							{
+								html +='<div class="info-image"><img src="'+re[i].img+'"></div>'
+							}
+							html +='</li>'
+							$(".tab-list-con ul").append(html);
+						}  	
+					}
+				});
+				page++;
+           	}
+			
+		});
+		//处理子分类查询
+		$(".nav-con.onepx .nav-tab-item").click(function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			var sid = $(this).data("sid");
+			page=2;
+			$.get("/web/index/getData/sid/"+sid+"/aid/{$area.id}/page/1",function(data,status){
+				if(data !='')
+				{
+					re = JSON.parse(data);
+					var html ='';
+					for(var i=0;i<re.length;i++){  
+						
+						html +='<li class="info-item" data-infoid="'+re[i].id+'">';
+						html +='<div class="info-detail">';
+						html +='<h3 class="info-title">'+re[i].content+'</h3>';
+						html +='<div class="info-msg">';
+						html +='<span class="info-cate">'+re[i].sortname+'</span>';
+						html +='<span class="info-time left">'+re[i].addtime+'</span>';
+						html +='</div>';
+						html +='</div>';
+						if(re[i].img != '')
+						{
+							html +='<div class="info-image"><img src="'+re[i].img+'"></div>'
+						}
+						html +='</li>'
+					}  	
+					$(".tab-list-con ul").html(html);
+				}
+			});
+		});
+	});
+</script>
+</body>
+</html>

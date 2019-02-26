@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+    <h4 class="modal-title">开通权限</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post" name="myForm" class="form-horizontal form-bordered" action="{:url('index/members/setAuth',['id'=>$temp.id])}">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">头条栏目：</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="headsort" name="hid">
+                            <option value="0">选择头条栏目</option>
+                            {volist name="headsort" id="vo"}
+                            <option value="{$vo.id}" {if $temp.hid == $vo.id}selected{/if}>{$vo.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">类目管理：</label>
+                    <div class="col-sm-7">
+                        <select class="form-control" id="category" name="cid">
+                            <option value="0">选择类目管理</option>
+                            {volist name="category" id="vo"}
+                            {if $vo.level==1}
+                            <optgroup label='{$vo.name}'></optgroup>
+                            {else}
+                            <option value="{$vo.id}" {if $temp.cid == $vo.id}selected{/if}>{$vo.name}</option>
+                            {/if}
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="panel-footer" style="display: block;">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <button class="btn btn-primary" id="updata" type="submit">提交</button>&nbsp;
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        </div>
+                    </div>
+                </div><!-- panel-footer -->
+            </form>
+        </div>
+    </div>
+    <!-- col-md-12 -->
+</div>
+</div>

@@ -1,0 +1,71 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 简历管理 <a class="btn btn-danger" href="{:url('index/resumes/add')}">添加简历</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/resumes">简历管理</a></li>
+          <li class="active">简历管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+						<th>出生年份</th>
+                       	<th>期望职位</th>
+                       	<th>工作地点</th>
+                       	<th>手机</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.name}</td>
+                        <td>{if $vo.sex == 0}女{else}男{/if}</td>
+                        <td>{:date('Y-m-d',$vo.birth)}</td>
+                        <td>{$vo.position}</td>
+                        <td>{$vo.address}</td>
+                        <td>{$vo.phone}</td>
+                        <td><a class="fa fa-edit" href="{:url('index/resumes/edit',['id'=>$vo.id])}"></a>   <a class="fa fa-trash-o" href="{:url('index/resumes/del',['id'=>$vo.id])}"></a></td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+
+
+
+{include file="Public/footer_base" /}

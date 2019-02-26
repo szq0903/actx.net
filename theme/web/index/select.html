@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>爱臣同乡</title>
+<link href="/template/css/style.default.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+</head>
+<style>
+	.btn-white {
+	   background: #fe552c;
+	   border: 1px solid #fe552c;
+	   color: #fff;
+	}
+
+	.btn-white:hover,
+	.btn-white:focus,
+	.btn-white:active,
+	.btn-white.active,
+	.open .dropdown-toggle.btn-white {
+	   -moz-box-shadow: none;
+	   -webkit-box-shadow: none;
+	   box-shadow: none;
+	   background: #fe552c;
+	   color: #fff;
+	}	
+	.searchform input {
+		width: 100%;
+		border-radius: 10px;
+		background-position: 5% center;
+		padding-left: 40px;
+		height: 41px;
+	}	
+	.dq ,.btn-m ,.btn-m:hover {
+	   color: #fe552c;
+	}
+	.position {
+		padding: 10px;
+		color: #fe552c;
+	}
+	.nav-tabs ,.nav-tabs.nav-justified{
+		background: #fff;
+		border-bottom: 1px solid #f3f3f3;
+	}
+	.nav-tabs.nav-justified .active a ,.nav-tabs.nav-justified > .active > a:hover
+	{
+		background-color: #fff;
+		border-bottom: 1px solid #fe552c;
+	}
+	.tab-content {
+		background: #fff;
+	}
+</style>
+
+<body style="background: #fff;">
+	<div class="contentpanel">
+		<div class="row">
+			<div class="col-md-12" align="center"><button class="btn btn-white btn-sm">乡镇</button></div>
+		</div>
+	</div>
+	<div class="contentpanel" style="background: #f6f6f6;">
+		<div class="row">
+		<form class="searchform" action="index.html" method="post">
+			<div class="col-xs-10">
+		   		<input type="text" id="area" class="form-control" name="keyword" placeholder="输入乡镇名称">
+		   	</div>
+		   	<div class="col-xs-2">
+				<a class="btn btn-m" {if isset($temp.id)}href="/web/index/index/aid/{$temp.id}"{/if}>取消</a>
+			</div>
+		</form>
+		</div>
+	</div>
+	{if isset($temp.name)}
+	<p class="position">当前乡镇：{$temp.name}</p>
+	{/if}
+	
+	<div id="area_content">
+		<div class="follower-list">
+			<div class="media">
+           		地市地市1<br>
+           		<small class="text-muted">地市地市1  地市地市1  地市地市1</small>
+       		</div><!-- media -->
+      		<div class="media">
+           		地市地市2<br>
+           		<small class="text-muted">地市地市1  地市地市1  地市地市1</small>
+         	</div><!-- media -->
+      		<div class="media">
+           		地市地市3<br>
+           		<small class="text-muted">地市地市1  地市地市1  地市地市1</small>
+       		</div><!-- media -->
+           	<div class="media">
+           		地市地市4<br>
+           		<small class="text-muted">地市地市1  地市地市1  地市地市1</small>
+         	</div><!-- media -->
+		</div><!--follower-list -->
+	</div>
+	<div id="disabledTabWizard">
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs nav-justified nav-profile">
+          	<li class="active"><a href="#activities" ><strong>选择省</strong></a></li>
+          	<li><a href="#followers"><strong>选择市</strong></a></li>
+          	<li><a href="#following" ><strong>选择区/县</strong></a></li>
+          	<li><a href="#events" ><strong>选择乡/镇</strong></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+			<div class="tab-pane active" id="activities">
+            		<div class="follower-list">
+             			{volist name="list" id="vo" mod="2"}
+              			<div class="media act-media" data-aid="{$vo.id}">
+                			{$vo.name}
+              			</div>
+              			<!-- media -->
+              			{/volist}
+              		
+            		</div><!-- activity-list -->
+          		</div>
+          		
+          	<div class="tab-pane" id="followers">
+            		<div class="follower-list">
+              			<div class="media">
+           					地市地市1
+              			</div><!-- media -->
+              			<div class="media">
+           					地市地市2
+              			</div><!-- media -->
+              			<div class="media">
+           					地市地市3
+              			</div><!-- media -->
+              			<div class="media">
+           					地市地市4
+              			</div><!-- media -->
+            		</div><!--follower-list -->
+            
+          		</div>
+          	<div class="tab-pane" id="following">
+            		<div class="follower-list">
+              
+              			<div class="media act-media">
+                			区/县1
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			区/县2
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			区/县3
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			区/县4
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			区/县5
+              			</div><!-- media -->
+
+            		</div><!-- activity-list -->
+            
+          		</div>
+          		<div class="tab-pane" id="events">
+   					
+         			<div class="follower-list">
+              
+              			<div class="media act-media">
+                			乡/镇
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			乡/镇
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			乡/镇
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			乡/镇
+              			</div><!-- media -->
+              			<div class="media act-media">
+                			乡/镇
+              			</div><!-- media -->
+
+            		</div><!-- activity-list -->
+          		</div>
+        </div>
+	</div>
+	
+<script src="/template/js/jquery-1.11.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/jquery.cookies.js"></script>
+
+<script>
+jQuery(document).ready(function(){
+	$("#area_content").hide();
+	$("#disabledTabWizard").show();
+	$("#area").change(function(){
+		$("#area_content").show();
+		$("#disabledTabWizard").hide();
+		var val = $(this).val();
+		if(val=='')
+		{
+			$("#area_content").hide();
+			$("#disabledTabWizard").show();
+		}else{
+			
+			$.ajax({  
+    			type : "get",  
+    			url : "/web/index/selectArea",
+				data : "name=" + val,  
+    			async : false,//取消异步  
+    			success : function(data){  
+					var jsondata = $.parseJSON(data);
+					var html='';
+			
+					console.log(jsondata[0].par.length);
+					console.log(jsondata[0].par);
+					//var json = $.parseJSON(jsondata[0].par);
+					//console.log(json);
+					for(var i = 0; i < jsondata.length; i++){
+						html +='<div class="media act-media" data-aid="'+jsondata[i].id+'">';
+						html +=jsondata[i].name;	
+						html +='<br>';
+           				html +='<small class="text-muted">';
+						for(var x in jsondata[i].par)
+						{
+							html += jsondata[i].par[x].name+ '  ';
+						}
+						
+						html +='</small>';
+						html +='</div>';
+					}
+					$("#area_content .follower-list").html(html);
+				}
+			});
+			
+		}
+	});
+	
+	$("#area_content").on("click",".follower-list .media",function(){
+		window.location.href = "/web/index/index/aid/"+$(this).data('aid');
+	});
+	
+	$("#disabledTabWizard").on("click",".follower-list .media",function(){
+		var id = $(this).parent().parent().attr('id');//标记id
+		var dom = $(this).parent().parent();//当前选项卡内容
+		var tabs = $(".nav-tabs li a[href=\"#"+id+"\"]").parent();//当前选项卡标题
+		if(id =='events')
+		{
+	
+			window.location.href = "/web/index/index/aid/"+$(this).data('aid');
+		
+		}else{
+			$.ajax({  
+    			type : "get",  
+    			url : "/web/index/getArea/id/"+$(this).data('aid'),  
+    			async : false,//取消异步  
+    			success : function(data){  
+					var jsondata = $.parseJSON(data);
+					var html='';
+					for(var i = 0; i < jsondata.length; i++){
+						html +='<div class="media act-media" data-aid="'+jsondata[i].id+'">';
+						html +=jsondata[i].name;		              			
+						html +='</div>';
+					}
+					dom.next().find(".follower-list").html(html);
+				}
+			});
+
+			dom.removeClass('active');
+			tabs.removeClass('active');
+
+			dom.next().addClass('active');
+			tabs.next().addClass('active');
+		}
+
+	});
+
+
+
+	
+});
+
+</script>
+
+</body>
+</html>
