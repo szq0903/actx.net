@@ -58,7 +58,7 @@ class Moulds extends Controller
 
                 $mould           = new Mould();
                 $mould->name    	= Request::instance()->post('name');
-                $mould->table    	= Request::instance()->post('table');
+                $mould->table    	= trim(Request::instance()->post('table'));
                 $mould->sort    	= Request::instance()->post('sort');
 
                 $mould->save();
@@ -100,7 +100,7 @@ class Moulds extends Controller
 			{
                 $this->rename($mould->table,Request::instance()->post('table'));
                 $mould->name    	= Request::instance()->post('name');
-                $mould->table    	= Request::instance()->post('table');
+                $mould->table    	= trim (Request::instance()->post('table'));
                 $mould->sort    	= Request::instance()->post('sort');
                 $mould->save();
 				$this->success('修改成功！');
