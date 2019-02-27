@@ -15,12 +15,14 @@ use app\index\model\Mould;
 class Moulds extends Controller
 {
 	public $title='SEOCRM管理系统';
-	
+
+
+
 	public function _initialize()
 	{
 		check();
 	}
-	
+
 	/**
 	 * 模型列表
 	 * @param unknown $id
@@ -32,7 +34,7 @@ class Moulds extends Controller
 
 		// 把数据赋值给模板变量list
 		$this->assign('list', $list);
-		
+
 		//获取当当前控制器
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
@@ -60,7 +62,7 @@ class Moulds extends Controller
                 $mould->name    	= Request::instance()->post('name');
                 $mould->table    	= trim(Request::instance()->post('table'));
                 $mould->sort    	= Request::instance()->post('sort');
-
+                $mould->icon        = Request::instance()->post('icon');
                 $mould->save();
                 $this->success('添加成功！');
             }else{
@@ -83,13 +85,13 @@ class Moulds extends Controller
 	 */
 	public function edit($id) {
 		$mould= Mould::get($id);
-		
+
 		//判断模型是否存在
 		if(empty($mould))
 		{
 			$this->error('要修改的模型不存在');
 		}
-		
+
 		//是否为提交表单
 
 
@@ -102,13 +104,14 @@ class Moulds extends Controller
                 $mould->name    	= Request::instance()->post('name');
                 $mould->table    	= trim (Request::instance()->post('table'));
                 $mould->sort    	= Request::instance()->post('sort');
+                $mould->icon        = Request::instance()->post('icon');
                 $mould->save();
 				$this->success('修改成功！');
 			}else{
 				$this->error('模型名不能为空！');
 			}
 		}
-		
+
 		//获取上级模型
 		$this->assign('temp1',$mould);
 		$this->assign('title','修改模型-'.$this->title);
@@ -116,7 +119,7 @@ class Moulds extends Controller
 		$this->assign('act', $request->controller());
 		return $this->fetch();
 	}
-	
+
 	/**
 	 * 删除模型
 	 * @param unknown $id

@@ -14,10 +14,10 @@ use think\Config;
 use app\index\model\Area;
 use app\index\model\Field;
 use app\index\model\Mould;
-use app\index\model\Guestbook;
+use app\index\model\Mail;
 use lib\Form;
 
-class Guestbooks extends Controller
+class Mails extends Controller
 {
     public $title='SEOCRM管理系统';
     public $mould;
@@ -27,7 +27,7 @@ class Guestbooks extends Controller
     {
         check();
         //初始化模型
-        $this->mould= Mould::get(['table'=>'guestbook']);
+        $this->mould= Mould::get(['table'=>'mail']);
         $this->assign('mould',$this->mould);
 
         //初始化字段
@@ -46,7 +46,7 @@ class Guestbooks extends Controller
     public function index(){
 
         // 查询数据集
-        $list = Guestbook::order('update','desc')->paginate(10);;
+        $list = Mail::order('update','desc')->paginate(10);;
         foreach ($list as $key=>$val)
         {
             $list[$key]['edit'] = url('index/'.$this->mould->table.'s/edit',['id'=>$val['id']]);
@@ -84,7 +84,7 @@ class Guestbooks extends Controller
         //是否为提交表单
         if (Request::instance()->isPost())
         {
-            $headart           = new Guestbook();
+            $headart           = new Mail();
             foreach ($this->field as $val)
             {
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
@@ -103,11 +103,7 @@ class Guestbooks extends Controller
             {
                 continue;
             }
-            if($val['fieldname'] == 'sid')//处理栏目id
-            {
-                $val['vdefault'] = $headarr;
-                $arr['html'] = $form->fieldToForm($val,'form-control','','3');
-            }elseif($val['fieldname'] == 'aid')
+            if($val['fieldname'] == 'aid')
             {
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
@@ -176,10 +172,14 @@ class Guestbooks extends Controller
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
 
+            }elseif($val['fieldname'] == 'shopimg')
+            {
+                $arr['html'] = $form->fieldToForm($val,'form-control','shopimg');
             }elseif($val['fieldname'] == 'body'){
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
-            }elseif ($val['fieldname'] == 'recommend')
+            }elseif ($val['fieldname'] == 'type')
             {
+                echo $val['vdefault'];
                 $arr = explode(',',$val['vdefault']);
                 $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3');
             } else{
@@ -204,7 +204,7 @@ class Guestbooks extends Controller
      */
     public function edit($id)
     {
-        $headart = Guestbook::get($id);
+        $headart = Mail::get($id);
 
         //判断模型是否存在
         if(empty($headart))
@@ -230,17 +230,12 @@ class Guestbooks extends Controller
         $formhtml = array();
         foreach ($this->field as $val)
         {
+
             if($val['ishide'] ==1)//隐藏时跳过本次
             {
                 continue;
             }
-            if($val['fieldname'] == 'sid')//处理栏目id
-            {
-
-                $val['vdefault'] = $headarr;
-                $arr['html'] = $form->fieldToForm($val,'form-control','',$headart->getData('sid'));
-
-            }elseif($val['fieldname'] == 'aid')
+            if($val['fieldname'] == 'aid')
             {
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
@@ -309,19 +304,22 @@ class Guestbooks extends Controller
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
 
-            }elseif ($val['fieldname'] == 'recommend')
+            }elseif ($val['fieldname'] == 'type')
             {
                 $arr = explode(',',$val['vdefault']);
-                $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3',$headart->getData('recommend'));
+                $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3',$headart->getData('type'));
+            }elseif($val['fieldname'] == 'shopimg')
+            {
+                $val['vdefault'] = $headart[$val['fieldname']];
+                $arr['html'] = $form->fieldToForm($val,'form-control','shopimg');
             }elseif($val['fieldname'] == 'body'){
-
                 $val['vdefault'] = $headart[$val['fieldname']];
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
             }else{
                 $val['vdefault'] = $headart[$val['fieldname']];
                 $arr['html'] = $form->fieldToForm($val,'form-control');
-
             }
+
             $arr['itemname'] = $val['itemname'];
             $formhtml[] = $arr;
         }
@@ -339,7 +337,7 @@ class Guestbooks extends Controller
      */
     public function del($id)
     {
-        $headart = Guestbook::get($id);
+        $headart = Mail::get($id);
 
         //判断模型是否存在
         if(empty($headart))
@@ -357,9 +355,9 @@ class Guestbooks extends Controller
 
     public function addimg() {
 
-        if(!empty(request() -> file('image')))
+        if(!empty(request() -> file('shopimg')))
         {
-            $file = request() -> file('image');
+            $file = request() -> file('shopimg');
         }
 
         // 移动到框架应用根目录/public/uploads/ 目录下

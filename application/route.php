@@ -34,7 +34,10 @@ return [
         'catearts'      =>  'index/catearts',
         'money_logs'      =>  'index/money_logs',
         'messages'      =>  'index/messages',
-        'guestbooks'    => 'index/guestbooks'
+        'guestbooks'    => 'index/guestbooks',
+        'books'    => 'index/books',
+        'mails'    => 'index/mails'
+
 
     ],
     '[hello]'     => [

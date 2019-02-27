@@ -3,9 +3,9 @@
 	{include file="Public/menu" /}
 
 	<div class="mainpanel">
-    
+
     {include file="Public/headerbar" /}
-        
+
     <div class="pageheader">
       <h2><i class="fa fa-table"></i> 会员管理 <a class="btn btn-danger" href="{:url('index/members/add')}">添加会员</a></h2>
       <div class="breadcrumb-wrapper">
@@ -16,10 +16,10 @@
         </ol>
       </div>
     </div>
-    
+
     <div class="contentpanel">
-      
-      
+
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="panel-btns">
@@ -29,15 +29,15 @@
           <h4 class="panel-title">搜索</h4>
         </div>
         <div method="post" class="panel-body">
-      
+
            <form method="post" name="myForm" class="form-inline">
             <div class="form-group">
               <label class="sr-only" for="exampleInputEmail2">昵称</label>
               <input type="text" name="nickname" class="form-control" id="exampleInputEmail2" placeholder="昵称">
             </div>
-          
+
 			<button type="submit" class="btn btn-primary">搜索</button>
-            
+
           </form>
         </div><!-- panel-body -->
       </div>
@@ -69,7 +69,7 @@
                         <td>
                         	<div class="thmb-prev">
                   			<a href="{$vo.headimgurl}" class="fa fa-file-image-o" data-rel="prettyPhoto">
-                    			
+
                   			</a>
 							</div>
                         </td>
@@ -83,17 +83,17 @@
                         </td>
                       </tr>
                       {/volist}
-                     
+
                     </tbody>
                 </table>
                 {$list->render()}
             </div><!-- table-responsive -->
-        </div> 
+        </div>
         <!-- col-md-12 -->
-        
-      </div><!-- row --> 
+
+      </div><!-- row -->
     </div><!-- contentpanel -->
-    
+
   </div><!-- mainpanel -->
 
 <div id="myModal" class="modal fade bs-example-modal-photo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -114,7 +114,7 @@
 
 <script>
   jQuery(document).ready(function(){
-	 
+
     jQuery("a[data-rel^='prettyPhoto']").prettyPhoto();
 
     $("#myModal").on("hidden.bs.modal", function() {
@@ -122,5 +122,4 @@
     });
 
   });
-  
 </script>

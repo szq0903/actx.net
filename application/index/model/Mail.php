@@ -2,7 +2,7 @@
 namespace app\index\model;
 use think\Model;
 
-class Guestbook extends Model
+class Mail extends Model
 {
 
 	//自定义初始化
@@ -35,9 +35,9 @@ class Guestbook extends Model
         }
     }
 
-    public function getRecommendAttr($value)
+    public function getTypeAttr($value)
     {
-        $arr = array('否','是');
+        $arr = array('批发商','零售商');
         return $arr[$value];
     }
 
@@ -51,7 +51,6 @@ class Guestbook extends Model
             return $arr['nickname'];
         }
     }
-
     public function getCidAttr($value)
     {
         $arr = Category::get(['id'=>$value]);
@@ -62,5 +61,7 @@ class Guestbook extends Model
             return $arr['name'];
         }
     }
+
+
 }
 ?>
