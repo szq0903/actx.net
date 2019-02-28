@@ -15,6 +15,7 @@ use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Category;
 use lib\Form;
+use lib\Tree;
 
 class Categorys extends Controller
 {
@@ -60,19 +61,15 @@ class Categorys extends Controller
                   			<a href=\"{$val['icon']}\" class=\"fa fa-file-image-o\" data-rel=\"prettyPhoto\"></a>
 							</div>";
             }
-
             $list[$key]['edit'] = url('index/'.$this->mould->table.'s/edit',['id'=>$val['id']]);
             $list[$key]['del'] = url('index/'.$this->mould->table.'s/del',['id'=>$val['id']]);
         }
 
 
 
-
         // 把数据赋值给模板变量list
         $this->assign('list', $list);
-
         $this->assign('field', $this->field);
-
 
         //获取当当前控制器
         $request = Request::instance();

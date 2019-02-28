@@ -15,7 +15,6 @@ class Category extends Model
 
     public function getTree($pid, &$sort ,$str ='')
     {
-
         $list = parent::where('pid','=',$pid)->order('rank')->select();
         //├─
         //└─

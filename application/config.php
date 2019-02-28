@@ -240,19 +240,19 @@ return [
     ],
 	'captcha'  => [
 		// 验证码字体大小(px)
-        'fontSize' => 16, 
+        'fontSize' => 16,
         // 是否画混淆曲线
-        'useCurve' => false, 
+        'useCurve' => false,
          // 验证码图片高度
         'imageH'   => 30,
         // 验证码图片宽度
         'imageW'   => 120,
-		// 背景颜色 
+		// 背景颜色
 		'bg'	   =>[255, 255, 255],
 		'fontttf'  => '2.ttf',
         // 验证码位数
-        'length'   => 4, 
-        // 验证成功后是否重置        
+        'length'   => 4,
+        // 验证成功后是否重置
         'reset'    => true
 	],
 
@@ -315,5 +315,5 @@ return [
             'length'=>5
         )
     ]
-	
+
 ];
