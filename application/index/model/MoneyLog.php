@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace app\index\model;
 
 use think\Model;
 
-class Money_log extends Model
+class MoneyLog extends Model
 {
 
     //自定义初始化

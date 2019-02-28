@@ -15,7 +15,7 @@ use app\index\model\Area;
 use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Member;
-use app\index\model\Money_log;
+use app\index\model\MoneyLog;
 use lib\Form;
 
 class MoneyLogs extends Controller
@@ -46,9 +46,10 @@ class MoneyLogs extends Controller
      * 列表
      */
     public function index(){
-
+        $ms = new MoneyLog();
+        echo $ms->getTable();
         // 查询数据集
-        $list = Money_log::order('update','desc')->paginate(10);;
+        $list = MoneyLog::order('update','desc')->paginate(10);;
         foreach ($list as $key=>$val)
         {
             $list[$key]['edit'] = url('index/'.$this->mould->table.'s/edit',['id'=>$val['id']]);
@@ -83,7 +84,7 @@ class MoneyLogs extends Controller
      */
     public function edit($id)
     {
-        $headart = Money_log::get($id);
+        $headart = MoneyLog::get($id);
 
         //判断模型是否存在
         if(empty($headart))
@@ -128,7 +129,7 @@ class MoneyLogs extends Controller
      */
     public function del($id)
     {
-        $headart = Money_log::get($id);
+        $headart = MoneyLog::get($id);
 
         //判断模型是否存在
         if(empty($headart))

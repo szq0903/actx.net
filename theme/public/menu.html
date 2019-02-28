@@ -52,9 +52,8 @@
 				<li  style="display: none;" {if $act=='Moulds' || $act=='Fields'}class="active"{/if}><a href="/moulds"><i class="fa fa-trash-o"></i> <span>模型管理</span></a></li>
 
                 {volist name="menu" id="vo"}
-                <li {if $act== ucfirst($vo.table.'s')}class="active"{/if}>
+                <li {if $act== parseName($vo.table.'s',1)}class="active"{/if}>
                 <a href="{:url('/'.$vo.table.'s')}"><i class="fa {$vo.icon}"></i> <span>{$vo.name}</span></a>
-                {:ucfirst($vo.table.'s')}
                 </li>
                 {/volist}
 
