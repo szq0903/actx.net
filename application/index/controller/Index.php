@@ -9,10 +9,10 @@ use think\Session;
 class Index extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
+
 	public function _initialize()
 	{
-		
+
 	}
 	/**
 	 * 系统首页
@@ -20,9 +20,10 @@ class Index extends Controller
 	 */
     public function index()
     {
-		
+
 		check();
-		
+        $this->assign('menu', getLeftMenu());
+
     	$info = array(
     			'操作系统'=>PHP_OS,
     			'运行环境'=>$_SERVER["SERVER_SOFTWARE"],
@@ -38,34 +39,34 @@ class Index extends Controller
     			'magic_quotes_gpc'=>(1===get_magic_quotes_gpc())?'YES':'NO',
     			'magic_quotes_runtime'=>(1===get_magic_quotes_runtime())?'YES':'NO',
     	);
-	
+
     	$this->assign('info',$info);
-    	
+
     	$request = Request::instance();
     	$this->assign('act', $request->controller());
-    	
+
     	$this->assign('title','系统首页-'.$this->title);
-	
+
     	return view('index');
     }
-	
+
     /**
      * 登陆
      * @return \think\response\View
      */
 	public function login()
     {
-    	
-		
-		
-		
-		if (Request::instance()->isPost()) 
+
+
+
+
+		if (Request::instance()->isPost())
 		{
 			if(!captcha_check(Request::instance()->post('code'))){
 				$this->error('验证码不正确');//验证失败
 			}else{
 				$user = User::get(['user' => Request::instance()->post('user'),'pwd' => md5(Request::instance()->post('pwd'))]);
-				
+
 				if(empty($user))
 				{
 					$this->error('用户名密码错误！');
@@ -80,7 +81,7 @@ class Index extends Controller
 			return view('login');
 		}
     }
-	
+
     public function quit() {
 
     	Session::delete('user');

@@ -27,7 +27,7 @@
 
         		<li {if $act=='Index'}class="active"{/if}><a href="/index"><i class="fa fa-home"></i> <span>系统首页</span></a></li>
 
-        		<li {if $act=='Magents'}class="active"{/if}><a href="/sysinfos"><i class="fa fa-cogs"></i> <span>系统设置</span></a></li>
+        		<li {if $act=='Sysinfos'}class="active"{/if}><a href="/sysinfos"><i class="fa fa-cogs"></i> <span>系统设置</span></a></li>
 
             	<li {if $act=='Account'}class="active"{/if}><a href="/account"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
 
@@ -51,23 +51,12 @@
 
 				<li  style="display: none;" {if $act=='Moulds' || $act=='Fields'}class="active"{/if}><a href="/moulds"><i class="fa fa-trash-o"></i> <span>模型管理</span></a></li>
 
-				<li {if $act=='Headsorts'}class="active"{/if}><a href="/headsorts"><i class="fa fa-trash-o"></i> <span>头条栏目管理</span></a></li>
-
-				<li {if $act=='Headarts'}class="active"{/if}><a href="/headarts"><i class="fa fa-trash-o"></i> <span>头条文章管理</span></a></li>
-
-				<li {if $act=='Categorys'}class="active"{/if}><a href="/categorys"><i class="fa fa-trash-o"></i> <span>类目管理</span></a></li>
-
-				<li {if $act=='Catearts'}class="active"{/if}><a href="/catearts"><i class="fa fa-trash-o"></i> <span>类目文章管理</span></a></li>
-
-				<li {if $act=='MoneyLogs'}class="active"{/if}><a href="/money_logs"><i class="fa fa-trash-o"></i> <span>充值记录</span></a></li>
-
-				<li {if $act=='Messages'}class="active"{/if}><a href="/messages"><i class="fa fa-trash-o"></i> <span>周边留言</span></a></li>
-
-				<li {if $act=='Guestbooks'}class="active"{/if}><a href="/guestbooks"><i class="fa fa-trash-o"></i> <span>游客留言</span></a></li>
-
-                <li {if $act=='Books'}class="active"{/if}><a href="/books"><i class="fa fa-trash-o"></i> <span>商家通讯录</span></a></li>
-
-                <li {if $act=='Mails'}class="active"{/if}><a href="/mails"><i class="fa fa-trash-o"></i> <span>站内信</span></a></li>
+                {volist name="menu" id="vo"}
+                <li {if $act== ucfirst($vo.table.'s')}class="active"{/if}>
+                <a href="{:url('/'.$vo.table.'s')}"><i class="fa {$vo.icon}"></i> <span>{$vo.name}</span></a>
+                {:ucfirst($vo.table.'s')}
+                </li>
+                {/volist}
 
 			</ul>
     	</div><!-- leftpanelinner -->

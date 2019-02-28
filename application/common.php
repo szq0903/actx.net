@@ -11,6 +11,9 @@
 
 // 应用公共文件
 use think\Session;
+
+use app\index\model\Mould;
+
 function check()
 {
 	$user = Session::get('user');
@@ -24,7 +27,7 @@ function check()
 //获取左侧菜单
 function getLeftMenu()
 {
-    $mould = Mould::all(['sortid' => 0, 'status' => 0]);
+    $mould = Mould::where('sort','>', 0)->select();
     return $mould;
 }
 

@@ -15,13 +15,14 @@ use app\index\model\Member;
 class Comments extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
 	}
-	
+
 	/**
 	 * 评论列表
 	 * @param unknown $id
@@ -31,10 +32,10 @@ class Comments extends Controller
 
 		// 查询数据集
 		$list = Comment::order('addtime desc')->paginate(10);
-		
+
 		// 把分页数据赋值给模板变量list
 		$this->assign('list', $list);
-		
+
 		//获取当当前控制器
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
@@ -42,15 +43,15 @@ class Comments extends Controller
 
 		return $this->fetch();
 	}
-	
-	
+
+
 	/**
 	 * 删除评论
 	 * @param unknown $id
 	 * @return \think\mixed
 	 */
 	public function del($id) {
-	
+
 		$comment = Comment::get($id);
 		if(empty($comment))
 		{
@@ -64,6 +65,6 @@ class Comments extends Controller
 		$this->assign('act', $request->controller());
 		return $this->fetch();
 	}
-	
-	
+
+
 }

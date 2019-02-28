@@ -15,13 +15,14 @@ use app\index\model\Member;
 class Resumes extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
 	}
-	
+
 	/**
 	 * 简历列表
 	 * @param unknown $id
@@ -31,10 +32,10 @@ class Resumes extends Controller
 
 		// 查询数据集
 		$list = Resume::order('addtime desc')->paginate(10);
-		
+
 		// 把分页数据赋值给模板变量list
 		$this->assign('list', $list);
-		
+
 		//获取当当前控制器
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
@@ -42,22 +43,22 @@ class Resumes extends Controller
 
 		return $this->fetch();
 	}
-	
+
 	/**
 	 * 修改简历
 	 * @param unknown $id
 	 * @return \think\mixed
 	 */
 	public function edit($id) {
-		
+
 		$resume = Resume::get($id);
-		
+
 		//判断简历是否存在
 		if(empty($resume))
 		{
 			$this->error('要修改的简历不存在');
 		}
-		
+
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
@@ -73,15 +74,15 @@ class Resumes extends Controller
 			$resume->save();
 			$this->success('修改成功！');
 		}
-		
+
 		$member =Member::all();
 		$this->assign('member',$member);
-		
-		
+
+
 		//处理时间
 		$resume['birth']=date('m/d/Y',$resume['birth']);
 		$resume['addtime']=date('m/d/Y',$resume['addtime']);
-		
+
 		$this->assign('temp',$resume);
 		$this->assign('title','修改简历-'.$this->title);
 		$request = Request::instance();
@@ -94,7 +95,7 @@ class Resumes extends Controller
 	 * @return \think\mixed
 	 */
 	public function del($id) {
-	
+
 		$resume = Resume::get($id);
 		if(empty($resume))
 		{
@@ -108,7 +109,7 @@ class Resumes extends Controller
 		$this->assign('act', $request->controller());
 		return $this->fetch();
 	}
-	
+
 	/**
 	 * 添加简历
 	 * @param unknown $id
@@ -137,19 +138,19 @@ class Resumes extends Controller
 				$this->error('两次密码不相同！');
 			}
 		}
-		
+
 		$member =Member::all();
 		$this->assign('member',$member);
-		
+
 		$resume['birth'] = date('m/d/Y');
 		$resume['addtime'] = date('m/d/Y');
 		$resume['sex']=0;
 		$this->assign('temp',$resume);
-		
+
 		$this->assign('title','添加简历-'.$this->title);
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
-		
+
 		return $this->fetch('edit');
 	}
 }

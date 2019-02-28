@@ -16,11 +16,10 @@ class Moulds extends Controller
 {
 	public $title='SEOCRM管理系统';
 
-
-
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
 	}
 
 	/**

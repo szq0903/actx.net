@@ -27,6 +27,7 @@ class Catearts extends Controller
     public function _initialize()
     {
         check();
+        $this->assign('menu', getLeftMenu());
         //初始化模型
         $this->mould= Mould::get(['table'=>'cateart']);
         $this->assign('mould',$this->mould);

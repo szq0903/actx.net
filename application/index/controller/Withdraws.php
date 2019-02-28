@@ -17,13 +17,14 @@ use app\index\model\Agent;
 class Withdraws extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
 	}
-	
+
 	/**
 	 * 提现列表
 	 * @param unknown $id
@@ -32,10 +33,10 @@ class Withdraws extends Controller
 	public function index() {
 		// 查询数据集
 		$list = Withdraw::order('addtime desc')->paginate(10);
-		
+
 		// 把分页数据赋值给模板变量list
 		$this->assign('list', $list);
-		
+
 		//获取当当前控制器
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
@@ -43,12 +44,12 @@ class Withdraws extends Controller
 
 		return $this->fetch();
 	}
-	
+
 	//改变状态
 	public function setStatus($id)
 	{
 		$status = Request::instance()->post('status');
-		
+
 		$withdraw = Withdraw::get($id);
 		if(empty($withdraw))
 		{
@@ -62,7 +63,7 @@ class Withdraws extends Controller
 				echo 'error';
 			}else{
 				$agent->save();
-			
+
 				//添加财务记录
 				$cashlog = new Cash_log();
 				$cashlog->aid = $withdraw->aid;
@@ -70,35 +71,35 @@ class Withdraws extends Controller
 				$cashlog->msg = '提现减余额';
 				$cashlog->addtime = time();
 				$cashlog->save();
-				
-				
+
+
 				$withdraw->status = $status;
 				$withdraw->handltime = time();
 				$withdraw->save();
 				echo 'success';
 			}
-			
-			
+
+
 		}
-		
+
 	}
-	
-	
+
+
 	/**
 	 * 修改提现
 	 * @param unknown $id
 	 * @return \think\mixed
 	 */
 	public function edit($id) {
-		
+
 		$user = User::get($id);
-		
+
 		//判断提现是否存在
 		if(empty($user))
 		{
 			$this->error('要修改的提现不存在');
 		}
-		
+
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
@@ -130,7 +131,7 @@ class Withdraws extends Controller
 	 * @return \think\mixed
 	 */
 	public function del($id) {
-	
+
 		$withdraw = Withdraw::get($id);
 		if(empty($withdraw))
 		{
@@ -144,7 +145,7 @@ class Withdraws extends Controller
 		$this->assign('act', $request->controller());
 		return $this->fetch();
 	}
-	
+
 	/**
 	 * 添加提现
 	 * @param unknown $id
@@ -167,16 +168,16 @@ class Withdraws extends Controller
 				$this->error('两次密码不相同！');
 			}
 		}
-		
+
 		$this->assign('title','添加提现-'.$this->title);
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
 		$this->assign('temp',array());
 		return $this->fetch('edit');
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

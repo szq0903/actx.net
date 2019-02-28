@@ -17,15 +17,16 @@ class Fields extends Controller
 {
 	public $title='SEOCRM管理系统';
     public $inputlist;
-	
+
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
         $this->inputlist = config('inputlist');
 
         $this->assign('inputlist',$this->inputlist);
 	}
-	
+
 	/**
 	 * 字段列表
 	 * @param unknown $id
@@ -134,7 +135,7 @@ class Fields extends Controller
         {
             $this->error('要修改的模型不存在');
         }
-		
+
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
@@ -183,17 +184,17 @@ class Fields extends Controller
         //为添加字段做准备
         $this->assign('mid',$field['mid']);
 
-		
+
 		$this->assign('temp1',$field);
 		$this->assign('title','修改字段-'.$this->title);
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
-		
+
 		return $this->fetch();
 	}
-	
 
-	
+
+
 	/**
 	 * 删除字段
 	 * @param unknown $id

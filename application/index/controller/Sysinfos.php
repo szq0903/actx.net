@@ -17,13 +17,14 @@ use lib\Form;
 class Sysinfos extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		check();
+        $this->assign('menu', getLeftMenu());
 	}
-	
+
 	/**
 	 * 系统设置
 	 * @param unknown $id
@@ -32,17 +33,17 @@ class Sysinfos extends Controller
 	public function index() {
 
 		$sysinfo = Sysinfo::get(1);
-		
+
 		//判断系统配置是否存在
 		if(empty($sysinfo))
 		{
 			$this->error('要修改的系统配置不存在');
 		}
-		
+
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
-			
+
 			$sysinfo->webname    = Request::instance()->post('webname');
 			$sysinfo->site    	 = Request::instance()->post('site');
 			$sysinfo->title      = Request::instance()->post('title');
@@ -59,7 +60,7 @@ class Sysinfos extends Controller
             $sysinfo->er     = Request::instance()->post('er');
 			$sysinfo->save();
 			$this->success('修改成功！');
-			
+
 		}
 
         $form = new Form();

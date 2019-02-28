@@ -13,18 +13,19 @@ use think\Log;
 class Clear extends Controller
 {
 	public $title='SEOCRM管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		check();
+
 	}
-	
-	
+
+
 	public function index() {
-		Cache::clear(); 
+		Cache::clear();
 		Log::clear();
 		$this->success('清理成功');
 	}
-	
+
 }
