@@ -36,7 +36,8 @@ return [
         'messages'      =>  'index/messages',
         'guestbooks'    => 'index/guestbooks',
         'books'    => 'index/books',
-        'mails'    => 'index/mails'
+        'mails'    => 'index/mails',
+        'uploads'   => 'index/uploads'
 
 
     ],

@@ -229,6 +229,7 @@ class Headarts extends Controller
         //是否为提交表单
         if (Request::instance()->isPost())
         {
+
             foreach ($this->field as $val)
             {
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);

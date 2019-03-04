@@ -21,7 +21,7 @@ namespace lib;
  checkbox,checkbox多选框			多选框		数组型
 */
 
-class Form {
+class Formbf {
 	public $forminc=array(
 			'text'		=>'text',
 			'multitext'	=>'textarea',
@@ -218,127 +218,92 @@ class Form {
 	 * @param string $id
 	 * @return string
 	 */
+	//引入这两个文件
+	//<script src="/eleditor/webuploader.min.js"></script>
+    //<!-- 插件核心 -->
+    //<script src="/eleditor/Eleditor.min.js"></script>
 	public function htmlarea($field,$class='',$id=''){
 		$class=$class=='' ? $class : "class='$class'";
 		$id=$id=='' ? $id : "id='$id'";
+		$html="<script>
+			var editor;
+			KindEditor.ready(function(K) {
+			editor = K.create('textarea[name=\"{$field['fieldname']}\"]', {
+				allowFileManager : true
+			});
+		});
+		</script>";
+		//$str="<textarea name='{$field['fieldname']}' {$class}  {$id}>{$field['vdefault']}</textarea>";
 
+		$html ='<div id="contentEditor"></div>';
+        $html .= "<input type='hidden' name='{$field['fieldname']}' {$class}  {$id}>";
 
-		$html = '<div class="zx-eidtor-container" id="editorContainer"></div>';
-        $html .= '<input type="hidden" name="'.$field['fieldname'].'" value=\''.$field['vdefault'].'\' class="zx-eidtor">';
-        $html .= '<a href="#" class="submit active" onclick="handleSubmitClick()">完成编辑</a>';
-        $html .= "<script>
+        $str ="<script>
+            var contentEditor = new Eleditor({
+                el: '#contentEditor',
+                upload:{
+                    server: '/headarts/addimg',
+                    formName: 'image',//设置文件name,
+                    formData: {
+                        'token': '123123'
+                    },
+                    compress: false,
+                    fileSizeLimit: 2
+                },
+                /*初始化完成钩子*/
+                mounted: function(){
 
-// 初始化ZX编辑器
-var zxEditor = new ZxEditor('#editorContainer', {
-            fixed: true,
-  // demo有顶部导航栏，高度44
-  //top: 44,
-  // 编辑框左右边距
-  //padding: 13,
-  //是否显示底部工具栏（图片、标签、链接添加等图标）。
-  showToolbar: ['pic', 'emoji', 'text']
-})
-";
-        if(!empty($field['vdefault']))
-        {
-            $html .= "zxEditor.setContent('".$field['vdefault']."')";
-        }
+                    /*以下是扩展插入视频的演示*/
+                    var _videoUploader = WebUploader.create({
+                        auto: true,
+                        server: '服务器地址',
+                        /*按钮类就是[Eleditor-你的自定义按钮id]*/
+                        pick: $('.Eleditor-insertVideo'),
+                        duplicate: true,
+                        resize: false,
+                        accept: {
+                            title: 'Images',
+                            extensions: 'mp4',
+                            mimeTypes: 'video/mp4'
+                        },
+                        fileVal: 'video',
+                    });
+                    _videoUploader.on( 'uploadSuccess', function( _file, _call ) {
 
-        $html .= "
-function handleSubmitClick () {
-    // 获取文章数据
-    var data = getArticleData() || {};
-  // 显示loading
-  zxEditor.dialog.loading();
+                        if( _call.status == 0 ){
+                            return window.alert(_call.msg);
+                        }
 
-  // 上传图片数据
-  // 处理正文中的base64图片
-  // 获取正文中的base64数据数组
-  var base64Images = zxEditor.getBase64Images();
-  // 上传base64图片数据
-  uploadBase64Images(base64Images, function () {
-      // 正文中有base64数据，上传替换成功后再重新获取正文内容
-      if (base64Images.length) {
-          data.content = zxEditor.getContent();
-      }
-      // 需要提交的数据
-      // 防止提交失败，再保存一次base64图片上传后的文章数据
-      zxEditor.storage.set('article', data)
-    // 发送至服务器
+                        /*保存状态，以便撤销*/
+                        contentEditor.saveState();
+                        contentEditor.getEditNode().after(`
+                                            <div class='Eleditor-video-area'>
+                                                <video src='{_call.url}' controls=\"controls\"></video>
+                                            </div>
+                                        `);
+                        contentEditor.hideEditorControllerLayer();
+                    });
+                },
+                changer: function(){
+                    console.log('文档修改');
+                },
+                /*自定义按钮的例子*/
+                toolbars: [
+                    'insertText',
+                    'editText',
+                    'insertImage',
+                    'insertLink',
+                    'insertHr',
+                    'delete',
+                    'undo',
+                    'cancel'
+                ],
+                placeHolder: '{$field['vdefault']}'
+            });
 
-    // end
-    zxEditor.dialog.removeLoading();
+        </script>";
 
-    $('.zx-eidtor').val(data.content)
-
-  })
-}
-
-
-//获取文章数据
-function getArticleData () {
-    var data = {
-        // 获取正文内容
-        content: zxEditor.getContent()
-  }
-  return (!data.content || data.content === '')
-      ? null
-      : data;
-}
-
-
-//数据处理，并提交数据处理
-
-function uploadBase64Images (base64Images, callback) {
-    var len = base64Images.length;
-    var count = 0;
-    if (len === 0) {
-        callback()
-    return
-  }
-    for (var i = 0; i < len; i++) {
-        _uploadHandler(base64Images[i]);
-    }
-  function _uploadHandler (data) {
-      upload(data.blob, function (url) {
-          // 替换正文中的base64图片
-          zxEditor.setImageSrc(data.id, url)
-      setTimeout(function () {}, 3000)
-      // 计算图片是否上传完成
-      _handleCount();
-    })
-  }
-  function _handleCount () {
-      count++
-    if (count === len) {
-        callback()
-    }
-  }
-}
-
-// 模拟文件上传
-function upload (blob, callback) {
-    var formData = new FormData();
-    formData.append('img', blob,blob.size+'.jpg');
-    $.ajax({
-    type : 'POST',
-    url : '/uploads/addimg/f/img.html',
-    data : formData,
-    async: false,
-    cache: false,
-    contentType: false,
-    processData: false,
-    success : function(msg) {
-        if(msg){
-            var obj = JSON.parse(msg);
-            console.log(obj.data)
-            callback(obj.data);
-        }
-    }
-  });
-}
-</script>";
-		return $html;
+		return $html.$str;
 	}
 	/**
 	 * 解析成时间插件

@@ -240,6 +240,13 @@ class Categorys extends Controller
             $file = request() -> file($f);
         }
 
+        if(!isset($file))
+        {
+            // 上传失败获取错误信息
+            echo "{\"code\":-1, \"error\":\"Invalid file format\"}";
+            exit;
+        }
+
         // 移动到框架应用根目录/public/uploads/ 目录下
         $file->validate(['size'=>1024*1024*2,'ext'=>'jpg,png,gif']);
         $info = $file->rule('md5')->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'images');
