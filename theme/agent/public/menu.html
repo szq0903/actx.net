@@ -24,22 +24,27 @@
 
      		<h5 class="sidebartitle">导航</h5>
      		<ul class="nav nav-pills nav-stacked nav-bracket">
-       			
+
         		<li {if $act=='Index'}class="active"{/if}><a href="{:url('/agent/index')}"><i class="fa fa-home"></i> <span>系统首页</span></a></li>
 
-     			<li {if $act=='Members'}class="active"{/if}><a href="{:url('/agent/members')}"><i class="fa fa-user-md"></i> <span>会员管理</span></a></li> 
-     			
-     			<li {if $act=='Withdraws'}class="active"{/if}><a href="{:url('/agent/withdraws')}"><i class="fa fa-money"></i> <span>提现管理</span></a></li> 
-  			                           
+     			<li {if $act=='Members'}class="active"{/if}><a href="{:url('/agent/members')}"><i class="fa fa-user-md"></i> <span>会员管理</span></a></li>
+
+     			<li {if $act=='Withdraws'}class="active"{/if}><a href="{:url('/agent/withdraws')}"><i class="fa fa-money"></i> <span>提现管理</span></a></li>
+
   			    <li {if $act=='cashlog'}class="active"{/if}><a href="{:url('/agent/cashlog')}"><i class="fa fa-database"></i> <span>财务记录</span></a></li>
-    			                           
-    			<li {if $act=='Articles'}class="active"{/if}><a href="{:url('/agent/articles')}"><i class="fa fa-file-text-o"></i> <span>文章管理</span></a></li> 
-    			 		
+
+    			<li {if $act=='Articles'}class="active"{/if}><a href="{:url('/agent/articles')}"><i class="fa fa-file-text-o"></i> <span>文章管理</span></a></li>
+
     			<li {if $act=='Comments'}class="active"{/if}><a href="{:url('/agent/comments')}"><i class="fa fa-list-alt"></i> <span>评论管理</span></a></li>
-    			
-    			<li {if $act=='Clear'}class="active"{/if}><a href="{:url('/agent/clear')}"><i class="fa fa-trash-o"></i> <span>清理缓存</span></a></li> 
-    			          
-     			                
+
+    			<li {if $act=='Clear'}class="active"{/if}><a href="{:url('/agent/clear')}"><i class="fa fa-trash-o"></i> <span>清理缓存</span></a></li>
+                {volist name="menu" id="vo"}
+                {if $vo.table <> 'headsort' && $vo.table <> 'category' && $vo.table <> 'money_log' && $vo.table <> 'mail'}
+                <li {if $act== parseName($vo.table.'s',1)}class="active"{/if}>
+                <a href="{:url('/agent/'.$vo.table.'s')}"><i class="fa {$vo.icon}"></i> <span>{$vo.name}</span></a>
+                </li>
+                {/if}
+                {/volist}
       		</ul>
     	</div><!-- leftpanelinner -->
 	</div><!-- leftpanel -->

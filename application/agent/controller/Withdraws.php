@@ -15,13 +15,14 @@ use app\agent\model\Sysinfo;
 class Withdraws extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
-	
+
+
 	public function _initialize()
 	{
 		checkagent();
+        $this->assign('menu', getLeftMenu());
 	}
-	
+
 	/**
 	 * 提现列表
 	 * @param unknown $id
@@ -32,10 +33,10 @@ class Withdraws extends Controller
 		$id = session('id','','agent');
 		// 查询数据集
 		$list = Withdraw::where('aid','=',$id)->order('addtime desc')->paginate(10);
-		
+
 		// 把分页数据赋值给模板变量list
 		$this->assign('list', $list);
-		
+
 		//获取当当前控制器
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
@@ -44,21 +45,21 @@ class Withdraws extends Controller
 		return $this->fetch();
 	}
 
-	
+
 	/**
 	 * 添加提现
 	 * @param unknown $id
 	 * @return \think\mixed
 	 */
 	public function add() {
-		
+
 		//代理id
 		$temp['aid'] = session('id','','agent');
-		
+
 		//最低提现额度
 		$sysinfo = Sysinfo::get(1);
 		$temp['withdrawals'] = $sysinfo->withdrawals;
-		
+
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
@@ -66,26 +67,26 @@ class Withdraws extends Controller
 			if(Request::instance()->post('money') < $temp['withdrawals'])
 			{
 				$this->error('小于最小提现额度！');
-				
+
 			}else{
 				$withdraw           = new Withdraw;
 				$withdraw->money    = Request::instance()->post('money');
 				$withdraw->aid    	= $temp['aid'];
 				$withdraw->status   = 0;
-				
+
 				$withdraw->addtime  = time();
 				$withdraw->save();
 				$this->success('添加成功！');
 			}
 		}
-		
-		
-		
+
+
+
 		$this->assign('title','添加提现-'.$this->title);
 		$request = Request::instance();
 		$this->assign('act', $request->controller());
 		$this->assign('temp',$temp);
 		return $this->fetch('edit');
 	}
-	
+
 }

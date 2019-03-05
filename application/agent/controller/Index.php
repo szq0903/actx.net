@@ -10,10 +10,10 @@ use app\agent\model\Area;
 class Index extends Controller
 {
 	public $title='爱臣同乡管理系统';
-	
+
 	public function _initialize()
 	{
-		
+        $this->assign('menu', getLeftMenu());
 	}
 	/**
 	 * 系统首页
@@ -21,7 +21,7 @@ class Index extends Controller
 	 */
     public function index()
     {
-		
+
 		checkagent();
 		$aid =  Session::get('aid','agent');
 		$endtime =  Session::get('endtime','agent');
@@ -43,39 +43,39 @@ class Index extends Controller
     			'magic_quotes_gpc'=>(1===get_magic_quotes_gpc())?'YES':'NO',
     			'magic_quotes_runtime'=>(1===get_magic_quotes_runtime())?'YES':'NO',
     	);
-	
+
     	$this->assign('info',$info);
-    	
+
     	$request = Request::instance();
     	$this->assign('act', $request->controller());
-    	
+
     	$this->assign('title','系统首页-'.$this->title);
-	
+
     	return view('index');
     }
-	
+
     /**
      * 登陆
      * @return \think\response\View
      */
 	public function login()
     {
-    	
-		
-		if (Request::instance()->isPost()) 
+
+
+		if (Request::instance()->isPost())
 		{
 			if(!captcha_check(Request::instance()->post('code'))){
 				$this->error('验证码不正确');//验证失败
 			}else{
 				$agent = Agent::get(['name' => Request::instance()->post('user'),'pwd' => md5(Request::instance()->post('pwd'))]);
-				
+
 				if(empty($agent))
 				{
 					$this->error('用户名密码错误！');
 				}else{
 					if(time() < $agent->endtime)
 					{
-						if($agent->status == 0)	
+						if($agent->status == 0)
 						{
 							Session::set('id',$agent->id ,'agent');
 							Session::set('aid',$agent->aid ,'agent');
@@ -90,15 +90,15 @@ class Index extends Controller
 					}else{
 						$this->error('代理已过期，请联系平台续费！');
 					}
-					
-					
+
+
 				}
 			}
 		}else{
 			return view('login');
 		}
     }
-	
+
     public function quit() {
 		Session::delete('id','agent');
     	Session::delete('name','agent');
