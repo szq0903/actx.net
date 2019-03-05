@@ -218,6 +218,10 @@ class Guestbooks extends Controller
         {
             foreach ($this->field as $val)
             {
+                if($val['ishide'] ==1)//隐藏时跳过本次
+                {
+                    continue;
+                }
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
 

@@ -2,22 +2,26 @@
 
 {include file="Public/menu" /}
 <script src="/template/js/jquery-1.11.1.min.js"></script>
-<script src="/eleditor/webuploader.min.js"></script>
-<!-- 插件核心 -->
-<script src="/eleditor/Eleditor.min.js"></script>
-
-<link href="/template/fileinput/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/zx-editor/css/index.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-polyfills/0.1.42/polyfill.min.js"></script>
+<!--exif获取照片参数插件-->
+<script src="/zx-editor/libs/exif.min.js"></script>
+<!--debug-->
+<script src="/zx-editor/libs/zx-debug.min.js"></script>
+<!--编辑器-->
+<script src="/zx-editor/js/zx-editor.min.js"></script>
 <style>
-    .form-control.file-caption.kv-fileinput-caption{
-        padding: 7px;
+    .zxeditor-container.fixed .zxeditor-content-wrapper {
+        position: inherit;
     }
-    .form-control.file-caption.kv-fileinput-caption  .file-caption-name
-    {
-        line-height: 25px;
+    .zxeditor-container .zxeditor-toolbar-wrapper {
+        position: inherit;
+    }
+    .zx-eidtor-container {border: 1px solid #d3d7db;}
+    .zxeditor-container {
+        background: #ffffff;
     }
 </style>
-<script src="/template/fileinput/fileinput.js" type="text/javascript"></script>
-<script src="/template/fileinput/zh.js" type="text/javascript"></script>
 
 <div class="mainpanel">
 

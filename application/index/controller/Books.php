@@ -180,7 +180,6 @@ class Books extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
             }elseif ($val['fieldname'] == 'type')
             {
-                echo $val['vdefault'];
                 $arr = explode(',',$val['vdefault']);
                 $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3');
             } else{
@@ -190,7 +189,6 @@ class Books extends Controller
             $formhtml[] = $arr;
         }
         $this->assign('formhtml',$formhtml);
-
 
 
         $this->assign('title','添加'.$this->mould->name.'-'.$this->title);
@@ -218,6 +216,10 @@ class Books extends Controller
         {
             foreach ($this->field as $val)
             {
+                if($val['ishide'] ==1)//隐藏时跳过本次
+                {
+                    continue;
+                }
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
 

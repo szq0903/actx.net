@@ -241,7 +241,7 @@ var zxEditor = new ZxEditor('#editorContainer', {
 ";
         if(!empty($field['vdefault']))
         {
-            $html .= "zxEditor.setContent('".$field['vdefault']."')";
+            $html .= "zxEditor.setContent('".str_replace(array("\r\n", "\r", "\n"), "", $field['vdefault'])."')";
         }
 
         $html .= "

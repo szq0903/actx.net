@@ -17,17 +17,21 @@ use app\index\model\Mould;
 use app\index\model\Headart;
 use app\index\model\Headsort;
 use lib\Form;
+use think\Session;
 
 class Headarts extends Controller
 {
     public $title='SEOCRM管理系统';
     public $mould;
     public $field;
+    public $aid;
 
     public function _initialize()
     {
         checkagent();
         $this->assign('menu', getLeftMenu());
+
+        $this->aid =  Session::get('aid','agent');
 
         //初始化模型
         $this->mould= Mould::get(['table'=>'headart']);
@@ -38,8 +42,8 @@ class Headarts extends Controller
         $this->assign('field',$this->field);
 
         //初始化url
-        $url['add'] =  url('index/'.$this->mould->table.'s/add');
-        $url['index'] =  url('index/'.$this->mould->table.'s/index');
+        $url['add'] =  url('agent/'.$this->mould->table.'s/add');
+        $url['index'] =  url('agent/'.$this->mould->table.'s/index');
         $this->assign('url',$url);
     }
 
@@ -49,11 +53,11 @@ class Headarts extends Controller
     public function index(){
 
         // 查询数据集
-        $list = Headart::order('rank')->paginate(10);;
+        $list = Headart::where('aid','=',$this->aid)->order('rank')->paginate(10);;
         foreach ($list as $key=>$val)
         {
-            $list[$key]['edit'] = url('index/'.$this->mould->table.'s/edit',['id'=>$val['id']]);
-            $list[$key]['del'] = url('index/'.$this->mould->table.'s/del',['id'=>$val['id']]);
+            $list[$key]['edit'] = url('agent/'.$this->mould->table.'s/edit',['id'=>$val['id']]);
+            $list[$key]['del'] = url('agent/'.$this->mould->table.'s/del',['id'=>$val['id']]);
         }
 
         // 把数据赋值给模板变量list
@@ -92,12 +96,12 @@ class Headarts extends Controller
             {
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
+            $headart->aid = $this->aid;
             $headart->mid = 0;
             $headart->update = time();
             $headart->save();
             $this->success('添加成功！');
         }
-
 
         //处理select
         $headsort = Headsort::order('rank')->select();
@@ -123,73 +127,7 @@ class Headarts extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control','','3');
             }elseif($val['fieldname'] == 'aid')
             {
-                $name = $val['fieldname'];
-                $val['fieldname'] = '';
-                $temp['aid'] = 370829104;//370829104疃里镇
-                $arr=array();
-                $area = new Area;
-                $area->getAreaTypeArr($arr,$temp['aid']);
-
-                //地区
-                //省
-                $area1 = Area::all(['level'=>1,'parent_id'=>0]);
-                $areadb1 = array();
-                foreach ($area1 as $v)
-                {
-                    $areadb1[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb1;
-                $ahtml1 = $form->fieldToForm($val,'form-control','area1',$arr[1]);
-
-                //市
-                $area2 = Area::all(['level'=>2,'parent_id'=>$arr[1]]);
-                $areadb2 = array();
-                foreach ($area2 as $v)
-                {
-                    $areadb2[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb2;
-                $ahtml2 = $form->fieldToForm($val,'form-control','area2',$arr[2]);
-
-                //县
-                $area3 = Area::all(['level'=>3,'parent_id'=>$arr[2]]);
-                $areadb3 = array();
-                foreach ($area3 as $v)
-                {
-                    $areadb3[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb3;
-                $ahtml3 = $form->fieldToForm($val,'form-control','area3',$arr[3]);
-
-                //镇
-                $area4 = Area::all(['level'=>4,'parent_id'=>$arr[3]]);
-                $areadb4 = array();
-                foreach ($area4 as $v)
-                {
-                    $areadb4[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb4;
-                $ahtml4 = $form->fieldToForm($val,'form-control','area4',$arr[4]);
-
-
-                $arr['html'] ='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml1;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml2;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml3;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml4;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                continue;
             }elseif($val['fieldname'] == 'body'){
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
             }elseif ($val['fieldname'] == 'recommend')
@@ -234,7 +172,7 @@ class Headarts extends Controller
             {
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
-
+            $headart->aid = $this->aid;
             $headart->save();
             $this->success('修改成功！');
         }
@@ -258,79 +196,11 @@ class Headarts extends Controller
             }
             if($val['fieldname'] == 'sid')//处理栏目id
             {
-
                 $val['vdefault'] = $headarr;
                 $arr['html'] = $form->fieldToForm($val,'form-control','',$headart->getData('sid'));
-
             }elseif($val['fieldname'] == 'aid')
             {
-                $name = $val['fieldname'];
-                $val['fieldname'] = '';
-                $temp['aid'] = $headart->getData('aid');//370829104疃里镇
-                $arr=array();
-                $area = new Area;
-                $area->getAreaTypeArr($arr,$temp['aid']);
-
-                //地区
-                //省
-                $area1 = Area::all(['level'=>1,'parent_id'=>0]);
-                $areadb1 = array();
-                foreach ($area1 as $v)
-                {
-                    $areadb1[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb1;
-                $ahtml1 = $form->fieldToForm($val,'form-control','area1',$arr[1]);
-
-                //市
-                $area2 = Area::all(['level'=>2,'parent_id'=>$arr[1]]);
-                $areadb2 = array();
-                foreach ($area2 as $v)
-                {
-                    $areadb2[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb2;
-                $ahtml2 = $form->fieldToForm($val,'form-control','area2',$arr[2]);
-
-                //县
-                $area3 = Area::all(['level'=>3,'parent_id'=>$arr[2]]);
-                $areadb3 = array();
-                foreach ($area3 as $v)
-                {
-                    $areadb3[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb3;
-                $ahtml3 = $form->fieldToForm($val,'form-control','area3',$arr[3]);
-
-                //镇
-                $area4 = Area::all(['level'=>4,'parent_id'=>$arr[3]]);
-                $areadb4 = array();
-                foreach ($area4 as $v)
-                {
-                    $areadb4[$v['id']] = $v['name'];
-                }
-                $val['vdefault'] = $areadb4;
-                $ahtml4 = $form->fieldToForm($val,'form-control','area4',$arr[4]);
-
-
-                $arr['html'] ='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml1;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml2;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml3;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .='<div class="col-sm-3">';
-                $arr['html'] .= $ahtml4;
-                $arr['html'] .= '</div>';
-
-                $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                continue;
             }elseif ($val['fieldname'] == 'recommend')
             {
                 $arr = explode(',',$val['vdefault']);
