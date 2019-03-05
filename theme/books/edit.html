@@ -50,12 +50,30 @@
                 <form method="post" name="myForm" class="form-horizontal form-bordered">
 
                     {volist name="formhtml" id="vo" mod="2"}
+                    {if $vo.fieldname=='cid'}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">类目管理：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="category" name="cid">
+                                <option value="0">选择类目管理</option>
+                                {volist name="category" id="vo1"}
+                                {if $vo1.level==1 || $vo1.level==2}
+                                <optgroup label='{$vo1.name}'></optgroup>
+                                {else}
+                                <option value="{$vo1.id}" {if $vo['vdefault'] == $vo1.id}selected{/if}>{$vo1.name}</option>
+                                {/if}
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    {else}
                     <div class="form-group">
                         <label class="col-sm-3 control-label">{$vo['itemname']}：</label>
                         <div class="col-sm-6"  {if $vo['itemname']=='内容'}style="position: initial"{/if} st>
                             {$vo['html']}
                         </div>
                     </div>
+                    {/if}
                     {/volist}
 
                     <div class="panel-footer" style="display: block;">

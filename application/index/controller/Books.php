@@ -16,6 +16,7 @@ use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Book;
 use lib\Form;
+use app\index\model\Category;
 
 class Books extends Controller
 {
@@ -95,6 +96,13 @@ class Books extends Controller
             $this->success('添加成功！');
         }
 
+        //处理select
+        $category = array();
+        $psort = new Category();
+        $le = 3;
+        $psort->getTreeLevel(0,$category, '  ',$le);
+        $this->assign('category',$category);
+
         //处理字段显示
         $form = new Form();
         $formhtml = array();
@@ -104,7 +112,10 @@ class Books extends Controller
             {
                 continue;
             }
-            if($val['fieldname'] == 'aid')
+            if($val['fieldname'] == 'cid')//处理栏目id
+            {
+                $arr['vdefault'] = $val['vdefault'];
+            }elseif($val['fieldname'] == 'aid')
             {
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
@@ -186,6 +197,7 @@ class Books extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control');
             }
             $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
             $formhtml[] = $arr;
         }
         $this->assign('formhtml',$formhtml);
@@ -227,6 +239,12 @@ class Books extends Controller
             $this->success('修改成功！');
         }
 
+        //处理select
+        $category = array();
+        $psort = new Category();
+        $le = 3;
+        $psort->getTreeLevel(0,$category, '  ',$le);
+        $this->assign('category',$category);
 
         //处理字段显示
         $form = new Form();
@@ -238,7 +256,11 @@ class Books extends Controller
             {
                 continue;
             }
-            if($val['fieldname'] == 'aid')
+            if($val['fieldname'] == 'cid')//处理栏目id
+            {
+                $arr['vdefault'] = $headart->getData('cid');
+
+            }elseif($val['fieldname'] == 'aid')
             {
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
@@ -324,6 +346,7 @@ class Books extends Controller
             }
 
             $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
             $formhtml[] = $arr;
         }
         $this->assign('formhtml',$formhtml);

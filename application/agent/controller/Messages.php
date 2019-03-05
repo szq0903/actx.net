@@ -98,7 +98,7 @@ class Messages extends Controller
         {
             foreach ($this->field as $val)
             {
-                if($val['fieldname'] == 'mid')
+                if($val['ishide'] ==1)//隐藏时跳过本次
                 {
                     continue;
                 }
