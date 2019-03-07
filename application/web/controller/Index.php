@@ -13,6 +13,9 @@ use app\index\model\Sysinfo;
 use app\index\model\Member;
 use app\index\model\Comment;
 use app\index\model\Resume;
+use app\index\model\Headart;
+
+
 
 
 use Wechat\WechatOauth;
@@ -37,6 +40,27 @@ class Index extends Controller
         //处理地区
         $area = Area::get($aid);
         $this->assign('area', $area);
+
+        $sysinfo = Sysinfo::get(1);
+        $this->assign('sysinfo', $sysinfo);
+
+        $headart = Headart::order('update','desc')->limit(6)->select();
+
+        foreach ($headart as $k=>$item) {
+            $headart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+
+            $headart[$k]['imgs'] = $match[1];
+            $headart[$k]['imgs_num'] = count($match[1]);
+        }
+
+        $this->assign('headart', $headart);
+
 
         $request = Request::instance();
         $this->assign('act', $request->controller());
