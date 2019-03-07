@@ -33,7 +33,6 @@ class Index extends Controller
 
 	public function index1()
     {
-
         $aid = Request::instance()->param('aid');
 
         Cookie::set('aid',$aid);
@@ -120,6 +119,18 @@ class Index extends Controller
 
     	return view('index');
     }
+
+    //头条列表页
+    public function hartlist()
+    {
+
+    }
+    //头条详情页
+    public function hartdetail()
+    {
+
+    }
+
 	public function select()
 	{
 
