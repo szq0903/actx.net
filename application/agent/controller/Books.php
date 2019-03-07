@@ -11,13 +11,15 @@ use think\Controller;
 use think\Request;
 use think\Db;
 use think\Config;
-use app\index\model\Area;
+use app\index\model\Sysinfo;
 use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Book;
 use app\index\model\Category;
 use lib\Form;
 use think\Session;
+use app\agent\model\Cash_log;
+
 
 class Books extends Controller
 {
@@ -88,6 +90,7 @@ class Books extends Controller
      */
     public function add()
     {
+
         //是否为提交表单
         if (Request::instance()->isPost())
         {
@@ -99,6 +102,18 @@ class Books extends Controller
             $headart->aid = $this->aid;
             $headart->update = time();
             $headart->save();
+
+
+            //获取系统设置
+            $sysinfo = Sysinfo::get(1);
+            //添加商铺通讯录单价
+            $cash_log = new Cash_log;
+            $cash_log->aid = Session::get('id','agent');
+            $cash_log->msg = '添加商铺通讯录增加余额';
+            $cash_log->money =  $sysinfo['shopprice'];
+            $cash_log->addtime = time();
+            $cash_log->save();
+
             $this->success('添加成功！');
         }
 
