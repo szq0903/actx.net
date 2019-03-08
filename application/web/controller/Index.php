@@ -178,6 +178,7 @@ class Index extends Controller
     public function hartdetail()
     {
 
+        return view('hartdetail');
     }
 
 	public function select()
