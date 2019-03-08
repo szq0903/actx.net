@@ -121,10 +121,59 @@ class Index extends Controller
     }
 
     //头条列表页
-    public function hartlist()
+    public function hartlist($hid)
     {
+        $aid = Request::instance()->param('aid');
+
+        Cookie::set('aid',$aid);
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+
+        $headart = Headart::order('update','desc')->limit(6)->select();
+
+        foreach ($headart as $k=>$item) {
+            $headart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $headart[$k]['imgs'] = $match[1];
+            $headart[$k]['imgs_num'] = count($match[1]);
+        }
+
+        $this->assign('headart', $headart);
+        return view('hartlist');
+    }
+
+    //头条列表页
+    public function hartlistajax($hid, $pid)
+    {
+        $headart = Headart::order('update','desc')->limit(4)->select();
+        $data = array();
+        foreach ($headart as $k=>$item) {
+            $data[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $data[$k]['imgs'] = $match[1];
+            $data[$k]['imgs_num'] = count($match[1]);
+            $data[$k]['title'] = $item['title'];
+            $data[$k]['click'] = $item['click'];
+            $data[$k]['id'] = $item['id'];
+            $data[$k]['url'] = $item['id'];
+        }
+        //echo $hid.'   '.$pid ;
+        echo json_encode($data);
 
     }
+
     //头条详情页
     public function hartdetail()
     {
