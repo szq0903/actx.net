@@ -121,7 +121,7 @@ class Index extends Controller
     }
 
     //头条列表页
-    public function hartlist($hid)
+    public function hartlist()
     {
         $aid = Request::instance()->param('aid');
 
