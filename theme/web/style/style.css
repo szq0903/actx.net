@@ -505,3 +505,19 @@ a:hover{
     position: relative;
     font-size: .18rem;
 }
+.disclaimer_title {
+    font-size: 0.18rem;
+    color: #000;
+    height: 0.6rem;
+    text-align: center;
+    line-height: 1.6rem;
+    position: relative;
+    margin: 0 0.506667rem;
+    font-weight: bold;
+}
+
+
+
+
+
+

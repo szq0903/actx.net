@@ -181,6 +181,19 @@ class Index extends Controller
         return view('hartdetail');
     }
 
+    //免责声明
+    public function disclaimer()
+    {
+        return view('disclaimer');
+    }
+
+    //类目
+    public function category()
+    {
+        return view('category');
+    }
+
+
 	public function select()
 	{
 
