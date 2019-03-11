@@ -99,6 +99,7 @@ class Catearts extends Controller
 
             $cateart->aid = $this->aid;
             $cateart->mid = 0;
+            $cateart->recommend = 0;
             $cateart->update = time();
             $cateart->save();
             $this->success('添加成功！');
@@ -129,7 +130,7 @@ class Catearts extends Controller
             {
                 $val['vdefault'] = $carr;
                 $arr['html'] = $form->fieldToForm($val,'form-control','','3');
-            }elseif($val['fieldname'] == 'aid')
+            }elseif($val['fieldname'] == 'aid' ||  $val['fieldname'] == 'recommend')
             {
                 continue;
             }elseif($val['fieldname'] == 'body'){
@@ -208,7 +209,7 @@ class Catearts extends Controller
                 $val['vdefault'] = $carr;
                 $arr['html'] = $form->fieldToForm($val,'form-control','',$cateart->getData('cid'));
 
-            }elseif($val['fieldname'] == 'aid')
+            }elseif($val['fieldname'] == 'aid' ||  $val['fieldname'] == 'recommend')
             {
                 continue;
             }elseif ($val['fieldname'] == 'recommend')
