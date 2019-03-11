@@ -53,7 +53,7 @@ class Catearts extends Controller
     public function index(){
 
         // 查询数据集
-        $list = Cateart::where('aid','=',$this->aid)->order('rank')->paginate(10);;
+        $list = Cateart::where('aid','=',$this->aid)->order('update','desc')->paginate(10);;
         foreach ($list as $key=>$val)
         {
             $list[$key]['edit'] = url('agent/'.$this->mould->table.'s/edit',['id'=>$val['id']]);

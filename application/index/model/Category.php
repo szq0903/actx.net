@@ -32,6 +32,13 @@ class Category extends Model
         }
     }
 
+    public function getListByPid($pid)
+    {
+        $list = parent::where('pid','=',$pid)->order('rank')->select();
+        return $list;
+    }
+
+
 
     public function getTreeLevel($pid, &$sort,$str ='', &$level)
     {

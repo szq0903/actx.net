@@ -20,17 +20,12 @@
     <script src="/theme/web/js/swiper.min.js"></script>
 </head>
 <body>
-<nav class="hartlist_header">
-    <ul>
-        <li class="now"><span>推荐</span></li>
-        <li><span>视频</span></li>
-        <li><span>三农</span></li>
-        <li><span>本地</span></li>
-        <li><span>社会</span></li>
-        <li><span>生活</span></li>
-        <li><span>生活1</span></li>
-    </ul>
-</nav>
+<header id="site-header">
+    <div data-ga-event="全部行业">
+        <a id="goback" href="javascript:;" onclick="window.history.back(); return false;">返回</a>
+    </div>
+
+</header>
 <div class="nowlist">
     <div class="swiper-container">
         <div class="swiper-wrapper">
@@ -42,7 +37,7 @@
                         <div class="swiper-slide">
                             <div class="data-wrap">
                         {if $vo.imgs_num >= 3}
-                        <a class="data-item  multiple-img-item" href="/web/index/hartdetail/id/{$vo.id}">
+                        <a class="data-item  multiple-img-item" href="{$vo.id}">
                             <h3 class="item-title">{$vo.title}</h3>
                             <div class="item-imgs">
                                 {volist name="vo['imgs']" id="sub" length='3'}
@@ -57,7 +52,7 @@
                         </a>
                         {/if}
                         {if $vo.imgs_num < 3 && $vo.imgs_num > 0}
-                        <a class="data-item  single-img-item" href="/web/index/hartdetail/id/{$vo.id}">
+                        <a class="data-item  single-img-item" href="{$vo.id}">
                             <h3 class="item-title">{$vo.title}</h3>
                             <div class="item-imgs">
                                 <div class="img-item"><img class="lazy" src="{$vo.imgs.0}" style="opacity: 1;"></div>
@@ -73,7 +68,7 @@
                         </a>
                         {/if}
                         {if $vo.imgs_num == 0}
-                        <a class="data-item  default-item" href="/web/index/hartdetail/id/{$vo.id}">
+                        <a class="data-item  default-item" href="{$vo.id}">
                             <h3 class="item-title">{$vo.title}</h3>
                             <div class="item-media">
                                 <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>

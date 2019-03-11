@@ -14,6 +14,8 @@ use app\index\model\Member;
 use app\index\model\Comment;
 use app\index\model\Resume;
 use app\index\model\Headart;
+use app\index\model\Category;
+use app\index\model\Cateart;
 
 
 
@@ -24,12 +26,20 @@ class Index extends Controller
 {
 	public $title='爱臣同镇';
 	public $size =10;//每页数量
-
+    public $aid;
 	public function _initialize()
 	{
 
 	}
 
+    public function checkCookie()
+    {
+        $this->aid = Cookie::get('aid');
+        if (empty($this->aid))
+        {
+            header('location:' . url('/web/index/select'));exit;
+        }
+    }
 
 	public function index1()
     {
@@ -76,7 +86,6 @@ class Index extends Controller
     public function index()
     {
 		$aid = Request::instance()->param('aid');
-
 		Cookie::set('aid',$aid);
 		//处理地区
 		$area = Area::get($aid);
@@ -123,15 +132,14 @@ class Index extends Controller
     //头条列表页
     public function hartlist()
     {
-        $aid = Request::instance()->param('aid');
+        $this->checkCookie();
+        $aid = $this->aid;
 
-        Cookie::set('aid',$aid);
         //处理地区
         $area = Area::get($aid);
         $this->assign('area', $area);
 
-
-        $headart = Headart::order('update','desc')->limit(6)->select();
+        $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->order('update','desc')->limit($this->size)->select();
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
@@ -152,7 +160,9 @@ class Index extends Controller
     //头条列表页
     public function hartlistajax($hid, $pid)
     {
-        $headart = Headart::order('update','desc')->limit(4)->select();
+        $this->checkCookie();
+        $aid = $this->aid;
+        $headart = Headart::whereOr('aid', $aid)->whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->site, 10)->select();
         $data = array();
         foreach ($headart as $k=>$item) {
             $data[$k]['update'] = time_tran($item['update']);
@@ -167,17 +177,27 @@ class Index extends Controller
             $data[$k]['title'] = $item['title'];
             $data[$k]['click'] = $item['click'];
             $data[$k]['id'] = $item['id'];
-            $data[$k]['url'] = $item['id'];
+            $data[$k]['url'] = '/web/index/hartdetail/id/'.$item['id'];
         }
         //echo $hid.'   '.$pid ;
         echo json_encode($data);
-
     }
 
     //头条详情页
-    public function hartdetail()
+    public function hartdetail($id=0)
     {
+        $this->checkCookie();
 
+        $headart = Headart::get(['id' => $id, 'aid'=>$this->aid]);
+
+
+        //判断模型是否存在
+        if(empty($headart))
+        {
+            $this->error('要查看的头条的不存在');
+        }
+        $headart['update'] = time_tran($headart['update']);
+        $this->assign('temp', $headart);
         return view('hartdetail');
     }
 
@@ -188,9 +208,49 @@ class Index extends Controller
     }
 
     //类目
-    public function category()
+    public function category($id=0, $level=0)
     {
+
+        $psort = new Category();
+        if($id==0)
+        {
+            $list = $psort->getListByPid($id);
+        }else{
+            $list = Category::all($id);
+        }
+        foreach ($list as $key=>$val)
+        {
+            $list[$key]['suplist'] = $psort->getListByPid($val['id']);
+        }
+        $this->assign('list', $list);
+        $this->assign('level', $level);
+
         return view('category');
+    }
+
+    public function catlist($cid=0)
+    {
+        $aid = Request::instance()->param('aid');
+        Cookie::set('aid',$aid);
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        $cateart = Cateart::where('cid','=',$cid)->order('update','desc')->limit(6)->select();
+
+        foreach ($cateart as $k=>$item) {
+            $cateart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateart[$k]['imgs'] = $match[1];
+            $cateart[$k]['imgs_num'] = count($match[1]);
+        }
+        $this->assign('headart', $cateart);
+        return view('catlist');
     }
 
 
