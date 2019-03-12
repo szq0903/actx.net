@@ -14,6 +14,7 @@ use app\index\model\Member;
 use app\index\model\Comment;
 use app\index\model\Resume;
 use app\index\model\Headart;
+use app\index\model\Headsort;
 use app\index\model\Category;
 use app\index\model\Cateart;
 
@@ -130,7 +131,7 @@ class Index extends Controller
     }
 
     //头条列表页
-    public function hartlist()
+    public function hartlist($sid=0)
     {
         $this->checkCookie();
         $aid = $this->aid;
@@ -139,7 +140,18 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
-        $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->order('update','desc')->limit($this->size)->select();
+
+        $headsort = Headsort::all();
+        $this->assign('headsort', $headsort);
+        $this->assign('sid', $sid);
+
+        if($sid==0)
+        {
+            $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->order('update','desc')->limit($this->size)->select();
+        }else{
+            $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->where('sid', $sid)->order('update','desc')->limit($this->size)->select();
+        }
+
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
@@ -162,7 +174,9 @@ class Index extends Controller
     {
         $this->checkCookie();
         $aid = $this->aid;
-        $headart = Headart::whereOr('aid', $aid)->whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->site, 10)->select();
+
+
+        $headart = Headart::whereOr('aid', $aid)->whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->size, 10)->select();
         $data = array();
         foreach ($headart as $k=>$item) {
             $data[$k]['update'] = time_tran($item['update']);
@@ -187,7 +201,8 @@ class Index extends Controller
     public function hartdetail($id=0)
     {
         $this->checkCookie();
-
+        $agent = Agent::get(['aid'=>$this->aid]);
+        print_r($agent);
         $headart = Headart::get(['id' => $id, 'aid'=>$this->aid]);
 
 

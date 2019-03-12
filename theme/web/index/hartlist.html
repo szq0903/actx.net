@@ -22,20 +22,17 @@
 <body>
 <nav class="hartlist_header">
     <ul>
-        <li class="now"><span>推荐</span></li>
-        <li><span>视频</span></li>
-        <li><span>三农</span></li>
-        <li><span>本地</span></li>
-        <li><span>社会</span></li>
-        <li><span>生活</span></li>
-        <li><span>生活1</span></li>
+        {volist name='headsort' id='vo'}
+        <li{if $sid == $vo.id} class="now"{/if}><a href="/web/index/hartlist/sid/{$vo.id}">{$vo.name}</a></li>
+        {/volist}
+
     </ul>
 </nav>
 <div class="nowlist">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide blue-slide">
-                <div class="swiper-nei" data-hid="1" data-pid="1">
+                <div class="swiper-nei" data-hid="{$sid}" data-pid="1">
                     <div class="swiper-wrapper">
                         <div class="refresh">释放刷新</div>
                         {volist name="headart" id="vo"}
