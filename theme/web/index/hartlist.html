@@ -93,83 +93,85 @@
 
 
 <script>
-refreshEnd = false;
-times = 0;//加载次数
-oriSpeed = 300
-var swiper = new Swiper('.swiper-nei', {
-  speed: oriSpeed,
-  slidesPerView: 'auto',
-  freeMode: true,
-  direction: 'vertical',
-  setWrapperSize: true,
-  observer:true,
-  observerParents:true,
-  on: {
-    //下拉释放刷新
-    touchEnd: function () {
-
-      var pid = this.$el.data('pid')
-      var hid = this.$el.data('hid')
-      //console.log('类目id=' + hid + '   页数id=' + pid)
-      this.$el.data('pid', Number(pid)+1)
-      swiper = this
-      refreshText = swiper.$el.find('.refresh')
-      swiper.setTransition(this.params.speed);
-      swiper.setTranslate(100);
-      swiper.touchEventsData.isTouched = false;//跳过touchEnd事件后面的跳转(4.0.5)
-      refreshText.html('刷新中')
-
-      swiper.allowTouchMove = false;
-
-      $.get("/web/index/hartlistajax/hid/"+ hid +"/pid/"+pid,function(data,status){
-        var list = JSON.parse(data)
-        $.each(list, function(i,val){
-          var html = ''
-          html ='<div class="swiper-slide">\n' +
-              '    <div class="data-wrap">'
-
-          if (val.imgs_num >= 3) {
-            html += '<a class="data-item  multiple-img-item" href="'+val.url+'">\n' +
-              '\t<h3 class="item-title">'+val.title+'</h3>\n' +
-              '    <div class="item-imgs">'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[1]+'" style="opacity: 1;"></div>'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[2]+'" style="opacity: 1;"></div>'
-
-          }else if (val.imgs_num >0){
-            html += '<a class="data-item  single-img-item" href="'+val.url+'">\n' +
-              '\t<h3 class="item-title">'+val.title+'</h3>\n' +
-              '\t<div class="item-imgs">\n' +
-              '        <div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
-          }else{
-            html += '<a class="data-item  default-item" href="'+val.url+'">\n' +
-              '    <h3 class="item-title">'+val.title+'</h3>'+
-              '\t<div class="item-imgs">\n'
-          }
-          html += '</div>\n' +
-            '    <div class="item-media">\n' +
-            '\t\t<span class="author" style="display:none">'+val.title+'</span>\n' +
-            '        <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">'+val.click+'</span></div>\n' +
-            '        <span class="media-time">'+ val.update +'</span>\n' +
-            '    </div>\n' +
-            '</a>'
-          html += '</div>\n' +
-              '                        </div>'
-
-          swiper.appendSlide(html)
-        });
-        refreshText.html('刷新完成');
-        refreshEnd = true;
-      });
-    },
-    touchStart: function () {
-      if (refreshEnd == true) {
-        this.$el.find('.refresh').html('释放刷新');
+    $(document).ready(function(){
         refreshEnd = false;
-      }
-    },
-  }
-});
+        times = 0;//加载次数
+        oriSpeed = 300
+        var swiper = new Swiper('.swiper-nei', {
+          speed: oriSpeed,
+          slidesPerView: 'auto',
+          freeMode: true,
+          direction: 'vertical',
+          setWrapperSize: true,
+          observer:true,
+          observerParents:true,
+          on: {
+            //下拉释放刷新
+            touchEnd: function () {
+
+              var pid = this.$el.data('pid')
+              var hid = this.$el.data('hid')
+              //console.log('类目id=' + hid + '   页数id=' + pid)
+              this.$el.data('pid', Number(pid)+1)
+              swiper = this
+              refreshText = swiper.$el.find('.refresh')
+              swiper.setTransition(this.params.speed);
+              swiper.setTranslate(100);
+              swiper.touchEventsData.isTouched = false;//跳过touchEnd事件后面的跳转(4.0.5)
+              refreshText.html('刷新中')
+
+              swiper.allowTouchMove = false;
+
+              $.get("/web/index/hartlistajax/hid/"+ hid +"/pid/"+pid,function(data,status){
+                var list = JSON.parse(data)
+                $.each(list, function(i,val){
+                  var html = ''
+                  html ='<div class="swiper-slide">\n' +
+                      '    <div class="data-wrap">'
+
+                  if (val.imgs_num >= 3) {
+                    html += '<a class="data-item  multiple-img-item" href="'+val.url+'">\n' +
+                      '\t<h3 class="item-title">'+val.title+'</h3>\n' +
+                      '    <div class="item-imgs">'
+                    html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
+                    html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[1]+'" style="opacity: 1;"></div>'
+                    html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[2]+'" style="opacity: 1;"></div>'
+
+                  }else if (val.imgs_num >0){
+                    html += '<a class="data-item  single-img-item" href="'+val.url+'">\n' +
+                      '\t<h3 class="item-title">'+val.title+'</h3>\n' +
+                      '\t<div class="item-imgs">\n' +
+                      '        <div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
+                  }else{
+                    html += '<a class="data-item  default-item" href="'+val.url+'">\n' +
+                      '    <h3 class="item-title">'+val.title+'</h3>'+
+                      '\t<div class="item-imgs">\n'
+                  }
+                  html += '</div>\n' +
+                    '    <div class="item-media">\n' +
+                    '\t\t<span class="author" style="display:none">'+val.title+'</span>\n' +
+                    '        <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">'+val.click+'</span></div>\n' +
+                    '        <span class="media-time">'+ val.update +'</span>\n' +
+                    '    </div>\n' +
+                    '</a>'
+                  html += '</div>\n' +
+                      '                        </div>'
+
+                  swiper.appendSlide(html)
+                });
+                refreshText.html('刷新完成');
+                refreshEnd = true;
+              });
+            },
+            touchStart: function () {
+              if (refreshEnd == true) {
+                this.$el.find('.refresh').html('释放刷新');
+                refreshEnd = false;
+              }
+            },
+          }
+        });
+    });
 </script>
 
 <div class="footBar">

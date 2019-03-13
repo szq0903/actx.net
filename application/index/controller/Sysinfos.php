@@ -60,6 +60,7 @@ class Sysinfos extends Controller
             $sysinfo->er     = Request::instance()->post('er');
             $sysinfo->p_number = Request::instance()->post('p_number');
             $sysinfo->shopprice = Request::instance()->post('shopprice');
+            $sysinfo->headline = Request::instance()->post('headline');
 			$sysinfo->save();
 			$this->success('修改成功！');
 

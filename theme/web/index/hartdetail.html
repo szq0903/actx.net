@@ -55,7 +55,7 @@
         <div class="tip"><div>长按二维码，加站长微信，免费发信息</div></div>
         <div class="down"></div>
         <div class="zz_qr">
-            <img src="//pic1.58cdn.com.cn/images/xq_img/n_v289b7db75fbe2481080bf081dcbb92394.jpg">
+            <img src="{$agent.qcode}">
         </div>
     </div>
 
@@ -77,8 +77,11 @@
 <script>
 $(document).ready(function(){
   $("#notice").click(function(){
-    window.open('/web/index/disclaimer');
+      location.href = '/web/index/disclaimer';
   });
+  $("#complaint").click(function(){
+      location.href = '/web/index/complaint';
+   });
 });
 </script>
 

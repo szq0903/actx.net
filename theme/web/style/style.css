@@ -490,10 +490,10 @@ a:hover{
     margin: .11rem auto;
 }
 .qr-wrap .zz_qr {
-    height: 1.07rem;
+    height: 1.6rem;
 }
 .qr-wrap .zz_qr img {
-    width: 1.07rem;
+    width: 1.6rem;
     height: 100%;
 }
 .section-wrap {
@@ -650,5 +650,66 @@ a:hover{
     position: static;
     margin: 0 auto;
 }
+.toptg {
+    height: .28rem;
+    font-size: .18rem;
+    background: #1b8cf2;
+    display: flex;
+    justify-content: space-around;
+}
+.toptg span {
+    font-size: .18rem;
+    font-weight: bold;
+    line-height: .28rem;
+    color: #ffffff;
+
+}
+.tgtop {
+    height: .75rem;
+    background: red;
+    display: flex;
+}
+.tgtop .tgtop_l {
+    width: 30%;
+}
+.tgtop .tgtop_l img {
+    width: .90rem;
+    margin: .07rem .08rem;
+}
+.tgtop .tgtop_r {
+    width: 70%;
+    line-height: .42rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.tgtop .tgtop_r a {
+    font-size: .20rem;
+    font-family:”Microsoft YaHei”;
+    font-weight: bold;
+    line-height: .2rem;
+    padding: .04rem .15rem;
+    margin: .08rem 0;
+    border-radius: .20rem;
+    background: #fcb408;
+}
+.tgtop .tgtop_r p {
+
+}
+.tgtop .tgtop_r p span {
+    font-size: 16px;
+    color: #ffffff;
+    transform: scale(0.5);
+    transform-origin: 0% 0%;
+}
+
+
+
+
+
+
+
+
 
 

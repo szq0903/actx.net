@@ -23,6 +23,7 @@ html {
 }
 body {
 	line-height: 16px;
+	font-family: "PingFang SC",Tahoma,Arial,Roboto,"Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC",sans-self,"hiraginosansgb w3";
 }
 ol, ul {
 	list-style: none;

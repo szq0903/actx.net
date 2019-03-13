@@ -17,7 +17,10 @@ use app\index\model\Headart;
 use app\index\model\Headsort;
 use app\index\model\Category;
 use app\index\model\Cateart;
-
+use app\index\model\Field;
+use app\index\model\Mould;
+use app\index\model\Complaint;
+use lib\Form;
 
 
 
@@ -51,6 +54,7 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
+        //系统配置
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
 
@@ -84,13 +88,22 @@ class Index extends Controller
 	 * 系统首页
 	 * @return \think\response\View
 	 */
-    public function index()
+    public function index($aid=0)
     {
+
 		$aid = Request::instance()->param('aid');
 		Cookie::set('aid',$aid);
 		//处理地区
 		$area = Area::get($aid);
 		$this->assign('area', $area);
+
+        //系统配置
+        $sysinfo = Sysinfo::get(1);
+        $this->assign('sysinfo', $sysinfo);
+
+        //头条
+        $headart = Headart::order('update','desc')->limit(6)->select();
+        $this->assign('headart', $headart);
 
 		//代理二维码
 		$agent = Agent::get(['aid' => $aid]);
@@ -128,6 +141,22 @@ class Index extends Controller
     	$this->assign('title','系统首页-'.$this->title);
 
     	return view('index');
+    }
+
+    public function index2()
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        $request = Request::instance();
+        $this->assign('act', $request->controller());
+
+        $this->assign('title','系统首页-'.$this->title);
+
+        return view('index2');
     }
 
     //头条列表页
@@ -202,7 +231,7 @@ class Index extends Controller
     {
         $this->checkCookie();
         $agent = Agent::get(['aid'=>$this->aid]);
-        print_r($agent);
+        $this->assign('agent', $agent);
         $headart = Headart::get(['id' => $id, 'aid'=>$this->aid]);
 
 
@@ -214,6 +243,45 @@ class Index extends Controller
         $headart['update'] = time_tran($headart['update']);
         $this->assign('temp', $headart);
         return view('hartdetail');
+    }
+
+    //投诉
+    public function complaint()
+    {
+        //预定义模块
+        $mould= Mould::get(['table'=>'complaint']);
+        $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $complaint           = new Complaint();
+            foreach ($field as $val)
+            {
+                $complaint->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+            }
+            $complaint->update = time();
+            $complaint->save();
+            $this->success('添加成功！');
+        }
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        foreach ($field as $val)
+        {
+            if($val['ishide'] ==1)//隐藏时跳过本次
+            {
+                continue;
+            }
+            $arr['html'] = $form->fieldToForm($val,'form-control');
+            $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
+
+            $formhtml[] = $arr;
+        }
+        $this->assign('formhtml',$formhtml);
+        return view('complaint');
     }
 
     //免责声明
@@ -272,14 +340,16 @@ class Index extends Controller
 	public function select()
 	{
 
-		if(Cookie::get('aid') && empty(Request::instance()->param('aid')))
+		if(Cookie::get('aid'))
 		{
-			//echo $aid = Cookie::get('aid');exit;
-			$aid = Cookie::get('aid');
-			$this->redirect('/web/index/index/aid/'.$aid);
-		}
 
-		$aid = Request::instance()->param('aid');
+			echo $aid = Cookie::get('aid');
+			//$this->redirect('/web/index/index/aid/'.$aid);
+		}elseif (!empty(Request::instance()->param('aid')))
+        {
+            $aid = Request::instance()->param('aid');
+        }
+
 
 		if(!empty($aid))
 		{

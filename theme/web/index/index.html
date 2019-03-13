@@ -14,6 +14,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link href="/theme/web/style/tongzhencenter.css" rel="stylesheet">
+	<link rel="stylesheet" href="/theme/web/style/swiper.min.css">
+	<script src="/theme/web/js/swiper.min.js"></script>
 </head>
 <body>
 
@@ -62,15 +64,33 @@
 		</div>
 		<div class="swipe-tip-con"><span class="on"></span><span class=""></span></div>
 	</div>
-	<!--<div class="headlines-con" style="display: none;">
+	<div class="headlines-con">
 		<div class="headlines-image"></div>
-		<div class="headlines-detail">
-			<li>“100%满意”的测评透着多少虚假形式</li>
-			<li>站队新零售？退出房地产？万达集团出面否认</li>
+		<div class="headlines-detail swiper-container">
+			<div class="swiper-wrapper">
+				{volist name='headart' id='vo'}
+				<li class="swiper-slide">{$vo.title}</li>
+				{/volist}
+			</div>
 		</div>
-	</div>-->
+	</div>
 </div>
-
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        direction: 'vertical',
+        slidesPerView: 2,
+        slidesPerGroup : 2,
+        spaceBetween: 0,
+        mousewheel: true,
+        loop : true,
+        autoplay: {
+            delay: 1000 * {$sysinfo.headline},
+            stopOnLastSlide: false,
+            disableOnInteraction: true,
+        }
+    });
+</script>
 <div class="newest-con">
 	<div class="newest-head onepx">{$area.name}最新信息<span class="newest-num">(共{$count}条)</span></div>
 	<ul class="info-con">
@@ -95,7 +115,6 @@
 <script src="/theme/web/js/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
-		
 		var cw = document.body.clientWidth;
 		$('html').css('font-size',cw/10);
 		var topheight = $("#head-wrap").height();
@@ -110,7 +129,6 @@
 			}
 			
 			if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
-     
 				//到达底部获取json数组
 				$.get("/web/index/getData/sid/0/aid/{$area.id}/page/"+page,function(data,status){
 					if(data !='')
