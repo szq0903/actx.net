@@ -151,6 +151,14 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
+        //顶级类目
+        $category = Category::all(['pid'=>0]);
+        $this->assign('category', $category);
+
+        //头条
+        $headart = Headart::order('update','desc')->limit(6)->select();
+        $this->assign('headart', $headart);
+
         $request = Request::instance();
         $this->assign('act', $request->controller());
 

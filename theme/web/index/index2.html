@@ -1,49 +1,114 @@
 <!doctype html>
 <html lang="en" data-dpr="1" style="font-size: 42.5px;">
 <head>
-<meta charset="UTF-8">
-<title>爱臣同乡-{$area.name}</title>
-<meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-<meta name="Description" content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
-<meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-<meta http-equiv="Content-Type" content="text/html;">
-<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
-<meta name="format-detection" content="telephone=no">
-<meta name="format-detection" content="email=no">
-<meta name="format-detection" content="address=no;">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link href="/theme/web/style/tongzhencenter.css" rel="stylesheet">
-	<link rel="stylesheet" href="/theme/web/style/swiper.min.css">
-	<link href="/theme/web/style/reset.css" rel="stylesheet">
-	<link href="/theme/web/style/style.css" rel="stylesheet">
-	<script src="/theme/web/js/swiper.min.js"></script>
+    <meta charset="UTF-8">
+    <title>爱臣同乡-{$area.name}</title>
+    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
+    <meta name="Description"
+          content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
+    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
+    <meta http-equiv="Content-Type" content="text/html;">
+    <meta name="viewport"
+          content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="address=no;">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="/theme/web/style/tongzhencenter.css" rel="stylesheet">
+    <link rel="stylesheet" href="/theme/web/style/swiper.min.css">
+    <link href="/theme/web/style/reset.css" rel="stylesheet">
+    <link href="/theme/web/style/style.css" rel="stylesheet">
+    <script src="/theme/web/js/swiper.min.js"></script>
 </head>
 <body>
 
 <div class="toptg">
-	<span>找产品</span>
-	<span>招商家</span>
-	<span>找工作</span>
-	<span>找展会</span>
+    <span>找产品</span>
+    <span>招商家</span>
+    <span>找工作</span>
+    <span>找展会</span>
 </div>
 <div class="tgtop">
-	<div class="tgtop_l">
-		<img src="/theme/web/images/tg_logo.jpg">
-	</div>
-	<div class="tgtop_r">
-		<a href="#">周边留言</a>
-		<a href="#">+ 关注</a>
-		<p><span>有效提升企业品牌的影响力，让您的招商信息精准抵达全国目标客户</span></p>
-	</div>
+    <div class="tgtop_l">
+        <img src="/theme/web/images/tg_logo1.jpg">
+    </div>
+    <div class="tgtop_r">
+        <a href="#">周边留言</a>
+        <a href="#">+ 关注</a>
+        <div class="tg_info"><p>有效提升企业品牌的影响力，让您的招商信息精准抵达全国目标客户</p></div>
+    </div>
+</div>
+
+<div class="c_list" >
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {volist name="category" id="vo"}
+            <div class="swiper-slide">
+                <div class="c_icon">
+                    <img src="{$vo.icon}">
+                </div>
+                <p>{$vo.name}</p>
+            </div>
+            {/volist}
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
 
 </div>
+
+<div class="zbly">
+    <div class="zblylines-con">
+        <div class="zblylines-image"></div>
+        <div class="zblylines-detail swiper-container1">
+            <div class="swiper-wrapper">
+                {volist name='headart' id='vo'}
+                <li class="swiper-slide">{$vo.title}</li>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+var swiperh = new Swiper('.swiper-container1', {
+  direction: 'vertical',
+  slidesPerView: 2,
+  slidesPerGroup: 1,
+  spaceBetween: 0,
+  mousewheel: true,
+  loop: true,
+  autoplay: {
+    delay: 1000 * 3,
+    stopOnLastSlide: false,
+    disableOnInteraction: true,
+  }
+});
+
+var swiper = new Swiper('.swiper-container', {
+  slidesPerView: 2,
+  slidesPerGroup: 2,
+  slidesPerColumn: 2,
+  spaceBetween: 15,
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+});
+
+
+
+</script>
+
+
 <div class="footBar">
-	<ul class="footBtn">
-		<li class="indexBtn_hd indexBtn_on_hd"><a href="#"><i></i>首页</a></li>
-		<li class="publishBtn_hd"><a href="#"><i></i>招商发布</a></li>
-		<li class="userBtn_hd"><a href="#"><i></i>我的</a></li>
-	</ul>
+    <ul class="footBtn">
+        <li class="indexBtn_hd indexBtn_on_hd"><a href="#"><i></i>首页</a></li>
+        <li class="publishBtn_hd"><a href="#"><i></i>招商发布</a></li>
+        <li class="userBtn_hd"><a href="#"><i></i>我的</a></li>
+    </ul>
 </div>
 <script src="/theme/web/js/jquery.min.js"></script>
 <script src="/theme/web/js/rem.js"></script>
