@@ -765,7 +765,7 @@ a:hover{
     padding-left: .1rem;
     color: #888;
     font-size: 13px;
-    line-height: 24px;
+    line-height: .24rem;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -785,8 +785,8 @@ a:hover{
 .xx_list {
     height: 100%;
     padding: 0;
-    box-sizing: border-box;
     position: relative;
+    padding-bottom: .55rem;
 }
 .xx_list .swiper-container2 {
     width: 100%;
@@ -800,7 +800,7 @@ a:hover{
 }
 .xx_list .swiper-slide {
     text-align: center;
-    font-size: 18px;
+    font-size: .18rem;
     background: #fff;
     height: 1.1rem;
     line-height: 1.1rem;
@@ -826,11 +826,11 @@ a:hover{
     width:100%;}
 .xx_list .loadmore{
     position:absolute;
-    line-height:20px;
-    top:100%;
+    line-height: .2rem;
+    top: inherit;
     text-align:center;
     width:100%;
-    font-size: 18px;
+    font-size: .18rem;
 }
 .tginfo-item {
     position: relative;
@@ -856,6 +856,7 @@ a:hover{
     line-height: .21rem;
     word-break: break-all;
     font-weight: 400;
+    text-align: left;
 }
 .tginfo-item .tginfo-detail .tginfo-msg {
     position: relative;
@@ -920,12 +921,12 @@ a:hover{
 }
 .tginfo-item .tginfo-detail .tginfo-title span {
     display: inline-block;
-    height: .37333rem;
-    width: .37333rem;
-    margin-right: .10667rem;
+    height: .15rem;
+    width: .15rem;
+    margin-right: .04rem;
     vertical-align: -2px;
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAeFBMVEUAAAD/Vi//VzD/VS//VS//VS7/VS7/XDL/VS7/VS7/VS//Vi7/Vi//Vi//VjD/VS//Vi7/VS//Wjn/VS7/WC//Vi//VS//VjD/XTj/VS//VS7/Vi//VTD/VS7/VTD/VTH/WDX/ZjP/Wjz/VVX/Vi//Vi//WjH/VS5lhMmNAAAAJ3RSTlMAyhr7k97nGOPXYKZ3Rzuug2wR9imhekEN6dGnWlI0Lh0KCAaSfB9ablEPAAAA2klEQVQoz73Ty3aDIBSF4S1GUNRAiBpzv7Xd7/+GFUmarqVkmH8Ag2+6DyBKyZlkKQaTlcJMqpICZYVIVQmpYqgkCOhFSNeLVxqgR8OQ+ear/QOdECLdCeF6MWSp/ecCjqUJHn3xDN8Ea611wtXwHqeY8Fk2g9tlKJvDHGgOCigiuGL9cbQ8x9HwGsciRxQ33EfwdkXCRrUCmCJ6wxYH5qf/eOeIdUHTA8f1evPExnYlW7guY2rhW45KSIUfkrsTbtnWXhCq0w5KjtNUymHocsdfjZ/m21G/PYdff5gdtM7/xzwAAAAASUVORK5CYII=) 50% no-repeat;
-    background-size: .37333rem auto
+    background-size: .15rem auto
 }
 
 

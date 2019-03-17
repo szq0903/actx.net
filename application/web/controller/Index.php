@@ -155,9 +155,31 @@ class Index extends Controller
         $category = Category::all(['pid'=>0]);
         $this->assign('category', $category);
 
+
         //头条
         $headart = Headart::order('update','desc')->limit(6)->select();
         $this->assign('headart', $headart);
+
+        //类目信息
+        $cateart1 =  Cateart::where('aid', $aid)->order('update','desc')->limit(10)->select();
+        $cateart = array();
+        foreach ($cateart1 as $k=>$item) {
+            $cateart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateart[$k]['cid'] = $item['cid'];
+            $cateart[$k]['imgs'] = $match[1];
+            $cateart[$k]['imgs_num'] = count($match[1]);
+            $cateart[$k]['title'] = $item['title'];
+            $cateart[$k]['click'] = $item['click'];
+            $cateart[$k]['id'] = $item['id'];
+            $cateart[$k]['url'] = '/web/index/hartdetail/id/'.$item['id'];
+        }
+        $this->assign('cateart', $cateart);
 
         $request = Request::instance();
         $this->assign('act', $request->controller());
@@ -165,6 +187,66 @@ class Index extends Controller
         $this->assign('title','系统首页-'.$this->title);
 
         return view('index2');
+    }
+
+    public function cartList($cid =0)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+
+        $temp = Cateart::get($cid);
+        $this->assign('temp', $temp);
+        $cateart = Cateart::where('cid','=',$cid)->order('update','desc')->limit(6)->select();
+
+        foreach ($cateart as $k=>$item) {
+            $cateart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateart[$k]['imgs'] = $match[1];
+            $cateart[$k]['imgs_num'] = count($match[1]);
+        }
+        $this->assign('headart', $cateart);
+        return view('catlist');
+    }
+    //加载类目信息
+    public function cartListAjax($cid, $pid)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        if($cid == 0) {
+            $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,10)->select();
+        }else{
+            $cateart =  Cateart::whereOr('aid', $aid)->whereOr('cid', $cid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+        }
+
+        $data = array();
+        foreach ($cateart as $k=>$item) {
+            $data[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $data[$k]['cid'] = $item['cid'];
+            $data[$k]['imgs'] = $match[1];
+            $data[$k]['imgs_num'] = count($match[1]);
+            $data[$k]['title'] = $item['title'];
+            $data[$k]['click'] = $item['click'];
+            $data[$k]['id'] = $item['id'];
+            $data[$k]['url'] = '/web/index/hartdetail/id/'.$item['id'];
+        }
+        echo json_encode($data);
     }
 
     //头条列表页
@@ -319,30 +401,6 @@ class Index extends Controller
         return view('category');
     }
 
-    public function catlist($cid=0)
-    {
-        $aid = Request::instance()->param('aid');
-        Cookie::set('aid',$aid);
-        //处理地区
-        $area = Area::get($aid);
-        $this->assign('area', $area);
-
-        $cateart = Cateart::where('cid','=',$cid)->order('update','desc')->limit(6)->select();
-
-        foreach ($cateart as $k=>$item) {
-            $cateart[$k]['update'] = time_tran($item['update']);
-            $match = array();
-            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
-            foreach ($match[1] as $key=>$val)
-            {
-                $match[1][$key] = str_replace('"',"",$val);
-            }
-            $cateart[$k]['imgs'] = $match[1];
-            $cateart[$k]['imgs_num'] = count($match[1]);
-        }
-        $this->assign('headart', $cateart);
-        return view('catlist');
-    }
 
 
 	public function select()

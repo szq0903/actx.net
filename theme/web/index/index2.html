@@ -35,7 +35,7 @@
 </div>
 <div class="tgtop">
     <div class="tgtop_l">
-        <img src="/theme/web/images/tg_logo1.jpg">
+        <img src="/theme/web/images/tg_logo.jpg">
     </div>
     <div class="tgtop_r">
         <a href="#">周边留言</a>
@@ -49,7 +49,7 @@
         <div class="swiper-wrapper">
             {volist name="category" id="vo"}
             <div class="swiper-slide">
-                <div class="c_icon">
+                <div class="c_icon" data-cid="{$vo.id}">
                     <img src="{$vo.icon}">
                 </div>
                 <p>{$vo.name}</p>
@@ -104,138 +104,34 @@
 </script>
 
 <div class="xx_list">
-    <div class="swiper-container2">
-
+    <div class="swiper-container2" data-cid="0" data-pid="1">
         <div class="swiper-wrapper">
             <div class="refresh">释放刷新</div>
+
+
+            {volist name="cateart" id="vo"}
             <div class="swiper-slide">
-                <li class="tginfo-item" data-tginfoid="972998239611940864">
+                <li class="tginfo-item" data-tginfoid="{$vo.id}">
                     <div class="tginfo-detail">
-                        <h3 class="tginfo-title">2500招聘女装内衣网店打包发货的细心女士，年龄40以下，别墅办公环境优美！</h3>
+                        <h3 class="tginfo-title">{$vo.title}</h3>
                         <div class="tginfo-msg">
-                            <span class="tginfo-cate left">招聘</span>
-                            <span class="tginfo-time left">50分钟前</span>
+                            <span class="tginfo-cate left">{$vo.cid}</span>
+                            <span class="tginfo-time left">{$vo.update}</span>
                         </div>
                     </div>
+                    {if $vo.imgs_num > 0}
                     <div class="tginfo-image">
-                        <img src="//pic2.58cdn.com.cn/images/xq_img/n_v212140d6d2a7e4e1faad7a0d4d8404ff3.jpg?w=130&amp;watermark=1">
+                        <img src="{$vo.imgs.0}">
                     </div>
+                    {/if}
                 </li>
             </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972982566504509440">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">琅琊镇驻地，3楼整体出租面积500平米，适合做服装加工车间，辅导班，瑜伽班，各种培训班……，内有5个单间，可根据客户需求</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">房屋出租</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972987227198349312">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">3800低价出售06年八座五菱之光，车况精品，原版原版，个人一手车，非诚勿扰</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">车辆出售</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image"><img src="//pic2.58cdn.com.cn/images/xq_img/n_v297cdbc23a51e4f959464b86684f78f53.jpg?w=130&amp;watermark=1"></div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-tginfoid="972998239611940864">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">2500招聘女装内衣网店打包发货的细心女士，年龄40以下，别墅办公环境优美！</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">招聘</span>
-                            <span class="tginfo-time left">50分钟前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image">
-                        <img src="//pic2.58cdn.com.cn/images/xq_img/n_v212140d6d2a7e4e1faad7a0d4d8404ff3.jpg?w=130&amp;watermark=1">
-                    </div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972982566504509440">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">琅琊镇驻地，3楼整体出租面积500平米，适合做服装加工车间，辅导班，瑜伽班，各种培训班……，内有5个单间，可根据客户需求</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">房屋出租</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972987227198349312">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">3800低价出售06年八座五菱之光，车况精品，原版原版，个人一手车，非诚勿扰</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">车辆出售</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image"><img src="//pic2.58cdn.com.cn/images/xq_img/n_v297cdbc23a51e4f959464b86684f78f53.jpg?w=130&amp;watermark=1"></div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-tginfoid="972998239611940864">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">2500招聘女装内衣网店打包发货的细心女士，年龄40以下，别墅办公环境优美！</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">招聘</span>
-                            <span class="tginfo-time left">50分钟前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image">
-                        <img src="//pic2.58cdn.com.cn/images/xq_img/n_v212140d6d2a7e4e1faad7a0d4d8404ff3.jpg?w=130&amp;watermark=1">
-                    </div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972982566504509440">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">琅琊镇驻地，3楼整体出租面积500平米，适合做服装加工车间，辅导班，瑜伽班，各种培训班……，内有5个单间，可根据客户需求</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">房屋出租</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972987227198349312">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title">3800低价出售06年八座五菱之光，车况精品，原版原版，个人一手车，非诚勿扰</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">车辆出售</span>
-                            <span class="tginfo-time left">1小时前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image"><img src="//pic2.58cdn.com.cn/images/xq_img/n_v297cdbc23a51e4f959464b86684f78f53.jpg?w=130&amp;watermark=1"></div>
-                </li>
-            </div>
-            <div class="swiper-slide">
-                <li class="tginfo-item" data-infoid="972965695633887232">
-                    <div class="tginfo-detail">
-                        <h3 class="tginfo-title"><span></span>好消息!好消息！！！3月16号―18号仅此三天，数量只有20套，格力大1.5匹变频空调2499元，2499!2499!抓</h3>
-                        <div class="tginfo-msg">
-                            <span class="tginfo-cate left">出售</span>
-                            <span class="tginfo-time left">2小时前</span>
-                        </div>
-                    </div>
-                    <div class="tginfo-image"><img src="//pic2.58cdn.com.cn/images/xq_img/n_v221e6d95467194998b10a11afdb8b52d4.jpg?w=130&amp;watermark=1"></div>
-                </li>
-            </div>
+            {/volist}
+
             <div class="loadmore">加载更多</div>
         </div>
         <div class="swiper-scrollbar2"></div>
     </div>
-
 </div>
 
 
@@ -245,7 +141,7 @@
     oriSpeed=300
     var swiper2 = new Swiper('.swiper-container2',{
         speed: oriSpeed,
-        slidesPerView: 'auto',
+        slidesPerView: 5,
         freeMode: true,
         direction: 'vertical',
         setWrapperSize: true,
@@ -263,19 +159,39 @@
                 //console.log('translate    ' + swiper.translate)
                 //console.log('_viewHeight    ' + _viewHeight)
                 //console.log('_contentHeight    ' + _contentHeight)
-                //console.log(_contentHeight - _viewHeight)
-                if(swiper.translate < _contentHeight - _viewHeight){
+                //console.log(_contentHeight - _viewHeight-110)
+
+                if(swiper.translate < _contentHeight - _viewHeight && swiper.translate < 0){
+
                     swiper.allowTouchMove=false;//禁止触摸
                     swiper.params.virtualTranslate=true;//定住不给回弹
-                    setTimeout(function(){
-                        //模仿AJAX
-                        for(m=0;m<20;m++){
-                            swiper.appendSlide('<div class="swiper-slide">moreSlide'+(times*20+m+1)+'</div>');
-                        }
-                        swiper.params.virtualTranslate=false;
-                        swiper.allowTouchMove= true;
-                        times++
-                    },1000)
+
+                    var pid = this.$el.data('pid')
+                    var cid = this.$el.data('cid')
+                    this.$el.data('pid',parseInt(pid) + 1)
+                    $.get("/web/index/cartListAjax/cid/"+ cid +"/pid/"+pid,function(data){
+                        var list = JSON.parse(data)
+                        $.each(list, function(i,val){
+                            var html = ''
+                            html = '<div class="swiper-slide">'
+                            html += '<li class="tginfo-item" data-infoid="972987227198349312">\n' +
+                                '                    <div class="tginfo-detail">\n' +
+                                '                        <h3 class="tginfo-title">'+val.title+'</h3>\n' +
+                                '                        <div class="tginfo-msg">\n' +
+                                '                            <span class="tginfo-cate left">'+val.cid+'</span>\n' +
+                                '                            <span class="tginfo-time left">'+ val.update +'</span>\n' +
+                                '                        </div>\n' +
+                                '                    </div>\n'
+                            if(val.imgs_num > 0){
+                                html += '                    <div class="tginfo-image"><img src="'+ val.imgs[0]+'"></div>\n'
+                            }
+                            html += '                </li>'
+                            html += '</div>'
+                            swiper.appendSlide(html)
+                        });
+                    });
+                    swiper.params.virtualTranslate=false;
+                    swiper.allowTouchMove= true;
                     //console.log('成功加载')
                 }
             },
@@ -294,7 +210,30 @@
 
 </script>
 
+
+<div class="footBar">
+    <ul class="footBtn">
+        <li class="indexBtn_hd indexBtn_on_hd"><a href="#"><i></i>首页</a></li>
+        <li class="publishBtn_hd"><a href="#"><i></i>招商发布</a></li>
+        <li class="userBtn_hd"><a href="#"><i></i>我的</a></li>
+    </ul>
+</div>
+
 <script src="/theme/web/js/jquery.min.js"></script>
 <script src="/theme/web/js/rem.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".xx_list").on("click",".tginfo-item" ,function(){
+            var id = $(this).data('tginfoid');
+            window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+        });
+        $(".c_list").on("click",'.c_icon',function () {
+            var cid = $(this).data('cid');
+            window.location.href = "/web/index/cartList/cid/"+cid;
+        })
+
+    });
+</script>
+
 </body>
 </html>

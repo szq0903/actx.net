@@ -1,184 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-dpr="1" style="font-size: 42.5px;">
 <head>
     <meta charset="UTF-8">
-    <title>爱臣同乡-{$area.name}</title>
-    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-    <meta name="Description"
-          content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
-    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-    <meta http-equiv="Content-Type" content="text/html;">
-    <meta name="viewport"
-          content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+     <meta http-equiv="Content-Type" content="text/html;">
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="email=no">
+    <meta name="format-detection" content="address=no;">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="stylesheet" href="/theme/web/style/swiper.min.css">
-    <link href="/theme/web/style/reset.css" rel="stylesheet">
-    <link href="/theme/web/style/style.css" rel="stylesheet">
-
-    <script src="/theme/web/js/jquery.min.js"></script>
-    <script src="/theme/web/js/swiper.min.js"></script>
+    <link href="/theme/web/style/tongzhenlist.css" rel="stylesheet">
 </head>
 <body>
-<header id="site-header">
-    <div data-ga-event="全部行业">
-        <a id="goback" href="javascript:;" onclick="window.history.back(); return false;">返回</a>
-    </div>
-
-</header>
-<div class="nowlist">
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide blue-slide">
-                <div class="swiper-nei" data-hid="1" data-pid="1">
-                    <div class="swiper-wrapper">
-                        <div class="refresh">释放刷新</div>
-                        {volist name="headart" id="vo"}
-                        <div class="swiper-slide">
-                            <div class="data-wrap">
-                        {if $vo.imgs_num >= 3}
-                        <a class="data-item  multiple-img-item" href="{$vo.id}">
-                            <h3 class="item-title">{$vo.title}</h3>
-                            <div class="item-imgs">
-                                {volist name="vo['imgs']" id="sub" length='3'}
-                                <div class="img-item"><img class="lazy" src="{$sub}" style="opacity: 1;"></div>
-                                {/volist}
-                            </div>
-                            <div class="item-media">
-                                <span class="author" style="display:none">{$vo.title}</span>
-                                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
-                                <span class="media-time">{$vo.update}</span>
-                            </div>
-                        </a>
-                        {/if}
-                        {if $vo.imgs_num < 3 && $vo.imgs_num > 0}
-                        <a class="data-item  single-img-item" href="{$vo.id}">
-                            <h3 class="item-title">{$vo.title}</h3>
-                            <div class="item-imgs">
-                                <div class="img-item"><img class="lazy" src="{$vo.imgs.0}" style="opacity: 1;"></div>
-                            </div>
-                            <div class="item-media">
-                                <span class="author">{$vo.title}</span>
-                                <div class="pv_scan" style="display:none">
-                                    <span class="scan_icon"></span>
-                                    <span class="scan_count">{$vo.click}</span>
-                                </div>
-                                <span class="media-time">{$vo.update}</span>
-                            </div>
-                        </a>
-                        {/if}
-                        {if $vo.imgs_num == 0}
-                        <a class="data-item  default-item" href="{$vo.id}">
-                            <h3 class="item-title">{$vo.title}</h3>
-                            <div class="item-media">
-                                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
-                                <span class="media-time">{$vo.update}</span>
-                            </div>
-                        </a>
-                        {/if}
-                            </div>
-                        </div>
-                        {/volist}
-
-                        <div class="loadmore">加载更多</div>
-                    </div>
-                    <div class="swiper-neibar1"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<script>
-refreshEnd = false;
-times = 0;//加载次数
-oriSpeed = 300
-var swiper = new Swiper('.swiper-nei', {
-  speed: oriSpeed,
-  slidesPerView: 'auto',
-  freeMode: true,
-  direction: 'vertical',
-  setWrapperSize: true,
-  observer:true,
-  observerParents:true,
-  on: {
-    //下拉释放刷新
-    touchEnd: function () {
-
-      var pid = this.$el.data('pid')
-      var hid = this.$el.data('hid')
-      //console.log('类目id=' + hid + '   页数id=' + pid)
-      this.$el.data('pid', Number(pid)+1)
-      swiper = this
-      refreshText = swiper.$el.find('.refresh')
-      swiper.setTransition(this.params.speed);
-      swiper.setTranslate(100);
-      swiper.touchEventsData.isTouched = false;//跳过touchEnd事件后面的跳转(4.0.5)
-      refreshText.html('刷新中')
-
-      swiper.allowTouchMove = false;
-
-      $.get("/web/index/hartlistajax/hid/"+ hid +"/pid/"+pid,function(data,status){
-        var list = JSON.parse(data)
-        $.each(list, function(i,val){
-          var html = ''
-          html ='<div class="swiper-slide">\n' +
-              '    <div class="data-wrap">'
-
-          if (val.imgs_num >= 3) {
-            html += '<a class="data-item  multiple-img-item" href="'+val.url+'">\n' +
-              '\t<h3 class="item-title">'+val.title+'</h3>\n' +
-              '    <div class="item-imgs">'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[1]+'" style="opacity: 1;"></div>'
-            html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[2]+'" style="opacity: 1;"></div>'
-
-          }else if (val.imgs_num >0){
-            html += '<a class="data-item  single-img-item" href="'+val.url+'">\n' +
-              '\t<h3 class="item-title">'+val.title+'</h3>\n' +
-              '\t<div class="item-imgs">\n' +
-              '        <div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
-          }else{
-            html += '<a class="data-item  default-item" href="'+val.url+'">\n' +
-              '    <h3 class="item-title">'+val.title+'</h3>'+
-              '\t<div class="item-imgs">\n'
-          }
-          html += '</div>\n' +
-            '    <div class="item-media">\n' +
-            '\t\t<span class="author" style="display:none">'+val.title+'</span>\n' +
-            '        <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">'+val.click+'</span></div>\n' +
-            '        <span class="media-time">'+ val.update +'</span>\n' +
-            '    </div>\n' +
-            '</a>'
-          html += '</div>\n' +
-              '                        </div>'
-
-          swiper.appendSlide(html)
+<script src="/theme/web/js/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //关闭站长二维码
+        $(".code-close").click(function(){
+            $(this).parent().parent().addClass("hide").removeClass("show");
         });
-        refreshText.html('刷新完成');
-        refreshEnd = true;
-      });
-    },
-    touchStart: function () {
-      if (refreshEnd == true) {
-        this.$el.find('.refresh').html('释放刷新');
-        refreshEnd = false;
-      }
-    },
-  }
-});
+        //打开站长二维码
+        $(".follow-module .follow-btn").eq(0).click(function(){
+            $(".code-module").addClass("show");
+        });
+        //发布文章
+        $(".follow-btn.post-btn").click(function(){
+            window.location.href = "/web/index/townpostcate/aid/{$area.id}";
+        });
+
+        //返回上一页
+        $('.return-btn').click(function(){
+            window.history.go(-1);
+        });
+        //返回首页
+        $('.return-home').click(function(){
+            window.location.href = "/web/index/index/aid/{$area.id}";
+        });
+
+        //更多文章点击
+
+        $(".tab-list-con").on("click",".info-item",function(){
+            var id = $(this).data('infoid');
+            window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+        });
+
+
+        var page=2;
+        //下拉加载
+        $(window).scroll(function(){
+
+            if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
+
+                var sid = $(".nav-con.onepx .active").data("sid");
+                //到达底部获取json数组
+                $.get("/web/index/getData/sid/"+sid+"/aid/{$area.id}/page/"+page,function(data,status){
+                    if(data !='')
+                    {
+                        re = JSON.parse(data);
+                        for(var i=0;i<re.length;i++){
+                            var html ='';
+                            html +='<li class="info-item" data-infoid="'+re[i].id+'">';
+                            html +='<div class="info-detail">';
+                            html +='<h3 class="info-title">'+re[i].content+'</h3>';
+                            html +='<div class="info-msg">';
+                            html +='<span class="info-cate">'+re[i].sortname+'</span>';
+                            html +='<span class="info-time left">'+re[i].addtime+'</span>';
+                            html +='</div>';
+                            html +='</div>';
+                            if(re[i].img != '')
+                            {
+                                html +='<div class="info-image"><img src="'+re[i].img+'"></div>'
+                            }
+                            html +='</li>'
+                            $(".tab-list-con ul").append(html);
+                        }
+                    }
+                });
+                page++;
+            }
+
+        });
+        //处理子分类查询
+        $(".nav-con.onepx .nav-tab-item").click(function(){
+            $(this).addClass("active").siblings().removeClass("active");
+            var sid = $(this).data("sid");
+            page=2;
+            $.get("/web/index/getData/sid/"+sid+"/aid/{$area.id}/page/1",function(data,status){
+                if(data !='')
+                {
+                    re = JSON.parse(data);
+                    var html ='';
+                    for(var i=0;i<re.length;i++){
+
+                        html +='<li class="info-item" data-infoid="'+re[i].id+'">';
+                        html +='<div class="info-detail">';
+                        html +='<h3 class="info-title">'+re[i].content+'</h3>';
+                        html +='<div class="info-msg">';
+                        html +='<span class="info-cate">'+re[i].sortname+'</span>';
+                        html +='<span class="info-time left">'+re[i].addtime+'</span>';
+                        html +='</div>';
+                        html +='</div>';
+                        if(re[i].img != '')
+                        {
+                            html +='<div class="info-image"><img src="'+re[i].img+'"></div>'
+                        }
+                        html +='</li>'
+                    }
+                    $(".tab-list-con ul").html(html);
+                }
+            });
+        });
+    });
 </script>
-
-<div class="footBar">
-    <ul class="footBtn">
-        <li class="indexBtn_hd indexBtn_on_hd"><a href="#"><i></i>首页</a></li>
-        <li class="publishBtn_hd"><a href="#"><i></i>招商发布</a></li>
-        <li class="userBtn_hd"><a href="#"><i></i>我的</a></li>
-    </ul>
-</div>
-
-
-<script src="/theme/web/js/rem.js"></script>
 </body>
 </html>
