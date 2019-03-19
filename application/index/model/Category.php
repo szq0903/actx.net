@@ -34,11 +34,23 @@ class Category extends Model
 
     public function getListByPid($pid)
     {
+
         $list = parent::where('pid','=',$pid)->order('rank')->select();
         return $list;
     }
 
-
+    public function getAllChildcateIds($pid)
+    {
+        $sort =array();
+        $this->getTree($pid,$sort);
+        $array = array();
+        foreach ($sort as $val)
+        {
+            $array[] = $val['id'];
+        }
+        $ids = implode(',', $array);
+        return $ids;
+    }
 
     public function getTreeLevel($pid, &$sort,$str ='', &$level)
     {

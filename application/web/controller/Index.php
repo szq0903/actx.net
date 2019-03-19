@@ -189,7 +189,7 @@ class Index extends Controller
         return view('index2');
     }
 
-    public function cartList($cid =0)
+    public function cartList($cid =0,$level=1)
     {
         $this->checkCookie();
         $aid = $this->aid;
@@ -198,10 +198,26 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
 
-        $temp = Cateart::get($cid);
+        $temp = Category::get($cid);
+        //判断类目是否存在
+        if(empty($temp))
+        {
+            $this->error('要查看的类目不存在');
+        }
+        $temp['level'] = $level;
         $this->assign('temp', $temp);
-        $cateart = Cateart::where('cid','=',$cid)->order('update','desc')->limit(6)->select();
+
+        $catelist = Category::all(['pid'=>$cid]);
+        $this->assign('catelist', $catelist);
+
+        $cat = new Category();
+        $ids = $cat->getAllChildcateIds($cid);
+
+        $cateart = Cateart::where('cid','in','=',$ids)->whereOr('aid', $aid)->order('update','desc')->limit(6)->select();
 
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
@@ -214,7 +230,7 @@ class Index extends Controller
             $cateart[$k]['imgs'] = $match[1];
             $cateart[$k]['imgs_num'] = count($match[1]);
         }
-        $this->assign('headart', $cateart);
+        $this->assign('cateart', $cateart);
         return view('catlist');
     }
     //加载类目信息
@@ -222,11 +238,14 @@ class Index extends Controller
     {
         $this->checkCookie();
         $aid = $this->aid;
-
+        $pid = 0;
         if($cid == 0) {
             $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,10)->select();
         }else{
-            $cateart =  Cateart::whereOr('aid', $aid)->whereOr('cid', $cid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+            $cat = new Category();
+            $ids = $cat->getAllChildcateIds($cid);
+
+            $cateart =  Cateart::where('cid','in','=',$ids)->whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
         }
 
         $data = array();
@@ -248,6 +267,31 @@ class Index extends Controller
         }
         echo json_encode($data);
     }
+
+    public function cartdetail($id=0)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $temp = Category::get($id);
+        //判断类目是否存在
+        if(empty($temp))
+        {
+            $this->error('要查看的类目不存在');
+        }
+        $this->assign('temp', $temp);
+
+        return view('cartdetail');
+    }
+
 
     //头条列表页
     public function hartlist($sid=0)
