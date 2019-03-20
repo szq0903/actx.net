@@ -39,7 +39,7 @@
     </div>
     <div class="tgtop_r">
         <a href="#">周边留言</a>
-        <a href="#">+ 关注</a>
+        <a href="javascript:;" id="follow">+ 关注</a>
         <div class="tg_info"><p>有效提升企业品牌的影响力，让您的招商信息精准抵达全国目标客户</p></div>
     </div>
 </div>
@@ -210,6 +210,17 @@
 
 </script>
 
+<div class="code-module1 hide">
+    <div class="code-con">
+        <span class="code-close"></span>
+        <div class="code-detail">
+            <h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+            <span class="code-img">
+                <img src="{$agent.qcode}" alt="本站二维码">
+            </span>
+        </div>
+    </div>
+</div>
 
 <div class="footBar">
     <ul class="footBtn">
@@ -231,6 +242,16 @@
             var cid = $(this).data('cid');
             window.location.href = "/web/index/cartList/level/1/cid/"+cid;
         })
+
+        //关闭站长二维码
+        $(".code-close").click(function(){
+            $(this).parent().parent().addClass("hide").removeClass("show");
+        });
+
+        //打开站长二维码
+        $("#follow").click(function(){
+            $(".code-module1").addClass("show");
+        });
 
     });
 </script>

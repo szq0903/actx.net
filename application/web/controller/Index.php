@@ -152,10 +152,13 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
         //顶级类目
         $category = Category::all(['pid'=>0]);
         $this->assign('category', $category);
-
 
         //头条
         $headart = Headart::order('update','desc')->limit(6)->select();
