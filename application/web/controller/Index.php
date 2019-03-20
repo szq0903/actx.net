@@ -20,6 +20,7 @@ use app\index\model\Cateart;
 use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Complaint;
+use app\index\model\MoneyLog;
 use lib\Form;
 
 
@@ -238,7 +239,6 @@ class Index extends Controller
     {
         $this->checkCookie();
         $aid = $this->aid;
-        $pid = 0;
         if($cid == 0) {
             $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,10)->select();
         }else{
@@ -281,13 +281,35 @@ class Index extends Controller
         $agent = Agent::get(['aid' => $aid]);
         $this->assign('agent', $agent);
 
-        $temp = Category::get($id);
+        $temp = Cateart::get($id);
         //判断类目是否存在
         if(empty($temp))
         {
-            $this->error('要查看的类目不存在');
+            $this->error('要查看的类目文章不存在');
         }
+
+        //检查用户余额并扣除指定金额浏览单价
+
+        delMoneyByCateart($temp);
+
+        $temp['update'] = time_tran($temp['update']);
         $this->assign('temp', $temp);
+
+        $cateart = Cateart::where('aid', $aid)->order('update','desc')->limit(6)->select();
+
+        foreach ($cateart as $k=>$item) {
+            $cateart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateart[$k]['imgs'] = $match[1];
+            $cateart[$k]['imgs_num'] = count($match[1]);
+        }
+        $this->assign('cateart', $cateart);
+
 
         return view('cartdetail');
     }
