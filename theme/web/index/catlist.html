@@ -53,6 +53,22 @@
 
                 <div class="tab-list-con">
                     <ul>
+                        {volist name="cateartzd" id="vo" mod="2" key="k" }
+                        <li class="info-item" data-infoid="{$vo.id}">
+                            <div class="info-detail">
+                                <h3 class="info-title"><span></span>{$vo.title}</h3>
+                                <div class="info-msg">
+                                    <span class="info-cate">{$vo.cid}</span>
+                                    <span class="info-time left">{$vo.update}</span>
+                                </div>
+                            </div>
+                            {if $vo.imgs_num > 0}
+                            <div class="info-image"><img src="{$vo.imgs.0}"></div>
+                            {/if}
+                        </li>
+                        {/volist}
+
+
                         {volist name="cateart" id="vo" mod="2" key="k" }
                         <li class="info-item" data-infoid="{$vo.id}">
                             <div class="info-detail">

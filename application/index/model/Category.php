@@ -49,6 +49,10 @@ class Category extends Model
             $array[] = $val['id'];
         }
         $ids = implode(',', $array);
+        if(empty($ids))
+        {
+            $ids = $pid;
+        }
         return $ids;
     }
 

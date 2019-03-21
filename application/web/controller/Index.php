@@ -221,8 +221,8 @@ class Index extends Controller
         $cat = new Category();
         $ids = $cat->getAllChildcateIds($cid);
 
-        $cateart = Cateart::where('cid','in','=',$ids)->whereOr('aid', $aid)->order('update','desc')->limit(6)->select();
-
+        //信息列表
+        $cateart = Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -235,6 +235,23 @@ class Index extends Controller
             $cateart[$k]['imgs_num'] = count($match[1]);
         }
         $this->assign('cateart', $cateart);
+
+        //置顶信息
+        $cateartzd = Cateart::whereIn('cid',$ids)->where('aid', $aid)->where('recommend',1)->order('update','desc')->limit(6)->select();
+        foreach ($cateartzd as $k=>$item) {
+            $cateartzd[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateartzd[$k]['imgs'] = $match[1];
+            $cateartzd[$k]['imgs_num'] = count($match[1]);
+        }
+
+        $this->assign('cateartzd', $cateartzd);
+
         return view('catlist');
     }
     //加载类目信息
@@ -248,7 +265,7 @@ class Index extends Controller
             $cat = new Category();
             $ids = $cat->getAllChildcateIds($cid);
 
-            $cateart =  Cateart::where('cid','in','=',$ids)->whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+            $cateart =  Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
         }
 
         $data = array();
@@ -292,8 +309,7 @@ class Index extends Controller
         }
 
         //检查用户余额并扣除指定金额浏览单价
-
-        delMoneyByCateart($temp);
+        $this->delMoneyByCateart($temp);
 
         $temp['update'] = time_tran($temp['update']);
         $this->assign('temp', $temp);
@@ -1056,5 +1072,27 @@ class Index extends Controller
 		);
 		echo json_encode($re);
 	}
+
+    //检查用户余额并扣除指定金额浏览单价
+    public function delMoneyByCateart($temp)
+    {
+        $member =  Member::get($temp->getData('mid'));
+        $sysinfo = Sysinfo::get(1);
+        if($member['money'] <= $sysinfo['everyprice'] )
+        {
+            $this->error('发布信息用户余额不足');
+        }else{
+            //减去指定
+            $member->money = $member->money - $sysinfo['everyprice'];
+            $member->save();
+
+            $moneylog = new MoneyLog();
+            $moneylog->update = time();
+            $moneylog->mid = $temp->getData('mid');
+            $moneylog->money = - $sysinfo['everyprice'];
+            $moneylog->msg = '浏览'.$temp['title']."减少余额";
+            $moneylog->save();
+        }
+    }
 
 }
