@@ -38,7 +38,7 @@
         <img src="/theme/web/images/tg_logo.jpg">
     </div>
     <div class="tgtop_r">
-        <a href="#">周边留言</a>
+        <a href="/web/index/message">周边留言</a>
         <a href="javascript:;" id="follow">+ 关注</a>
         <div class="tg_info"><p>有效提升企业品牌的影响力，让您的招商信息精准抵达全国目标客户</p></div>
     </div>
@@ -67,7 +67,7 @@
         <div class="zblylines-image"></div>
         <div class="zblylines-detail swiper-container1">
             <div class="swiper-wrapper">
-                {volist name='headart' id='vo'}
+                {volist name='message' id='vo'}
                 <li class="swiper-slide">{$vo.title}</li>
                 {/volist}
             </div>
@@ -111,7 +111,7 @@
 
             {volist name="cateart" id="vo"}
             <div class="swiper-slide">
-                <li class="tginfo-item" data-tginfoid="{$vo.id}">
+                <li class="tginfo-item" data-tginfoid="{$vo.id}" data-type="0">
                     <div class="tginfo-detail">
                         <h3 class="tginfo-title">{$vo.title}</h3>
                         <div class="tginfo-msg">
@@ -174,7 +174,7 @@
                         $.each(list, function(i,val){
                             var html = ''
                             html = '<div class="swiper-slide">'
-                            html += '<li class="tginfo-item" data-infoid="972987227198349312">\n' +
+                            html += '<li class="tginfo-item" data-tginfoid="'+val.id+'" data-type="0">\n' +
                                 '                    <div class="tginfo-detail">\n' +
                                 '                        <h3 class="tginfo-title">'+val.title+'</h3>\n' +
                                 '                        <div class="tginfo-msg">\n' +
@@ -236,7 +236,8 @@
     $(document).ready(function(){
         $(".xx_list").on("click",".tginfo-item" ,function(){
             var id = $(this).data('tginfoid');
-            window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+            var type = $(this).data('type');
+            window.location.href = "/web/index/cartdetail/aid/{$area.id}/id/"+id +"/type/"+type;
         });
         $(".c_list").on("click",'.c_icon',function () {
             var cid = $(this).data('cid');

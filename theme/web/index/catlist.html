@@ -54,7 +54,7 @@
                 <div class="tab-list-con">
                     <ul>
                         {volist name="cateartzd" id="vo" mod="2" key="k" }
-                        <li class="info-item" data-infoid="{$vo.id}">
+                        <li class="info-item" data-infoid="{$vo.id}" data-type="1">
                             <div class="info-detail">
                                 <h3 class="info-title"><span></span>{$vo.title}</h3>
                                 <div class="info-msg">
@@ -70,7 +70,7 @@
 
 
                         {volist name="cateart" id="vo" mod="2" key="k" }
-                        <li class="info-item" data-infoid="{$vo.id}">
+                        <li class="info-item" data-infoid="{$vo.id}" data-type="0">
                             <div class="info-detail">
                                 <h3 class="info-title">{$vo.title}</h3>
                                 <div class="info-msg">
@@ -120,7 +120,8 @@
         //更多文章点击
         $(".tab-list-con").on("click",".info-item",function(){
             var id = $(this).data('infoid');
-            window.location.href = "/web/index/cartdetail/aid/{$area.id}/id/"+id;
+            var type = $(this).data('type');
+            window.location.href = "/web/index/cartdetail/aid/{$area.id}/id/"+id +"/type/"+type;
         });
         var page=2;
         //下拉加载

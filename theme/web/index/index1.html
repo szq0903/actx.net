@@ -31,7 +31,7 @@
 </div>
 <div class="logo">
     <img src="/theme/web/images/logo.png">
-    <form method="post" name="myForm">
+    <form method="post" action="/web/index/search"  name="myForm">
         <div class="form_b">
             <input type="text" name="kw" class="kw" value="">
             <input type="submit" id="su" value="爱臣搜索" class="s_btn">
@@ -43,7 +43,7 @@
 
         {volist name="headart" id="vo"}
         {if $vo.imgs_num >= 3}
-        <a class="data-item  multiple-img-item" href="{$vo.id}">
+        <a class="data-item  multiple-img-item" data-infoid="{$vo.id}">
             <h3 class="item-title">{$vo.title}</h3>
             <div class="item-imgs">
                 {volist name="vo['imgs']" id="sub" length='3'}
@@ -58,7 +58,7 @@
         </a>
         {/if}
         {if $vo.imgs_num < 3 && $vo.imgs_num > 0}
-        <a class="data-item  single-img-item" href="{$vo.id}">
+        <a class="data-item  single-img-item" data-infoid="{$vo.id}">
             <h3 class="item-title">{$vo.title}</h3>
             <div class="item-imgs">
                 <div class="img-item"><img class="lazy" src="{$vo.imgs.0}" style="opacity: 1;"></div>
@@ -74,7 +74,7 @@
         </a>
         {/if}
         {if $vo.imgs_num == 0}
-        <a class="data-item  default-item" href="{$vo.id}">
+        <a class="data-item  default-item" data-infoid="{$vo.id}">
             <h3 class="item-title">{$vo.title}</h3>
             <div class="item-media">
                 <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
@@ -97,5 +97,13 @@
 
 <script src="/theme/web/js/jquery.min.js"></script>
 <script src="/theme/web/js/rem.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".data-wrap").on("click",".data-item" ,function(){
+            var id = $(this).data('infoid');
+            window.location.href = "/web/index/hartdetail/id/"+id;
+        });
+    });
+</script>
 </body>
 </html>

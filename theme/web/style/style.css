@@ -987,6 +987,187 @@ a:hover{
     text-align: center;
     margin: 1.2rem .53333rem
 }
+.viewport {
+    margin: 0 auto;
+    overflow: hidden;
+    font-size: .14rem;
+    line-height: .24rem;
+}
+.user-information {
+    background-color: #ff7ba9;
+    width: 100%;
+    min-height: 1.2rem;
+    position: relative;
+}
+.user-information .user-img {
+    text-align: center;
+    padding: .1rem 0 .08rem;
+}
+.user-information .user-img img {
+    width: .7rem;
+    height: .7rem;
+    border-radius: .7rem;
+}
+.user-information .user-name {
+    text-align: center;
+    color: #fff;
+}
+.user-information .user-level {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+    font-size: 12px;
+}
+.user-money {
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d5d5d5;
+}
+.user-money a {
+    width: 25%;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    margin: .1rem 0px;
+    padding: .02rem 0;
+    border-left: 1px solid #d5d5d5;
+    margin-left: -1px;
+}
+.user-money a strong {
+    display: block;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: .02rem;
+}
+.cf:before, .cf:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
+.user-order {
+    background-color: #fff;
+    border-bottom: 1px solid #d5d5d5;
+    border-top: 1px solid #d5d5d5;
+}
+.user-order a {
+    width: 25%;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    margin: .15rem 0px;
+    border-left: 1px solid #d5d5d5;
+    margin-left: -1px;
+    color: #333;
+}
+.user-order a span {
+     display: block;
+     position: relative;
+ }
+.user-order a i {
+    display: block;
+    width: .3rem;
+    height: .25rem;
+    margin: 0 auto .03rem;
+}
+.user-order a.allorder i {
+    background: url(../images/icon_order_1.png)  no-repeat center;
+    background-size: .26rem;
+}
+.user-order a.wait-pay i {
+    background: url(../images/icon_order_2.png) no-repeat center;
+    background-size: .26rem;
+}
+.user-order a.wait-shouhuo i {
+    background: url(../images/icon_order_3.png) no-repeat center;
+    background-size: .26rem;
+}
+.user-order a.wait-return i {
+    background: url(../images/icon_order_4.png) no-repeat center;
+    background-size: .26rem;
+}
+.user-other {
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #d5d5d5;
+}
+.user-other a {
+    width: 50%;
+    float: left;
+    text-align: center;
+    text-decoration: none;
+    padding: 10px 0px;
+    border-left: 1px solid #d5d5d5;
+    margin-left: -1px;
+    color: #333;
+}
+.user-other a span {
+    display: block;
+    position: relative;
+}
+.user-other a i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.user-other a.shoucang i {
+    background: url(../images/user-love.png) 0 0/100% no-repeat;
+}
+.user-other a.look-jilu i {
+    background: url(../images/user-history.png) 0 0/100% no-repeat;
+}
+.user-common {
+    background-color: #fff;
+    margin: 0 0 10px;
+    border-bottom: 1px solid #d5d5d5;
+    border-top: 1px solid #d5d5d5;
+}
+.user-common a {
+    display: block;
+    line-height: 26px;
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+    padding: 10px 15px;
+    position: relative;
+}
+.user-common .yingyongnum, .user-common .infor-centernum, .user-common .help-tel, .user-common .infor-phone {
+    position: absolute;
+    right: 30px;
+    top: 12px;
+}
+.user-common .pink {
+    color: #e5004f;
+}
+.user-common a em {
+    display: block;
+    position: absolute;
+    background: url(../images/bai.png) 0 0/100% no-repeat;
+    width: 8px;
+    height: 14px;
+    top: 17px;
+    right: 10px;
+}
+.user-common .hr {
+    margin: 0 10px;
+}
+.hr {
+    display: block;
+    height: 1px;
+    background-color: #d5d5d5;
+}
+.user-logout {
+    background-color: #fff;
+    line-height: 26px;
+    border-top: 1px solid #d5d5d5;
+    padding: 10px 15px;
+    text-align: center;
+    color: #e5004f;
+    font-size: 16px;
+    font-weight: 500;
+}
 
 
 

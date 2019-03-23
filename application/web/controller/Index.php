@@ -21,6 +21,7 @@ use app\index\model\Field;
 use app\index\model\Mould;
 use app\index\model\Complaint;
 use app\index\model\MoneyLog;
+use app\index\model\Message;
 use lib\Form;
 
 
@@ -59,7 +60,7 @@ class Index extends Controller
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
 
-        $headart = Headart::order('update','desc')->limit(6)->select();
+        $headart = Headart::where('aid',$aid)->order('update','desc')->limit(6)->select();
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
@@ -161,8 +162,12 @@ class Index extends Controller
         $this->assign('category', $category);
 
         //头条
-        $headart = Headart::order('update','desc')->limit(6)->select();
-        $this->assign('headart', $headart);
+        $message = Message::order('update','desc')->limit(6)->select();
+        foreach ($message as $key=>$val)
+        {
+            $message[$key]['title'] = $val['aid'] .' '. $val['name'] .' '. $val['pro'];
+        }
+        $this->assign('message', $message);
 
         //类目信息
         $cateart1 =  Cateart::where('aid', $aid)->order('update','desc')->limit(10)->select();
@@ -193,6 +198,14 @@ class Index extends Controller
         return view('index2');
     }
 
+    public function search()
+    {
+        if (Request::instance()->isPost())
+        {
+            echo Request::instance()->post('kw');
+        }
+
+    }
     public function cartList($cid =0,$level=1)
     {
         $this->checkCookie();
@@ -240,6 +253,8 @@ class Index extends Controller
         $cateartzd = Cateart::whereIn('cid',$ids)->where('aid', $aid)->where('recommend',1)->order('update','desc')->limit(6)->select();
         foreach ($cateartzd as $k=>$item) {
             $cateartzd[$k]['update'] = time_tran($item['update']);
+
+            //初始化图片
             $match = array();
             preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
             foreach ($match[1] as $key=>$val)
@@ -248,6 +263,15 @@ class Index extends Controller
             }
             $cateartzd[$k]['imgs'] = $match[1];
             $cateartzd[$k]['imgs_num'] = count($match[1]);
+
+            //判断用户余额不足时清除记录
+            $member =  Member::get($item->getData('mid'));
+            $sysinfo = Sysinfo::get(1);
+            if($member['money'] <= $sysinfo['stickprice'] )//用户余额小于置顶金额
+            {
+                //清除记录
+                unset($cateartzd[$k]);
+            }
         }
 
         $this->assign('cateartzd', $cateartzd);
@@ -283,12 +307,12 @@ class Index extends Controller
             $data[$k]['title'] = $item['title'];
             $data[$k]['click'] = $item['click'];
             $data[$k]['id'] = $item['id'];
-            $data[$k]['url'] = '/web/index/hartdetail/id/'.$item['id'];
+            $data[$k]['url'] = '/web/index/cartdetail/id/'.$item['id'];
         }
         echo json_encode($data);
     }
 
-    public function cartdetail($id=0)
+    public function cartdetail($id=0,$type=0)
     {
         $this->checkCookie();
         $aid = $this->aid;
@@ -308,14 +332,28 @@ class Index extends Controller
             $this->error('要查看的类目文章不存在');
         }
 
-        //检查用户余额并扣除指定金额浏览单价
-        $this->delMoneyByCateart($temp);
+        //增加点击次数
+        $temp->click ++;
+        $temp->save();
+
+        if($type==0)
+        {
+            //检查用户余额并扣除浏览单价浏览单价
+            $this->delMoneyByCateart($temp);
+        }elseif($type==1)
+        {
+            //检查用户余额并扣除置顶单价浏览单价
+            $this->delMoneyByCateartTop($temp);
+        }else{
+            $this->error('要查看的类目文章不存在');
+        }
 
         $temp['update'] = time_tran($temp['update']);
         $this->assign('temp', $temp);
 
-        $cateart = Cateart::where('aid', $aid)->order('update','desc')->limit(6)->select();
 
+        //更多信息
+        $cateart = Cateart::where('aid', $aid)->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -415,10 +453,138 @@ class Index extends Controller
         {
             $this->error('要查看的头条的不存在');
         }
+        $headart->click ++;
+        $headart->save();
+
         $headart['update'] = time_tran($headart['update']);
         $this->assign('temp', $headart);
+
+
         return view('hartdetail');
     }
+
+    //周边留言
+    public function message()
+    {
+        //预定义模块
+        $mould= Mould::get(['table'=>'message']);
+        $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
+
+
+        //处理select
+        $category = array();
+        $psort = new Category();
+        $le = 3;
+        $psort->getTreeLevel(0,$category, '  ',$le);
+        $this->assign('category',$category);
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $message           = new Message();
+            foreach ($field as $val)
+            {
+                $message->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+            }
+            $message->mid = 1;
+            $message->update = time();
+            $message->save();
+            $this->success('添加成功！');
+        }
+
+
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        foreach ($field as $val)
+        {
+
+
+            if($val['fieldname'] == 'aid')
+            {
+                $name = $val['fieldname'];
+                $val['fieldname'] = '';
+                $temp['aid'] = 370829104;//370829104疃里镇
+                $arr=array();
+                $area = new Area;
+                $area->getAreaTypeArr($arr,$temp['aid']);
+
+                //地区
+                //省
+                $area1 = Area::all(['level'=>1,'parent_id'=>0]);
+                $areadb1 = array();
+                foreach ($area1 as $v)
+                {
+                    $areadb1[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb1;
+                $ahtml1 = $form->fieldToForm($val,'form-control','area1',$arr[1]);
+
+                //市
+                $area2 = Area::all(['level'=>2,'parent_id'=>$arr[1]]);
+                $areadb2 = array();
+                foreach ($area2 as $v)
+                {
+                    $areadb2[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb2;
+                $ahtml2 = $form->fieldToForm($val,'form-control','area2',$arr[2]);
+
+                //县
+                $area3 = Area::all(['level'=>3,'parent_id'=>$arr[2]]);
+                $areadb3 = array();
+                foreach ($area3 as $v)
+                {
+                    $areadb3[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb3;
+                $ahtml3 = $form->fieldToForm($val,'form-control','area3',$arr[3]);
+
+                //镇
+                $area4 = Area::all(['level'=>4,'parent_id'=>$arr[3]]);
+                $areadb4 = array();
+                foreach ($area4 as $v)
+                {
+                    $areadb4[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb4;
+                $ahtml4 = $form->fieldToForm($val,'form-control','area4',$arr[4]);
+
+
+                $arr['html'] ='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml1;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml2;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml3;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml4;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
+
+            }elseif ($val['fieldname'] == 'cid' || $val['fieldname'] == 'mid'){
+                continue;
+            } else {
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }
+
+            $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
+
+            $formhtml[] = $arr;
+        }
+        $this->assign('formhtml',$formhtml);
+        return view('message');
+    }
+
 
     //投诉
     public function complaint()
@@ -465,6 +631,18 @@ class Index extends Controller
         return view('disclaimer');
     }
 
+
+    //用户中心
+    public function member()
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        return view('member');
+    }
     //类目
     public function category($id=0, $level=0)
     {
@@ -1095,4 +1273,43 @@ class Index extends Controller
         }
     }
 
+
+    //检查用户余额并扣除指定金额浏览单价
+    public function delMoneyByCateartTop($temp)
+    {
+        $member =  Member::get($temp->getData('mid'));
+        $sysinfo = Sysinfo::get(1);
+        if($member['money'] <= $sysinfo['stickprice'] )
+        {
+            $this->error('发布信息用户余额不足');
+        }else{
+            //减去指定
+            $member->money = $member->money - $sysinfo['stickprice'];
+            $member->save();
+
+            $moneylog = new MoneyLog();
+            $moneylog->update = time();
+            $moneylog->mid = $temp->getData('mid');
+            $moneylog->money = - $sysinfo['stickprice'];
+            $moneylog->msg = '浏览置顶'.$temp['title']."减少余额";
+            $moneylog->save();
+        }
+    }
+
+    //获取地区数据
+    public function getajaxarea($type=1,$supid=0)
+    {
+        $area = Area::all(['level'=>$type,'parent_id'=>$supid]);
+
+        $data=array();
+        foreach ($area as $val)
+        {
+            $ls=array();
+            $ls['name']	=  $val->name;
+            $ls['id']	=  $val->id;
+            $data[] =$ls;
+        }
+
+        return $data;
+    }
 }
