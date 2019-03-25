@@ -197,7 +197,7 @@ class Members extends Controller
         $this->assign('title','修改会员-'.$this->title);
         $request = Request::instance();
         $this->assign('act', $request->controller());
-        return view();
+        return view('setMoney');
     }
 
     public function setAuth($id)
@@ -215,6 +215,7 @@ class Members extends Controller
         {
             $member->hid = Request::instance()->post('hid');
             $member->cid = Request::instance()->post('cid');
+            $member->islink = Request::instance()->post('islink');
             $member->save();
             $this->success('开通权限成功！');
         }
@@ -234,7 +235,7 @@ class Members extends Controller
         $this->assign('title','修改会员-'.$this->title);
         $request = Request::instance();
         $this->assign('act', $request->controller());
-        return view();
+        return view('setAuth');
     }
 	/**
 	 * 添加会员

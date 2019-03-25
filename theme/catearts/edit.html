@@ -65,18 +65,14 @@
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
 
-                                <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+                                <button class="btn btn-primary" name="btn" value="1" id="tijiao" type="submit">提交</button>&nbsp;
                                 <button class="btn btn-default" type="reset">取消</button>
                             </div>
                         </div>
                     </div><!-- panel-footer -->
             </div>
-
             </form>
-
         </div><!-- panel-body -->
-
-
         <!-- row -->
     </div><!-- contentpanel -->
 
@@ -120,6 +116,7 @@
 
 
 <script>
+
     jQuery(document).ready(function() {
 
         "use strict";
@@ -179,7 +176,7 @@
         }
     });
 
-    $("form").submit(function() {
+    $("form").submit(function(){
         var _content = contentEditor.getContent();
         $("#body").val(_content);
         $("form").submit()

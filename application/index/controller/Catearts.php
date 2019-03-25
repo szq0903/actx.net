@@ -192,12 +192,14 @@ class Catearts extends Controller
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
 
             }elseif($val['fieldname'] == 'body'){
+                //开放链接
+                $val['islink'] = 1;
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
             }elseif ($val['fieldname'] == 'recommend')
             {
                 $arr = explode(',',$val['vdefault']);
                 $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3');
-            } else{
+            }else{
                 $arr['html'] = $form->fieldToForm($val,'form-control');
             }
             $arr['itemname'] = $val['itemname'];
@@ -342,7 +344,8 @@ class Catearts extends Controller
                 $arr = explode(',',$val['vdefault']);
                 $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3',$cateart->getData('recommend'));
             }elseif($val['fieldname'] == 'body'){
-
+                //开放链接
+                $val['islink'] = 1;
                 $val['vdefault'] = $cateart[$val['fieldname']];
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
             }else{

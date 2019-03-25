@@ -98,10 +98,10 @@ class Form {
         }else{
             $arrs=explode(',', $field['vdefault']);
         }
-        $k = $key;
+
 		if(is_array($arrs))
 		{
-			foreach ($arrs as $key=>$value)
+			foreach ($arrs as $k=>$value)
 			{
 			    if($k == $key)
                 {
@@ -235,10 +235,21 @@ var zxEditor = new ZxEditor('#editorContainer', {
   //top: 44,
   // 编辑框左右边距
   //padding: 13,
+  ";
+        if(isset($field['islink']))
+        {
+            $html .= "
+  //是否显示底部工具栏（图片、标签、链接添加等图标）。
+  showToolbar: ['pic', 'emoji', 'text', 'link']
+})
+";
+        }else{
+            $html .= "
   //是否显示底部工具栏（图片、标签、链接添加等图标）。
   showToolbar: ['pic', 'emoji', 'text']
 })
 ";
+        }
         if(!empty($field['vdefault']))
         {
             $html .= "zxEditor.setContent('".str_replace(array("\r\n", "\r", "\n"), "", $field['vdefault'])."')";
