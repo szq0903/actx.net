@@ -86,6 +86,46 @@ class Index extends Controller
         return view('index1');
     }
 
+    public function searchs()
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $keys = trim(Request::instance()->param('keys'));
+        $this->assign('keys', $keys);
+
+        //信息列表
+        $cateart = Cateart::where('keywords','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit(10)->select();
+
+        $data = getCateArtList($cateart);
+        $this->assign('cateart', $data);
+
+        return view('searchs');
+    }
+
+    //加载搜索信息
+    public function searchsAjax($pid)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        $keys = trim(Request::instance()->param('keys'));
+        $this->assign('keys', $keys);
+
+        $cateart =  Cateart::where('keywords','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+
+        $data = getCateArtList($cateart);
+
+        echo json_encode($data);
+    }
+
 	/**
 	 * 系统首页
 	 * @return \think\response\View

@@ -57,6 +57,9 @@
                         <label class="col-sm-3 control-label">{$vo['itemname']}：</label>
                         <div class="col-sm-6"  {if $vo['itemname']=='内容'}style="position: initial"{/if} st>
                             {$vo['html']}
+                            {if $vo['fieldname']=='keywords'}
+                            <div class="help-block">关键字用英文逗号“,”分割，如  “关键词1,关键词2,关键词3” 。</div>
+                            {/if}
                         </div>
                     </div>
                     {/volist}

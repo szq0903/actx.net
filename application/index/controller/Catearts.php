@@ -202,6 +202,7 @@ class Catearts extends Controller
             }else{
                 $arr['html'] = $form->fieldToForm($val,'form-control');
             }
+            $arr['fieldname'] = $val['fieldname'];
             $arr['itemname'] = $val['itemname'];
             $formhtml[] = $arr;
         }
@@ -353,6 +354,7 @@ class Catearts extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control');
 
             }
+            $arr['fieldname'] = $val['fieldname'];
             $arr['itemname'] = $val['itemname'];
             $formhtml[] = $arr;
         }

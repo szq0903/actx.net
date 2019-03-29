@@ -128,4 +128,26 @@ function makeradio($arr,$name, $class ,$value = -1)
     return $html;
 }
 
+//初始化类目文章列表
+function getCateArtList($cateart)
+{
+    $data = array();
+    foreach ($cateart as $k=>$item) {
+        $data[$k]['update'] = time_tran($item['update']);
+        $match = array();
+        preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+        foreach ($match[1] as $key=>$val)
+        {
+            $match[1][$key] = str_replace('"',"",$val);
+        }
+        $data[$k]['cid'] = $item['cid'];
+        $data[$k]['imgs'] = $match[1];
+        $data[$k]['imgs_num'] = count($match[1]);
+        $data[$k]['title'] = $item['title'];
+        $data[$k]['click'] = $item['click'];
+        $data[$k]['id'] = $item['id'];
+        $data[$k]['url'] = '/web/index/cartdetail/id/'.$item['id'];
+    }
+    return $data;
+}
 
