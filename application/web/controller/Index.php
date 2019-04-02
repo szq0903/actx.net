@@ -238,14 +238,6 @@ class Index extends Controller
         return view('index2');
     }
 
-    public function search()
-    {
-        if (Request::instance()->isPost())
-        {
-            echo Request::instance()->post('kw');
-        }
-
-    }
     public function cartList($cid =0,$level=1)
     {
         $this->checkCookie();
@@ -675,11 +667,24 @@ class Index extends Controller
     //用户中心
     public function member()
     {
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+
+        $member['browse'] = MoneyLog::where('mid',$mid)->where('money','<',"0")->count();
+        $member['sun'] = MoneyLog::where('mid',$mid)->where('money','<',"0")->sum('money');
+
+        $this->assign('member', $member);
+
+
         $this->checkCookie();
         $aid = $this->aid;
         //处理地区
         $area = Area::get($aid);
         $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
 
         return view('member');
     }
@@ -1075,7 +1080,6 @@ class Index extends Controller
 	{
 		$aid = Request::instance()->param('aid');
 		$sid = Request::instance()->param('sid');
-
 
 
 		//获取openid

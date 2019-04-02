@@ -1025,7 +1025,7 @@ a:hover{
     border-bottom: 1px solid #d5d5d5;
 }
 .user-money a {
-    width: 25%;
+    width: 33.3%;
     float: left;
     text-align: center;
     text-decoration: none;
@@ -1152,6 +1152,16 @@ a:hover{
 }
 .user-common .hr {
     margin: 0 10px;
+}
+.user-infoimg {
+    text-align: center;
+}
+.user-infoimg p{
+    text-align: center;
+    padding: 10px 15px;
+}
+.user-infoimg img {
+    width: 90%;
 }
 .hr {
     display: block;
