@@ -1,246 +1,109 @@
-<!doctype html>
-<html lang="en" data-dpr="1" style="font-size: 42.5px;">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>爱臣同乡-{$area.name}</title>
-<meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-<meta name="Description" content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
-<meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-<meta http-equiv="Content-Type" content="text/html;">
-<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
-<meta name="format-detection" content="telephone=no">
-<meta name="format-detection" content="email=no">
-<meta name="format-detection" content="address=no;">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link href="/theme/web/style/tongzhencenter.css" rel="stylesheet">
-	<link rel="stylesheet" href="/theme/web/style/swiper.min.css">
-	<script src="/theme/web/js/swiper.min.js"></script>
+    <meta charset="UTF-8">
+    <title>爱臣同乡-{$area.name}</title>
+    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
+    <meta name="Description"
+          content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
+    <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
+    <meta http-equiv="Content-Type" content="text/html;">
+    <meta name="viewport"
+          content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="/theme/web/style/reset.css" rel="stylesheet">
+    <link href="/theme/web/style/style.css" rel="stylesheet">
 </head>
 <body>
-
-<div class="head-wrap" id="head-wrap">
-	<div class="header-con" id="header-con">
-		<div class="header-city">{$area.name}</div>
-			<div class="follow-module">
-				<div class="follow-btn">+ 关注</div>
-				<div class="code-module hide">
-					<div class="code-con">
-						<span class="code-close"></span>
-						<div class="code-detail">
-							<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
-							<span class="code-img">
-								<img src="{$agent.qcode}" alt="本站还没有站长请联系站长">
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="follow-btn post-btn">发布</div>
-	</div>
-	<!--<div class="weather-con" style="display: none"><div class="">南召县 -8℃~6℃多云</div></div>-->
+<div class="top">
+    给人人带来有价值的商业信息平台
 </div>
+<div class="door">
+    <a href="#">
+        <img src="/theme/web/images/door.gif">
+    </a>
+    <p>
+        进入幸福门<br>
+        <span>已有{$sysinfo.p_number}人进入</span>
+    </p>
 
-<div class="entrance-wrap">
-	<div class="swipe-wrap">
-		<div class="react-swipe-container swipe-content" style="overflow: hidden; visibility: visible; position: relative;">
-			<div style="overflow: hidden; position: relative; width: 850px;">
-				<div class="swipe-list" data-index="0" style="float: left; width: 425px; position: relative; transition-property: transform; left: 0px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
-				
-					{volist name="sort" id="vo" mod="2" key="k" }
-					<li data-sid="{$vo.id}">
-						<div class="user-logo-con">
-							<span class="user-detail-logo homepage_icon{$vo.rank}"></span>
-						</div>
-						<span class="user-detail-name">{$vo.name}</span>
-					</li>
-					{if $k ==10}
-				</div>
-				<div class="swipe-list" data-index="1" style="float: left; width: 425px; position: relative; transition-property: transform; left: -425px; transition-duration: 300ms; transform: translate(425px, 0px) translateZ(0px);">
-					{/if}
-					{/volist}
-				</div>
-			</div>
-		</div>
-		<div class="swipe-tip-con"><span class="on"></span><span class=""></span></div>
-	</div>
-	<div class="headlines-con">
-		<div class="headlines-image"></div>
-		<div class="headlines-detail swiper-container">
-			<div class="swiper-wrapper">
-				{volist name='headart' id='vo'}
-				<li class="swiper-slide">{$vo.title}</li>
-				{/volist}
-			</div>
-		</div>
-	</div>
 </div>
-<!-- Initialize Swiper -->
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        direction: 'vertical',
-        slidesPerView: 2,
-        slidesPerGroup : 2,
-        spaceBetween: 0,
-        mousewheel: true,
-        loop : true,
-        autoplay: {
-            delay: 1000 * {$sysinfo.headline},
-            stopOnLastSlide: false,
-            disableOnInteraction: true,
-        }
-    });
-</script>
-<div class="newest-con">
-	<div class="newest-head onepx">{$area.name}最新信息<span class="newest-num">(共{$count}条)</span></div>
-	<ul class="info-con">
-		{volist name="article" id="vo" mod="2" key="k" }
-		<li class="info-item" data-infoid="{$vo.id}">
-			<div class="info-detail">
-				<h3 class="info-title">{$vo.content}</h3>
-				<div class="info-msg">
-					<span class="info-cate">{$vo.sort.name}</span>
-					<span class="info-time left">{$vo.addtime}</span>
-				</div>
-			</div>
-			{if !empty($vo.img)}
-			<div class="info-image"><img src="{$vo.img}"></div>
-			{/if}
-		</li>
-		{/volist}
-	</ul>
+<div class="logo">
+    <img src="/theme/web/images/logo.png">
+    <form method="get" action="/web/index/searchs"  name="myForm">
+        <div class="form_b">
+            <input type="text" name="keys" class="kw" value="">
+            <input type="submit" id="su" value="爱臣搜索" class="s_btn">
+        </div>
+    </form>
+</div>
+<section>
+    <div class="data-wrap">
+
+        {volist name="headart" id="vo"}
+        {if $vo.imgs_num >= 3}
+        <a class="data-item  multiple-img-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-imgs">
+                {volist name="vo['imgs']" id="sub" length='3'}
+                <div class="img-item"><img class="lazy" src="{$sub}" style="opacity: 1;"></div>
+                {/volist}
+            </div>
+            <div class="item-media">
+                <span class="author" style="display:none">{$vo.title}</span>
+                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {if $vo.imgs_num < 3 && $vo.imgs_num > 0}
+        <a class="data-item  single-img-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-imgs">
+                <div class="img-item"><img class="lazy" src="{$vo.imgs.0}" style="opacity: 1;"></div>
+            </div>
+            <div class="item-media">
+                <span class="author">{$vo.title}</span>
+                <div class="pv_scan" style="display:none">
+                    <span class="scan_icon"></span>
+                    <span class="scan_count">{$vo.click}</span>
+                </div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {if $vo.imgs_num == 0}
+        <a class="data-item  default-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-media">
+                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {/volist}
+    </div>
+</section>
+
+
+<div class="footBar">
+    <ul class="footBtn">
+        <li class="indexBtn_hd indexBtn_on_hd"><a href="#"><i></i>首页</a></li>
+        <li class="publishBtn_hd"><a href="#"><i></i>招商发布</a></li>
+        <li class="userBtn_hd"><a href="#"><i></i>我的</a></li>
+    </ul>
 </div>
 
 <script src="/theme/web/js/jquery.min.js"></script>
-<script src="/theme/web/js/jquery.mobile-1.4.5.min.js"></script>
+<script src="/theme/web/js/rem.js"></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var cw = document.body.clientWidth;
-		$('html').css('font-size',cw/10);
-		var topheight = $("#head-wrap").height();
-		var page=2;
-		
- 		$(window).scroll(function(){
-			// 滚动条距离顶部的距离 大于 200px时
-			if($(window).scrollTop() >= topheight){
-				$("#header-con").addClass('scroll'); // 开始淡入
-			} else{
-				$("#header-con").removeClass('scroll'); // 如果小于等于 200 淡出
-			}
-			
-			if ($(document).scrollTop() + $(window).height() >= $(document).height()) {
-				//到达底部获取json数组
-				$.get("/web/index/getData/sid/0/aid/{$area.id}/page/"+page,function(data,status){
-					if(data !='')
-					{
-						re = JSON.parse( data );
-						for(var i=0;i<re.length;i++){  
-							var html ='';
-							html +='<li class="info-item" data-infoid="'+re[i].id+'">';
-							html +='<div class="info-detail">';
-							html +='<h3 class="info-title">'+re[i].content+'</h3>';
-							html +='<div class="info-msg">';
-							html +='<span class="info-cate">'+re[i].sortname+'</span>';
-							html +='<span class="info-time left">'+re[i].addtime+'</span>';
-							html +='</div>';
-							html +='</div>';
-							if(re[i].img != '')
-							{
-								html +='<div class="info-image"><img src="'+re[i].img+'"></div>'
-							}
-							html +='</li>'
-							$(".info-con").append(html);
-						}
-					}
-				});
-				page++;
-           	}
-			
-		});
-		
-		var wid = $(window).width();
-		$(".swipe-content").children("div").css("width",wid*2);
-		
-		
-		$(".swipe-list").eq(0).css({
-			"width":wid,
-			"left":0,
-			"transition-duration":'300ms',
-			"transform":'translate(0px, 0px) translateZ(0px)'
-		});
-		$(".swipe-list").eq(1).css({
-			"width":wid,
-			"left":-wid,
-			"transition-duration":'300ms',
-			"transform":'translate('+wid+'px, 0px) translateZ(0px)'
-		});
-		
-		$(".swipe-wrap").on("swipeleft",function(){
-			$(".swipe-list").eq(0).css({
-				"width":wid,
-				"left":0,
-				"transition-duration":'300ms',
-				"transform":'translate('+-wid+'px, 0px) translateZ(0px)'
-			});
-			$(".swipe-list").eq(1).css({
-				"width":wid,
-				"left":-wid,
-				"transition-duration":'300ms',
-				"transform":'translate(0px, 0px) translateZ(0px)'
-			});
-			$(".swipe-tip-con span").eq(1).addClass("on").siblings().removeClass("on");
-		 });    
-		
-		$(".swipe-wrap").on("swiperight",function(){
-			$(".swipe-list").eq(0).css({
-				"width":wid,
-				"left":0,
-				"transition-duration":'300ms',
-				"transform":'translate(0px, 0px) translateZ(0px)'
-			});
-			$(".swipe-list").eq(1).css({
-				"width":wid,
-				"left":-wid,
-				"transition-duration":'300ms',
-				"transform":'translate('+wid+'px, 0px) translateZ(0px)'
-			});
-			$(".swipe-tip-con span").eq(0).addClass("on").siblings().removeClass("on");
-		 });
-		
-		//关闭站长二维码
-		$(".code-close").click(function(){
-			$(this).parent().parent().addClass("hide").removeClass("show");
-		});
-		//打开站长二维码
-		$(".follow-module .follow-btn").eq(0).click(function(){
-			$(".code-module").addClass("show");
-		});
-		//发布文章
-		$(".follow-btn.post-btn").click(function(){
-			window.location.href = "/web/index/townpostcate/aid/{$area.id}";
-		});
-		
-		$(".header-city").click(function(){
-			window.location.href = "/web/index/select/aid/{$area.id}";
-		});
-
-		$(".swipe-list li").click(function(){
-			var sid = $(this).data('sid');
-			window.location.href = "/web/index/getlist/aid/{$area.id}/sid/"+sid;
-		});
-		
-		$(".info-con").on("click",".info-item" ,function(){
-			var id = $(this).data('infoid');
-			window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
-		
-		});
-	});
-
+    $(document).ready(function(){
+        $(".data-wrap").on("click",".data-item" ,function(){
+            var id = $(this).data('infoid');
+            window.location.href = "/web/index/hartdetail/id/"+id;
+        });
+    });
 </script>
-<style>
-	.ui-loader{
-		display: none;
-	}
-</style>
 </body>
 </html>

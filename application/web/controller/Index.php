@@ -47,10 +47,10 @@ class Index extends Controller
         }
     }
 
-	public function index1()
+	public function index()
     {
-        $aid = Request::instance()->param('aid');
 
+        $aid = Request::instance()->param('aid');
         Cookie::set('aid',$aid);
         //处理地区
         $area = Area::get($aid);
@@ -83,7 +83,7 @@ class Index extends Controller
 
         $this->assign('title','系统首页-'.$this->title);
 
-        return view('index1');
+        return view('index');
     }
 
     public function searchs()
@@ -130,7 +130,7 @@ class Index extends Controller
 	 * 系统首页
 	 * @return \think\response\View
 	 */
-    public function index($aid=0)
+    public function index1($aid=0)
     {
 
 		$aid = Request::instance()->param('aid');
@@ -182,7 +182,7 @@ class Index extends Controller
 
     	$this->assign('title','系统首页-'.$this->title);
 
-    	return view('index');
+    	return view('index1');
     }
 
     public function index2()
