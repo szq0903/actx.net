@@ -1,5 +1,6 @@
 <?php
 namespace app\web\controller;
+use app\index\model\Book;
 use think\Controller;
 use think\Request;
 use think\Route;
@@ -641,6 +642,82 @@ class Index extends Controller
         return view('message');
     }
 
+    //商家通讯录
+    public function bookslist($type=-1)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        //商家类型
+        $mould= Mould::get(['table'=>'book']);
+        $field = Field::where(['mid'=>$mould->id])->where(['fieldname'=>'type'])->order('rank')->find();
+        $typelist = explode(',',$field['vdefault']);
+        $this->assign('typelist', $typelist);
+
+        //查询数量
+        $limit = 6;
+        if($type < 0)
+        {
+            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($limit)->select();
+        }else{
+            $books = Book::where('cid',$member['cid'])->where('type',$type)->order('update','desc')->limit($limit)->select();
+        }
+
+
+        foreach ($books as $val)
+        {
+            echo $val['id'].'->'.$val['phone']. '<br/>';
+        }
+
+
+
+
+        exit;
+        $temp = Category::get($cid);
+        //判断类目是否存在
+        if(empty($temp))
+        {
+            $this->error('要查看的类目不存在');
+        }
+        $temp['level'] = $level;
+        $this->assign('temp', $temp);
+
+        $catelist = Category::all(['pid'=>$cid]);
+        $this->assign('catelist', $catelist);
+
+        $cat = new Category();
+        $ids = $cat->getAllChildcateIds($cid);
+
+        //信息列表
+        $cateart = Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit(6)->select();
+        foreach ($cateart as $k=>$item) {
+            $cateart[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $cateart[$k]['imgs'] = $match[1];
+            $cateart[$k]['imgs_num'] = count($match[1]);
+        }
+        $this->assign('cateart', $cateart);
+
+        return view('bookslist');
+    }
+
 
     //投诉
     public function complaint()
@@ -712,6 +789,10 @@ class Index extends Controller
 
         return view('member');
     }
+
+
+
+
     //类目
     public function category($id=0, $level=0)
     {
@@ -1280,7 +1361,7 @@ class Index extends Controller
 		}
 	}
 
-	public function addimg() {
+	public function addimg($f) {
 
 		if(!empty(request() -> file('upqcode')))
 		{
@@ -1291,6 +1372,11 @@ class Index extends Controller
 		{
 			$file = request() -> file('uper');
 		}
+
+        if(!empty(request() -> file($f)))
+        {
+            $file = request() -> file($f);
+        }
 
 		// 移动到框架应用根目录/public/uploads/ 目录下
 		$file->validate(['size'=>1024*1024*16,'ext'=>'jpg,png,gif']);
