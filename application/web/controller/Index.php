@@ -51,6 +51,13 @@ class Index extends Controller
     {
 
         $aid = Request::instance()->param('aid');
+        if (empty($aid))
+        {
+            $this->checkCookie();
+            $aid = $this->aid;
+        }
+
+
         Cookie::set('aid',$aid);
         //处理地区
         $area = Area::get($aid);
@@ -134,14 +141,31 @@ class Index extends Controller
     {
 
 		$aid = Request::instance()->param('aid');
+        if (empty($aid))
+        {
+            $this->checkCookie();
+            $aid = $this->aid;
+        }
+
 		Cookie::set('aid',$aid);
-		//处理地区
-		$area = Area::get($aid);
-		$this->assign('area', $area);
 
         //系统配置
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
+
+        //进入幸福门人数
+        $act =  Request::instance()->param('act');
+        if (!empty($act))
+        {
+            $sysinfo->p_number++;
+            $sysinfo->save();
+        }
+
+		//处理地区
+		$area = Area::get($aid);
+		$this->assign('area', $area);
+
+
 
         //头条
         $headart = Headart::order('update','desc')->limit(6)->select();
