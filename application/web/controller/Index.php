@@ -695,8 +695,8 @@ class Index extends Controller
 
         if($type < 0)
         {
-            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
-            //$books = Book::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+            //$books = Book::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
+            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
         }else{
             $books = Book::where('cid',$member['cid'])->where('type',$type)->order('update','desc')->limit($pid*$this->size,$this->size)->select();
         }
