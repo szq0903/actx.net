@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en" data-dpr="1" style="font-size: 42.5px;">
+<head>
+<meta charset="UTF-8">
+<title>爱臣同乡-{$temp.merchant}</title>
+<meta name="keywords" content="{$area.name}招聘网,{$area.name}找工作,{$area.name}求职">   
+<meta name="descripiton" content="爱臣同乡{$area.name}招聘求职频道是专业的{$area.name}招聘求职信息查询和发布平台,提供海量{$area.name}招聘求职信息,爱臣同乡{$area.name}招聘求职网是您找工作的明智选择."/>
+<meta http-equiv="Content-Type" content="text/html;">
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="email=no">
+<meta name="format-detection" content="address=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="/theme/web/style/cunzhendetail.css" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+	<div class="wrap show-return-module">
+		<div class="return-module">
+			<div class="return-con">
+				<div class="return-btn">返回</div>
+				<div class="return-other-con">
+					<div class="home-con">
+						<div class="return-home">首页</div>
+						<!--<span class="uv-number">99+</span>-->
+					</div>
+					<div class="follow-btn post-btn">发布</div>
+					<div class="follow-module">
+						<div class="follow-btn">+ 关注</div>
+						<div class="code-module hide">
+							<div class="code-con">
+								<span class="code-close"></span>
+								<div class="code-detail">
+									<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+									<span class="code-img">
+										<img src="{$agent.qcode}" alt="本站还没有站长请联系站长">
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="detail-head-module">
+			<div class="head-con detail-head-con">
+				<div class="user-con">
+					<div class="head-left">
+						<h3 class="head-title">{$temp.merchant}</h3>
+						<div class="head-time">{$temp.update}发布</div>
+					</div>
+
+				</div>
+				<div class="detail-con">
+					{if !empty($temp.shopimg)}
+					<p class="detail-text"><img src="{$temp.shopimg}"> </p>
+					{/if}
+					<p class="detail-text">商家名称：{$temp.merchant}</p>
+					<p class="detail-text">商家类型：{$temp.type}</p>
+					<p class="detail-text">姓名：{$temp.name}</p>
+					<p class="detail-text">电话：{$temp.phone}</p>
+					<p class="detail-text">微信：{$temp.wechat}</p>
+					<p class="detail-text">地址：{$temp.address}</p>
+
+
+
+
+					<div class="detail-text">
+						{$temp.phone}
+						<br/>
+						联系我时，请说是在爱臣同乡看到的，谢谢
+					</div>
+
+					{if isset($comments)}
+					<div class="comment-wrap">
+						<h3 class="comment-header">最新评论<span></span></h3>
+						<ul class="comment-ul">
+							{volist name="comments" id="vo" mod="2" key="k" }
+						
+							<li class="comment-item">
+								<div class="comment-logo">
+									<img src="{$vo.headimgurl}">
+								</div>
+								<div class="comment-detail">
+									<h3 class="comment-title">{$vo.nickname}<span class="comment-time">{$vo.addtime}</span></h3>
+									<p class="comment-content">{$vo.comment}</p><div class="comment-info"></div>
+								</div>
+							</li>
+							{/volist}
+						</ul>
+					
+					</div>
+					{/if}
+					<ul class="img-list">
+						{if isset($agent.er)}
+						<li><img src="{$agent.er}"></li>
+						{else}
+						本站还没有站长请联系站长
+						{/if}
+					</ul>
+				</div>
+			</div>
+			<div class="cate-wrap">
+				<div class="cate-header">
+					<h3 class="cate-title">更多信息</h3>
+					<ul class="cate-list">
+
+					</ul>
+				</div>
+			</div>
+		
+		</div>
+		
+	
+		<div class="detail-list-con">
+			<h3 class="detail-list-title">更多信息</h3>
+			<ul class="detail-ul">
+				{volist name="cateart" id="vo" mod="2" key="k" }
+				<li data-id="{$vo.id}">
+					<div class="detail-link">
+						<div class="detail-content">{$vo.title}</div>
+						<div class="list-img-con">
+							<ul class="list-img-ul">
+								{if $vo.imgs_num > 0}
+								{volist name="vo['imgs']" id="img" length='3'}
+								<li class="list-img-item"><img src="{$img}"></li>
+								{/volist}
+								{/if}
+							</ul>
+						</div>
+						<span class="detail-time">{$vo.update}</span>
+					</div>
+				</li>
+				{/volist}
+			</ul>
+		</div>
+		
+
+		<div class="code-module hide">
+			<div class="code-con">
+				<span class="code-close"></span>
+				<div class="code-detail">
+					<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+					<span class="code-img">
+						<img src="{$agent.qcode}" alt="本站二维码">
+					</span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="footbar">
+			<div class="footBtn">
+				<div class="footer-follow-btn"><i></i>关注我们</div>
+			</div>
+		</div>
+
+		
+	</div>
+</div>
+
+
+<script src="/theme/web/js/jquery.min.js"></script>
+<script type="text/javascript">
+	
+	
+	$('.textarea-body textarea').on('input propertychange', function() {  
+		$(".comment-layer-operation .comment-btn-post").eq(1).addClass("on");
+	}); 
+	$('.comment-btn-post').eq(1).click(function(){
+		var al = $(".textarea-body textarea").val();
+		if(al != '')
+		{
+			$("form").submit();
+		}
+	});
+	
+	$(document).ready(function(){
+		
+		var cw = document.body.clientWidth;
+		$('html').css('font-size',cw/10);
+		var topheight = $("#head-wrap").height();
+		
+		//关闭站长二维码
+		$(".code-close").click(function(){
+			$(this).parent().parent().addClass("hide").removeClass("show");
+		});
+		
+		
+		$(".footer-follow-btn").eq(0).click(function(){
+			$(".code-module").addClass("show");
+		});
+		//打开站长二维码
+		$(".follow-module .follow-btn").eq(0).click(function(){
+			$(".code-module").addClass("show");
+		});
+		//发布文章
+		$(".follow-btn.post-btn").click(function(){
+			window.location.href = "/web/index/townpostcate/aid/{$area.id}";
+		});
+		
+		//返回上一页
+		$('.return-btn').click(function(){
+			window.history.go(-1);
+		});
+		//返回首页
+		$('.return-home').click(function(){
+			window.location.href = "/web/index/index/aid/{$area.id}";
+		});
+		
+		
+		//更多信息
+		$(".cate-arrow").click(function(){
+			var cs = $(this).attr("class");
+			if(cs.indexOf("on") > 0 )
+			{
+    			$(this).removeClass("on");
+				$(".cate-con").removeClass("hide");
+			}else{
+				$(this).addClass("on");
+				$(".cate-con").addClass("hide");
+			}
+		});
+		
+		//更多信息点击
+		$(".cate-list li").click(function(){
+			var sid = $(this).data('sid');
+			window.location.href = "/web/index/getlist/aid/{$area.id}/sid/"+sid;
+		});
+		//更多文章点击
+		$(".detail-ul li").click(function(){
+			var id = $(this).data('id');
+			window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+		});
+		
+		//关闭评论
+		$(".comment-btn-post.on").click(function(){
+			$(".comment-layer-bg").hide();
+		});
+		//打开评论
+		$(".comment-btn").click(function(){
+			$(".comment-layer-bg").show();
+		});
+		//登记简历
+		$(".footer-resume-btn").click(function(){
+			window.location.href = "/web/index/resume/aid/{$area.id}/id/{$temp.id}";
+		});
+		//头部电话
+		$(".head-phone").click(function(){
+			window.location.href = "tel:"+$(this).data("phone");
+		});
+		//底部电话
+		$(".tel-button2").click(function(){
+			window.location.href = "tel:"+$(this).data("phone");
+		});
+		
+		
+	});
+	
+</script>
+</body>
+</html>

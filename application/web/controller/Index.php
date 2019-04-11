@@ -341,12 +341,12 @@ class Index extends Controller
         $this->checkCookie();
         $aid = $this->aid;
         if($cid == 0) {
-            $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,10)->select();
+            $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,$this->size)->select();
         }else{
             $cat = new Category();
             $ids = $cat->getAllChildcateIds($cid);
 
-            $cateart =  Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+            $cateart =  Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, $this->size)->select();
         }
 
         $data = array();
@@ -645,6 +645,8 @@ class Index extends Controller
     //商家通讯录
     public function bookslist($type=-1)
     {
+        $this->assign('type', $type);
+
         $this->checkCookie();
         $aid = $this->aid;
 
@@ -666,42 +668,85 @@ class Index extends Controller
         $typelist = explode(',',$field['vdefault']);
         $this->assign('typelist', $typelist);
 
-        //查询数量
-        $limit = 6;
         if($type < 0)
         {
-            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($limit)->select();
+            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
         }else{
-            $books = Book::where('cid',$member['cid'])->where('type',$type)->order('update','desc')->limit($limit)->select();
+            $books = Book::where('cid',$member['cid'])->where('type',$type)->order('update','desc')->limit($this->size)->select();
         }
 
-
-        foreach ($books as $val)
+        foreach ($books as $k=>$val)
         {
-            echo $val['id'].'->'.$val['phone']. '<br/>';
+            $books[$k]['update'] = time_tran($val['update']);
         }
 
+        $this->assign('list', $books);
+        return view('bookslist');
+    }
 
+    //加载商家通讯录
+    public function bookslistAjax($type,$pid)
+    {
+        $this->checkCookie();
 
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
 
-        exit;
-        $temp = Category::get($cid);
+        if($type < 0)
+        {
+            $books = Book::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
+            //$books = Book::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+        }else{
+            $books = Book::where('cid',$member['cid'])->where('type',$type)->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+        }
+
+        $data = array();
+        foreach ($books as $k=>$val)
+        {
+            $data[$k]['update'] = time_tran($val['update']);
+            $data[$k]['merchant'] = $val['merchant'];
+            $data[$k]['id'] = $val['id'];
+            $data[$k]['cid'] = $val['cid'];
+            $data[$k]['shopimg'] = $val['shopimg'];
+        }
+
+        echo json_encode($data);
+    }
+
+    //商家通讯录详情
+    public function booksdetail($id=0)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $temp = Book::get($id);
         //判断类目是否存在
         if(empty($temp))
         {
-            $this->error('要查看的类目不存在');
+            $this->error('要查看的商家通讯录不存在');
         }
-        $temp['level'] = $level;
+
+        //获取会员信息
+        $mid= 1;
+
+        //检查用户余额并扣除商家通讯录单价
+        $this->delMoneyByBooks($temp, $mid);
+
+        $temp['update'] = time_tran($temp['update']);
         $this->assign('temp', $temp);
 
-        $catelist = Category::all(['pid'=>$cid]);
-        $this->assign('catelist', $catelist);
 
-        $cat = new Category();
-        $ids = $cat->getAllChildcateIds($cid);
-
-        //信息列表
-        $cateart = Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit(6)->select();
+        //更多信息
+        $cateart = Cateart::where('aid', $aid)->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -715,7 +760,8 @@ class Index extends Controller
         }
         $this->assign('cateart', $cateart);
 
-        return view('bookslist');
+
+        return view('booksdetail');
     }
 
 
@@ -1428,7 +1474,7 @@ class Index extends Controller
     }
 
 
-    //检查用户余额并扣除指定金额浏览单价
+    //检查用户余额并扣除指定金额置顶单价
     public function delMoneyByCateartTop($temp)
     {
         $member =  Member::get($temp->getData('mid'));
@@ -1446,6 +1492,29 @@ class Index extends Controller
             $moneylog->mid = $temp->getData('mid');
             $moneylog->money = - $sysinfo['stickprice'];
             $moneylog->msg = '浏览置顶'.$temp['title']."减少余额";
+            $moneylog->save();
+        }
+    }
+
+
+    //检查用户余额并扣除指定金额商家通讯录单价
+    public function delMoneyByBooks($temp,$mid)
+    {
+        $member =  Member::get($mid);
+        $sysinfo = Sysinfo::get(1);
+        if($member['money'] <= $sysinfo['shopprice'] )
+        {
+            $this->error('发布用户余额不足');
+        }else{
+            //减去指定
+            $member->money = $member->money - $sysinfo['shopprice'];
+            $member->save();
+
+            $moneylog = new MoneyLog();
+            $moneylog->update = time();
+            $moneylog->mid = $mid;
+            $moneylog->money = - $sysinfo['stickprice'];
+            $moneylog->msg = '浏览商家通讯录'.$temp['name']."减少余额";
             $moneylog->save();
         }
     }
