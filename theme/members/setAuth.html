@@ -23,10 +23,10 @@
                         <select class="form-control" id="category" name="cid">
                             <option value="0">选择类目管理</option>
                             {volist name="category" id="vo"}
-                            {if $vo.level==1}
-                            <optgroup label='{$vo.name}'></optgroup>
-                            {else}
+                            {if $vo.level==0}
                             <option value="{$vo.id}" {if $temp.cid == $vo.id}selected{/if}>{$vo.name}</option>
+                            {else}
+                            <optgroup label='{$vo.name}'></optgroup>
                             {/if}
                             {/volist}
                         </select>

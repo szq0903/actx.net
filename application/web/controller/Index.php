@@ -764,6 +764,143 @@ class Index extends Controller
         return view('booksdetail');
     }
 
+    //周边留言
+    public function messageslist()
+    {
+
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $message = Message::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
+
+        foreach ($message as $k=>$val)
+        {
+            $message[$k]['update'] = time_tran($val['update']);
+        }
+
+        $this->assign('list', $message);
+        return view('messageslist');
+    }
+
+    //加载周边留言
+    public function messageslistAjax($pid)
+    {
+        $this->checkCookie();
+
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+
+        $message = Message::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+
+        $data = array();
+        foreach ($message as $k=>$val)
+        {
+            $data[$k]['update'] = time_tran($val['update']);
+            $data[$k]['id'] = $val['id'];
+            $data[$k]['name'] = $val['name'];
+            $data[$k]['aid'] = $val['aid'];
+            $data[$k]['pro'] = $val['pro'];
+        }
+        echo json_encode($data);
+    }
+
+    //商家通讯录详情
+    public function messagesdetail($id=0)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $temp = Message::get($id);
+        //判断类目是否存在
+        if(empty($temp))
+        {
+            $this->error('要查看的周边留言不存在');
+        }
+
+        //获取会员信息
+        $mid= 1;
+
+        //检查用户余额是否为空
+        $member = Member::get(['id' => $mid]);
+        if($member['money'] <= 0)
+        {
+            $this->error('您的余额不足，请充值后再试！');
+        }
+
+        $temp['update'] = time_tran($temp['update']);
+        $this->assign('temp', $temp);
+
+        return view('messagesdetail');
+    }
+
+    //认证
+    public function auth()
+    {
+
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+        if($member['status'] == 1)
+        {
+            $this->error('会员信息已认证！');
+        }
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        $val = array(
+            'itemname'=>'营业执照',
+            'fieldname'=>'zj',
+            'dtype'=> 'img',
+            'vdefault'=> '',
+            'url'=>'/web/index/addimg/f/upzj.html'
+        );
+
+        $arr['html'] = $form->fieldToForm($val,'form-control',$val['fieldname']);
+
+        $arr['itemname'] = $val['itemname'];
+        $arr['fieldname'] = $val['fieldname'];
+
+        $formhtml[] = $arr;
+
+        $this->assign('formhtml',$formhtml);
+
+
+
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $member['zj'] = Request::instance()->post($val['zj']);
+            $member->update = time();
+            $member->save();
+            $this->success('添加成功！');
+        }
+
+        $this->assign('formhtml',$formhtml);
+        return view('');
+    }
 
     //投诉
     public function complaint()
@@ -809,7 +946,6 @@ class Index extends Controller
     {
         return view('disclaimer');
     }
-
 
     //用户中心
     public function member()
@@ -1424,7 +1560,8 @@ class Index extends Controller
             $file = request() -> file($f);
         }
 
-		// 移动到框架应用根目录/public/uploads/ 目录下
+
+        // 移动到框架应用根目录/public/uploads/ 目录下
 		$file->validate(['size'=>1024*1024*16,'ext'=>'jpg,png,gif']);
 		$info = $file->rule('md5')->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'images');
 

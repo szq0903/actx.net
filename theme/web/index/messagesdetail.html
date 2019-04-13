@@ -2,7 +2,7 @@
 <html lang="en" data-dpr="1" style="font-size: 42.5px;">
 <head>
 <meta charset="UTF-8">
-<title>爱臣同乡-{$temp.merchant}</title>
+<title>爱臣同乡-{$temp.name}</title>
 <meta name="keywords" content="{$area.name}招聘网,{$area.name}找工作,{$area.name}求职">   
 <meta name="descripiton" content="爱臣同乡{$area.name}招聘求职频道是专业的{$area.name}招聘求职信息查询和发布平台,提供海量{$area.name}招聘求职信息,爱臣同乡{$area.name}招聘求职网是您找工作的明智选择."/>
 <meta http-equiv="Content-Type" content="text/html;">
@@ -49,47 +49,24 @@
 			<div class="head-con detail-head-con">
 				<div class="user-con">
 					<div class="head-left">
-						<h3 class="head-title">{$temp.merchant}</h3>
+						<h3 class="head-title">{$temp.name}</h3>
 						<div class="head-time">{$temp.update}发布</div>
 					</div>
 
 				</div>
 				<div class="detail-con">
-					{if !empty($temp.shopimg)}
-					<p class="detail-text"><img src="{$temp.shopimg}"> </p>
-					{/if}
-					<p class="detail-text">商家名称：{$temp.merchant}</p>
-					<p class="detail-text">商家类型：{$temp.type}</p>
+					<p class="detail-text">地区：{$temp.aid}</p>
 					<p class="detail-text">姓名：{$temp.name}</p>
 					<p class="detail-text">电话：{$temp.phone}</p>
-					<p class="detail-text">微信：{$temp.wechat}</p>
-					<p class="detail-text">地址：{$temp.address}</p>
+					<p class="detail-text">产品名：{$temp.pro}</p>
+					<p class="detail-text">产品描述：{$temp.description}</p>
 
 
 					<div class="detail-text">
 						联系我时，请说是在爱臣同乡看到的，谢谢
 					</div>
 
-					{if isset($comments)}
-					<div class="comment-wrap">
-						<h3 class="comment-header">最新评论<span></span></h3>
-						<ul class="comment-ul">
-							{volist name="comments" id="vo" mod="2" key="k" }
-						
-							<li class="comment-item">
-								<div class="comment-logo">
-									<img src="{$vo.headimgurl}">
-								</div>
-								<div class="comment-detail">
-									<h3 class="comment-title">{$vo.nickname}<span class="comment-time">{$vo.addtime}</span></h3>
-									<p class="comment-content">{$vo.comment}</p><div class="comment-info"></div>
-								</div>
-							</li>
-							{/volist}
-						</ul>
-					
-					</div>
-					{/if}
+
 					<ul class="img-list">
 						{if isset($agent.er)}
 						<li><img src="{$agent.er}"></li>
@@ -110,29 +87,7 @@
 		
 		</div>
 		
-	
-		<div class="detail-list-con">
-			<h3 class="detail-list-title">更多信息</h3>
-			<ul class="detail-ul">
-				{volist name="cateart" id="vo" mod="2" key="k" }
-				<li data-id="{$vo.id}">
-					<div class="detail-link">
-						<div class="detail-content">{$vo.title}</div>
-						<div class="list-img-con">
-							<ul class="list-img-ul">
-								{if $vo.imgs_num > 0}
-								{volist name="vo['imgs']" id="img" length='3'}
-								<li class="list-img-item"><img src="{$img}"></li>
-								{/volist}
-								{/if}
-							</ul>
-						</div>
-						<span class="detail-time">{$vo.update}</span>
-					</div>
-				</li>
-				{/volist}
-			</ul>
-		</div>
+
 		
 
 		<div class="code-module hide">

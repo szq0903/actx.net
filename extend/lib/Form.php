@@ -177,12 +177,18 @@ class Form {
         }
         $field['vdefault'] = str_replace('\\','/',$field['vdefault']);
 
+	    if(empty($field['url']))
+        {
+            $field['url'] = "/categorys/addimg/f/up{$field['fieldname']}.html";
+        }
+
+
 		$html = "<input id='{$id}' name='{$field['fieldname']}' value='{$field['vdefault']}' type='hidden'>
                 <input id='file-{$id}' name='up{$id}' value='{$field['vdefault']}' type='file' data-min-file-count='1'>
                 <script>
 	                $('#file-{$id}').fileinput({
                         language: 'zh',
-		                uploadUrl: '/categorys/addimg/f/up{$field['fieldname']}.html',
+		                uploadUrl: '{$field['url']}',
                         allowedFileExtensions : ['jpg', 'png','gif'],
 		                previewFileType:'any',
 		                dropZoneEnabled: false,

@@ -226,7 +226,7 @@ class Members extends Controller
         //处理select
         $category = array();
         $psort = new Category();
-        $le = 2;
+        $le = 3;
         $psort->getTreeLevel(0,$category, '  ',$le);
         $this->assign('category',$category);
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>周边留言</title>
+    <link href="/template/css/style.default.css" rel="stylesheet">
+    <link href="/template/css/jquery.datatables.css" rel="stylesheet">
+    <link href="/template/css/prettyPhoto.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="/theme/web/js/jquery.min.js"></script>
+
+    <script src="/template/fileinput/fileinput.js" type="text/javascript"></script>
+    <script src="/template/fileinput/zh.js" type="text/javascript"></script>
+    <link href="/template/fileinput/fileinput.css" media="all" rel="stylesheet" type="text/css">
+</head>
+
+<style>
+    body{
+        background-color: #fff;
+        padding-bottom: 50px;
+    }
+    .form-bordered .form-group{
+        border-top:none;
+        padding: 10px 0;
+    }
+    .form-control.file-caption.kv-fileinput-caption{
+        padding: 7px;
+    }
+    .footbar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 300;
+        background: #fff;
+        padding: 5px 0px;
+
+    }
+    .footBtn .footer-follow-btn {
+        background: #f1a829;
+        margin-right: .15625rem;
+    }
+    .footBtn .phone-module {
+        margin-left: .15625rem;
+        background: #ff552e;
+    }
+    .footBtn .footer-follow-btn{
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        height: 1.1875rem;
+        line-height: 1.1875rem;
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+    }
+</style>
+<body>
+<form method="post" name="myForm" class="form-horizontal form-bordered">
+
+    {volist name="formhtml" id="vo" mod="2"}
+    <div class="form-group">
+        <label class="col-sm-3 control-label">{$vo['itemname']}：</label>
+        <div class="col-sm-6"  {if $vo['itemname']=='内容'}style="position: initial"{/if} st>
+        {$vo['html']}
+    </div>
+    </div>
+    {/volist}
+
+    <div class="footbar">
+        <div class="col-xs-6">
+            <button class="btn btn-primary btn-block" type="submit">提交</button>
+        </div>
+        <div class="col-xs-6">
+            <button class="btn btn-default btn-block" type="reset">取消</button>
+        </div>
+    </div>
+</form>
+
+
+</div>
+
+
+
+</body>
+</html>
+
+
