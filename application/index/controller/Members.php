@@ -79,8 +79,7 @@ class Members extends Controller
 			$member->headimgurl = Request::instance()->post('headimgurl');
 			$member->phone    	= Request::instance()->post('phone');
             $member->aid    	= Request::instance()->post('aid');
-            $member->hid    	= Request::instance()->post('hid');
-            $member->cid    	= Request::instance()->post('cid');
+
             $member->status    	= Request::instance()->post('status');
             $member->money    	= Request::instance()->post('money');
             $member->zj    	= Request::instance()->post('zj');
@@ -255,8 +254,7 @@ class Members extends Controller
 			$member->headimgurl = Request::instance()->post('headimgurl');
 			$member->phone    	= Request::instance()->post('phone');
             $member->aid    	= Request::instance()->post('aid');
-            $member->hid    	= Request::instance()->post('hid');
-            $member->cid    	= Request::instance()->post('cid');
+
             $member->status    	= Request::instance()->post('status');
             $member->money    	= Request::instance()->post('money');
             $member->zj    	= Request::instance()->post('zj');

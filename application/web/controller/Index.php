@@ -887,18 +887,78 @@ class Index extends Controller
         $this->assign('formhtml',$formhtml);
 
 
-
-
         //是否为提交表单
         if (Request::instance()->isPost())
         {
             $member['zj'] = Request::instance()->post($val['zj']);
-            $member->update = time();
             $member->save();
             $this->success('添加成功！');
         }
 
         $this->assign('formhtml',$formhtml);
+        return view('');
+    }
+
+    //发布信息
+    public function headart()
+    {
+        //获取会员信息
+        $mid= 1;
+        $member = Member::get(['id' => $mid]);
+        if(empty($member['hid']))
+        {
+            $this->error('没有开通栏目，请联系站长！');
+        }
+
+        if($member['money'] <= 0)
+        {
+            $this->error('您的余额不足，请充值后再试！');
+        }
+        exit;
+        //预定义模块
+        $mould= Mould::get(['table'=>'headart']);
+        $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
+
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $headart           = new Headart();
+            foreach ($field as $val)
+            {
+                if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'recommend' || $val['fieldname'] == 'click'){
+                    continue;
+                }else{
+                    $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                }
+
+            }
+            $headart->mid = 1;
+            $headart->update = time();
+            $headart->save();
+            $this->success('添加成功！');
+        }
+
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        foreach ($field as $val)
+        {
+
+            if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'recommend' || $val['fieldname'] == 'click'){
+                continue;
+            } else {
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }
+
+            $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
+
+            $formhtml[] = $arr;
+        }
+        $this->assign('formhtml',$formhtml);
+
         return view('');
     }
 
