@@ -651,7 +651,7 @@ class Index extends Controller
         $aid = $this->aid;
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
 
         //处理地区
@@ -690,7 +690,7 @@ class Index extends Controller
         $this->checkCookie();
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
 
         if($type < 0)
@@ -736,7 +736,8 @@ class Index extends Controller
         }
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
+
 
         //检查用户余额并扣除商家通讯录单价
         $this->delMoneyByBooks($temp, $mid);
@@ -772,7 +773,7 @@ class Index extends Controller
         $aid = $this->aid;
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
 
         //处理地区
@@ -800,7 +801,7 @@ class Index extends Controller
         $this->checkCookie();
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
 
         $message = Message::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
@@ -839,7 +840,7 @@ class Index extends Controller
         }
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
 
         //检查用户余额是否为空
         $member = Member::get(['id' => $mid]);
@@ -859,7 +860,7 @@ class Index extends Controller
     {
 
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
         if($member['status'] == 1)
         {
@@ -887,10 +888,13 @@ class Index extends Controller
         $this->assign('formhtml',$formhtml);
 
 
+
+
         //是否为提交表单
         if (Request::instance()->isPost())
         {
             $member['zj'] = Request::instance()->post($val['zj']);
+            $member->update = time();
             $member->save();
             $this->success('添加成功！');
         }
@@ -899,22 +903,22 @@ class Index extends Controller
         return view('');
     }
 
-    //发布信息
+    //头条文章
     public function headart()
     {
         //获取会员信息
-        $mid= 1;
+        $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
         if(empty($member['hid']))
         {
-            $this->error('没有开通栏目，请联系站长！');
+            $this->error('头条栏目没有授权，请联系站长开通！');
         }
 
         if($member['money'] <= 0)
         {
-            $this->error('您的余额不足，请充值后再试！');
+            $this->error('您的余额不足，请联系站长充值！');
         }
-        exit;
+
         //预定义模块
         $mould= Mould::get(['table'=>'headart']);
         $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
@@ -926,19 +930,22 @@ class Index extends Controller
             $headart           = new Headart();
             foreach ($field as $val)
             {
-                if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'recommend' || $val['fieldname'] == 'click'){
+                if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
                     continue;
                 }else{
                     $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
                 }
-
             }
-            $headart->mid = 1;
+            $headart->sid = $member['hid'];
+            $headart->mid = $member['id'];
+            $headart->aid = $member['aid'];
+            $headart->click = 0;
+            $headart->rank = 0;
+            $headart->recommend = 0;
             $headart->update = time();
             $headart->save();
             $this->success('添加成功！');
         }
-
 
         //初始化表单
         $form = new Form();
@@ -946,9 +953,14 @@ class Index extends Controller
         foreach ($field as $val)
         {
 
-            if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'recommend' || $val['fieldname'] == 'click'){
+           if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
                 continue;
-            } else {
+            }elseif($val['fieldname'] == 'body')
+            {
+                $val ['url']='/web/index/addimg/f/img.html';
+                $val['islink'] = $member['islink'];
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }else {
                 $arr['html'] = $form->fieldToForm($val,'form-control');
             }
 
@@ -958,7 +970,76 @@ class Index extends Controller
             $formhtml[] = $arr;
         }
         $this->assign('formhtml',$formhtml);
+        return view('');
+    }
 
+    //发布类目信息
+    public function cateart()
+    {
+        //获取会员信息
+        $mid = $this->getMidByOpenid();
+        $member = Member::get(['id' => $mid]);
+        if(empty($member['hid']))
+        {
+            $this->error('头条栏目没有授权，请联系站长开通！');
+        }
+
+        if($member['money'] <= 0)
+        {
+            $this->error('您的余额不足，请联系站长充值！');
+        }
+
+        //预定义模块
+        $mould= Mould::get(['table'=>'cateart']);
+        $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
+
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $cateart           = new Cateart();
+            foreach ($field as $val)
+            {
+                if ($val['fieldname'] == 'cid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
+                    continue;
+                }else{
+                    $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                }
+            }
+            $cateart->cid = $member['cid'];
+            $cateart->mid = $member['id'];
+            $cateart->aid = $member['aid'];
+            $cateart->click = 0;
+            $cateart->rank = 0;
+            $cateart->recommend = 0;
+            $cateart->update = time();
+            $cateart->save();
+            $this->success('添加成功！');
+        }
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        foreach ($field as $val)
+        {
+
+            if ($val['fieldname'] == 'cid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
+                continue;
+            }elseif($val['fieldname'] == 'body')
+            {
+                $val['url']='/web/index/addimg/f/img.html';
+                $val['islink'] = $member['islink'];
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }else {
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }
+
+            $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
+
+            $formhtml[] = $arr;
+        }
+        $this->assign('formhtml',$formhtml);
         return view('');
     }
 
@@ -1217,30 +1298,11 @@ class Index extends Controller
 
 
 		//获取openid
-		$wechatOauth = new WechatOauth();
-        $wechat = $wechatOauth->getOpenid();
-		if(is_array($wechat)){
-			$openid = $wechat['openid'];
-		}else{
-			$openid = $wechat;
-		}
+        $mid = $this->getMidByOpenid();
+        $member = Member::get($mid);
 
-		//没有记录openid时记录到数据库
-		$meb = Member::get(['openid' => $openid]);
-		if(empty($meb))
-		{
-			$member = new member;
-			$member->nickname	= $wechat['nickname'];
-			$member->openid		= $wechat['openid'];
-			$member->headimgurl	= $wechat['head_pic'];
-			$member->addtime	= time();
-			$member->save();
-			$mid = $member->id;
-			$this->assign('member', $member);
-		}else{
-			$mid = $meb->id;
-			$this->assign('member', $meb);
-		}
+        $this->assign('member', $member);
+
 
 
 		//是否为提交表单
@@ -1278,28 +1340,7 @@ class Index extends Controller
 		$this->assign('id', $id);
 
 		//获取openid
-		$wechatOauth = new WechatOauth();
-        $wechat = $wechatOauth->getOpenid();
-		if(is_array($wechat)){
-			$openid = $wechat['openid'];
-		}else{
-			$openid = $wechat;
-		}
-
-		//没有记录openid时记录到数据库
-		$meb = Member::get(['openid' => $openid]);
-		if(empty($meb))
-		{
-			$member = new member;
-			$member->nickname	= $wechat['nickname'];
-			$member->openid		= $wechat['openid'];
-			$member->headimgurl	= $wechat['head_pic'];
-			$member->addtime	= time();
-			$member->save();
-			$mid = $member->id;
-		}else{
-			$mid = $meb->id;
-		}
+        $mid = $this->getMidByOpenid();
 
 		$res = Resume::get(['mid'=>$mid]);
 
@@ -1366,6 +1407,8 @@ class Index extends Controller
 		$this->assign('agent', $agent);
 
 		//获取openid
+
+
 		$wechatOauth = new WechatOauth();
         $wechat = $wechatOauth->getOpenid();
 		if(is_array($wechat)){
@@ -1430,29 +1473,8 @@ class Index extends Controller
 
 
 		//获取openid
-		$wechatOauth = new WechatOauth();
-        $wechat = $wechatOauth->getOpenid();
-		if(is_array($wechat)){
-			$openid = $wechat['openid'];
-		}else{
-			$openid = $wechat;
-		}
-		//没有记录openid时记录到数据库
-		$meb = Member::get(['openid' => $openid]);
-		if(empty($meb))
-		{
-			$member = new member;
-			$member->nickname	= $wechat['nickname'];
-			$member->openid		= $wechat['openid'];
-			$member->headimgurl	= $wechat['head_pic'];
-			$member->addtime	= time();
-			$member->save();
-			$mid = $member->id;
-
-		}else{
-			$mid = $meb->id;
-			$member = $meb;
-		}
+		$mid = $this->getMidByOpenid();
+        $member = Member::get($mid);
 
 		//是否为提交表单
 		if (Request::instance()->isPost())
@@ -1731,5 +1753,34 @@ class Index extends Controller
         }
 
         return $data;
+    }
+
+    //获取openid
+    public function getMidByOpenid()
+    {
+        //获取openid
+        $wechatOauth = new WechatOauth();
+        $wechat = $wechatOauth->getOpenid();
+        if(is_array($wechat)){
+            $openid = $wechat['openid'];
+        }else{
+            $openid = $wechat;
+        }
+
+        //没有记录openid时记录到数据库
+        $meb = Member::get(['openid' => $openid]);
+        if(empty($meb))
+        {
+            $member = new member;
+            $member->nickname	= $wechat['nickname'];
+            $member->openid		= $wechat['openid'];
+            $member->headimgurl	= $wechat['head_pic'];
+            $member->addtime	= time();
+            $member->save();
+            $mid = $member->id;
+        }else{
+            $mid = $meb->id;
+        }
+        return $mid;
     }
 }

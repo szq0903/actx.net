@@ -228,6 +228,10 @@ class Form {
 		$class=$class=='' ? $class : "class='$class'";
 		$id=$id=='' ? $id : "id='$id'";
 
+        if(empty($field['url']))
+        {
+            $field['url'] = "/uploads/addimg/f/img.html";
+        }
 
 		$html = '<div class="zx-eidtor-container" id="editorContainer"></div>';
         $html .= '<input type="hidden" name="'.$field['fieldname'].'" value=\''.$field['vdefault'].'\' class="zx-eidtor">';
@@ -242,7 +246,7 @@ var zxEditor = new ZxEditor('#editorContainer', {
   // 编辑框左右边距
   //padding: 13,
   ";
-        if(isset($field['islink']))
+        if(!empty($field['islink']))
         {
             $html .= "
   //是否显示底部工具栏（图片、标签、链接添加等图标）。
@@ -339,7 +343,7 @@ function upload (blob, callback) {
     formData.append('img', blob,blob.size+'.jpg');
     $.ajax({
     type : 'POST',
-    url : '/uploads/addimg/f/img.html',
+    url : '{$field['url']}',
     data : formData,
     async: false,
     cache: false,
