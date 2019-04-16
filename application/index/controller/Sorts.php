@@ -13,7 +13,7 @@ use app\index\model\Sorttype;
  */
 class Sorts extends Controller
 {
-	public $title='爱臣同乡管理系统';
+	public $title='爱臣推广管理系统';
 
 
 	public function _initialize()

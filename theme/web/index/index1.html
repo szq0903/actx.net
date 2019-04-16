@@ -2,9 +2,9 @@
 <html lang="en" data-dpr="1">
 <head>
 <meta charset="UTF-8">
-<title>爱臣同乡-{$area.name}</title>
+<title>爱臣推广-{$area.name}</title>
 <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
-<meta name="Description" content="爱臣同乡{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣同乡{$area.name}-专业的乡镇生活信息服务平台.">
+<meta name="Description" content="爱臣推广{$area.name}分类信息网,为你提供招聘求职,房产交易,车辆交易,物品租赁,交友等分类内容,您可以随时免费发布,查阅信息咨询,爱臣推广{$area.name}-专业的乡镇生活信息服务平台.">
 <meta name="Keywords" content="{$area.name}分类信息,{$area.name}生活服务平台">
 <meta http-equiv="Content-Type" content="text/html;">
 <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
@@ -34,7 +34,7 @@
 					<div class="code-con">
 						<span class="code-close"></span>
 						<div class="code-detail">
-							<h3 class="code-title">长按或扫一扫二维码，关注爱臣同乡{$area.name}</h3>
+							<h3 class="code-title">长按或扫一扫二维码，关注爱臣推广{$area.name}</h3>
 							<span class="code-img">
 								<img src="{$agent.qcode}" alt="本站还没有站长请联系站长">
 							</span>
@@ -49,33 +49,58 @@
 
 <div class="entrance-wrap">
 	<div class="swipe-wrap">
-		<div class="react-swipe-container swipe-content" style="overflow: hidden; visibility: visible; position: relative;">
-			<div style="overflow: hidden; position: relative; width: 850px;">
-				<div class="swipe-list" data-index="0" style="float: left; width: 425px; position: relative; transition-property: transform; left: 0px; transition-duration: 300ms; transform: translate(0px, 0px) translateZ(0px);">
-				
-					{volist name="sort" id="vo" mod="2" key="k" }
-					<li data-sid="{$vo.id}">
-						<div class="user-logo-con">
-							<span class="user-detail-logo homepage_icon{$vo.rank}"></span>
-						</div>
-						<span class="user-detail-name">{$vo.name}</span>
-					</li>
-					{if $k ==10}
-				</div>
-				<div class="swipe-list" data-index="1" style="float: left; width: 425px; position: relative; transition-property: transform; left: -425px; transition-duration: 300ms; transform: translate(425px, 0px) translateZ(0px);">
-					{/if}
-					{/volist}
-				</div>
+
+	<style>
+		.react-swipe-container {
+			width: 100%;
+			height: auto;
+			margin-left: auto;
+			margin-right: auto;
+			margin: 0 auto;
+			position: relative;
+			overflow: hidden;
+			list-style: none;
+			padding: 0;
+			z-index: 1;
+		}
+	</style>
+		<div class="react-swipe-container">
+			<div class="swiper-wrapper ">
+				{volist name="sort" id="vo" mod="2" key="k" }
+				<li class="swiper-slide" data-sid="{$vo.id}">
+					<div class="user-logo-con">
+						<span class="user-detail-logo homepage_icon{$vo.rank}"></span>
+					</div>
+					<span class="user-detail-name">{$vo.name}</span>
+				</li>
+				{/volist}
+
 			</div>
+			<!-- Add Pagination -->
 		</div>
 		<div class="swipe-tip-con"><span class="on"></span><span class=""></span></div>
-	</div>
+
+	<script>
+        var reactswiper = new Swiper('.react-swipe-container', {
+            slidesPerView: 5,//一行显示3个
+            slidesPerColumn: 2,//显示2行
+            slidesPerColumnFill : 'row',
+            slidesPerGroup : 10,
+            pagination: {
+                el: '.swipe-tip-con',
+                clickable: true,
+            },
+        });
+
+
+	</script>
+
 	<div class="headlines-con">
 		<div class="headlines-image"></div>
 		<div class="headlines-detail swiper-container">
 			<div class="swiper-wrapper">
 				{volist name='headart' id='vo'}
-				<li class="swiper-slide">{$vo.title}</li>
+				<li class="swiper-slide" data-id="{$vo.id}">{$vo.title}</li>
 				{/volist}
 			</div>
 		</div>
@@ -238,7 +263,7 @@
 			window.location.href = "/web/index/select/aid/{$area.id}";
 		});
 
-		$(".swipe-list li").click(function(){
+		$(".react-swipe-container .swiper-wrapper li").click(function(){
 			var sid = $(this).data('sid');
 			window.location.href = "/web/index/getlist/aid/{$area.id}/sid/"+sid;
 		});
@@ -248,6 +273,11 @@
 			window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
 		
 		});
+
+        $(".headlines-detail .swiper-wrapper li").click(function(){
+            var id = $(this).data('id');
+            window.location.href = "/web/index/hartdetail/id/"+id;
+        });
 	});
 
 </script>

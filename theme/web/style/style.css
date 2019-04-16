@@ -826,7 +826,9 @@ a:hover{
     line-height:100px;
     bottom:100%;
     text-align:center;
-    width:100%;}
+    width:100%;
+    display: none;
+}
 .xx_list .loadmore{
     position:absolute;
     line-height: .2rem;

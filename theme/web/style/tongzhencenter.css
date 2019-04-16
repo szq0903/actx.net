@@ -393,6 +393,9 @@ body {
 .swipe-wrap .swipe-tip-con span.on {
 	opacity: 1
 }
+.swipe-wrap .swipe-tip-con span.swiper-pagination-bullet-active {
+	opacity: 1
+}
 .homepage_icon1 {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABMCAMAAADwSaEZAAAAyVBMVEX/XDEAAAD/5N7/9fLROxj/1Mn/uaj/jXD/e1r/c1D/XDH+6eX/9/X/7+v/3tb/zcH/x7j/gGHROxj/XDHROxj/XDH/6eT/z8T/sZ//rpr/nIX/mYD/bUn/Zj/ROxj////2VSz//fz/+fj6c1P/y7/7gGL3WTH4aUb4ZED/5N7+sZ7+q5f9ooz/8e7/7en76uf+u6zuq578jnT6hWjdZU3WSy7/2tD+w7T8k3n/4Nn20sr0x777nITnkYDmi3nlh3T5elv4YDrSPx0iPztUAAAAHnRSTlPMAPX78e/m2dTSwf38+fLs6tWtiice9u7j4t3c0M64FQbeAAACW0lEQVRYw+3U13ajMBCAYeLeu9OjGQHGuPeSvsn7P9QKy9lgG+Sh7FXyX3LxndEZCe0ixgTWbha0yBWabQdrSyo61xZYU4uppsAKcWEFgWmx9Yv9LCybSV+WOC9dpjPZaFi9lgRXpVo9NJZLw0npXDgsw8EjngmB5SvgUyUfFMuVwbdyLhiWS4KiZC4Idl8EZcX7AFgFzlShY9ewT+8bFv7LMvo67LumYnkdZCMDj/pTApmeJ2JVEJk9gDmetIV9VRqW5wCwEVMM0SNzPe866+F5EpYBkY2KOiDKkLDy7pSGAuuCqEzB6iDr+1H2YAROdQJ2I63HDz/s4xF23RCwKjhxxTENLvdJwBLgtEFFG3BKEDD5xOcqbC6fOwGT17+L57YJOgGDXRb2gPemi0NlMe1x6KEFTpyAydeHKCc03ZYpJ0IkHzOxx5zbxMdTNzYdc4DRAJG8gJrEVEmsRsBuqdgtAXvgNIw/EDDtyo31h9uOYVuWbXS2w74bu9IoWNaNwXdHX7MUTO6z8/Xncuf+mtBo2B0QuqNgcrSzJTQqlj2PZcmYlj5npTVvDD3q6mpL76JHPhgO1dgQg2DWWmWtMRCGhq44pBEQwxd/7AWDYmj6WSYGx+yxtzW2Q2C44F4WX2AYDAde2ABVGPPv+dR6Zv6psVXx2CquQmNsqR9a+pKFx9j7IfbOomBs5rZmLBr2+fRtPX1GxNhq8mVNViwqxpZcWnzJomPsTWJvjIgRljBj8WDsdTJ5ZTSM1i/2v7BUXFZKYI24sIbAWqmYBmsJ7KLVSMVANVoXAouxv5R6mXNSpFkrAAAAAElFTkSuQmCC)
 }
@@ -454,7 +457,7 @@ body {
 .homepage_icon1100000 {
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABECAMAAAALOLO9AAAAYFBMVEUYu6QZu6Qbv6QZu6QAAAAYu6OQ4NSL4NMbvaV/284zxK8pwaqD3dBm1MSH3tF62sxf0cB22cpIy7cgvqdx18hb0b88xrIkv6lr1cVg0sJUzrxQzbpAyLQuw61Xz706xrFoyPi1AAAABXRSTlPmphztAPMTpaIAAAHYSURBVFjD7djtkoIgFIBhauMAKpDfaWr3f5ebbYXEQXJydmZ3fH/Z4DwqSjWSw35H6EeR3f5A9l/04772ZEdXaEfIGoxRPmtjNuZfMnWTMN3mFIlnjRyit5iKwZjqqFOmbkOnPMx08Gh4PZXTY0TUIaZn8KyxrzU1IyKfZ7iASZKbkdgemWdaMFmzUCl7pJtjagZ2SXW/efA6wGeYIzglcigLcMv8TM7g7RLuZc6woM7LJNOjCSHUHJP6mAgmRWaqPPUe5vgGU2bP+W49jAozF0qpvG9rnOkhyGhrvxhlzH1i10amHDemjLCmMEOZwpz5tHTqVNOFLlGG+RlTczafE4yJIcC41QjTmeUSX+Pjihw3tJ+5IMwAgTulnSV6RhgZYCR3DtUgTOFlzFPCmf2thjAiwOTOgw4aYRTK2BNRgVWCMAwClVX7so9CGFgeQ89meQiTLFcYwujljECYAt9Tp1rhCH7DS5doI34b4lEmMUuiS9MutRc6r04Og62p3H6yOuoUNy9MhDB0erSiplh94fnhJOjP1MCpp4zZ12QYZ5JVRf314qEIjjNc/gzHdK5c3i8p9v4xyTSIltNAfZmKtM3/1N/rjdmYX3pJQVZ68bLSa6CVXkp9A9CnbQWKM/vMAAAAAElFTkSuQmCC)
 }
-.swipe-list {
+.swipe-list1 {
 	position: relative;
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -466,15 +469,13 @@ body {
 	-webkit-flex-wrap: wrap;
 	flex-wrap: wrap
 }
-.swipe-list li {
+.react-swipe-container li {
 	padding-top: .53333rem;
-	-webkit-flex-basis: 20%;
-	flex-basis: 20%
 }
-.swipe-list li .user-logo-con {
+.user-logo-con {
 	margin: 0 .4rem
 }
-.swipe-list li .user-logo-con .user-detail-logo {
+.user-logo-con .user-detail-logo {
 	position: relative;
 	display: block;
 	width: 1rem;
@@ -483,7 +484,7 @@ body {
 	background-repeat: no-repeat;
 	background-size: 1rem auto
 }
-.swipe-list li .user-logo-con .user-detail-logo i {
+.user-logo-con .user-detail-logo i {
 	position: absolute;
 	top: -.21333rem;
 	right: -.21333rem;
@@ -495,7 +496,7 @@ body {
 	font-style: normal;
 	background: #ff6356
 }
-.swipe-list li .user-detail-name {
+.user-detail-name {
 	display: block;
 	font-size: 12px;
 	color: #101010;

@@ -109,7 +109,6 @@ class Form {
                 }else{
                     $str.="<option value='$key'>$value</option>";
                 }
-
 			}
 		}
 		$str.="</select>";
@@ -168,14 +167,23 @@ class Form {
 	 */
 	public function img ($field,$class='',$id='qcode',$key=''){
 
+
+
 	    if(stripos($field['vdefault'], 'http') !== false)
         {
             $header_array = get_headers($field['vdefault'], true);
             $imagesize = $header_array['Content-Length'];
         }else{
+            /*
+            if(PHP_OS == 'WINNT' || PHP_OS == 'WIN32' || PHP_OS == 'Windows')
+            {
+                $field['vdefault'] = str_replace('\\','/',$field['vdefault']);
+            }else{
+                $field['vdefault'] = str_replace('\\','\\',$field['vdefault']);
+            }*/
+            $field['vdefault'] = str_replace('\\','/',$field['vdefault']);
             $imagesize =filesize(getcwd().$field['vdefault']);
         }
-        $field['vdefault'] = str_replace('\\','/',$field['vdefault']);
 
 	    if(empty($field['url']))
         {
