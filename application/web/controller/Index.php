@@ -68,7 +68,7 @@ class Index extends Controller
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
 
-        $headart = Headart::where('aid',$aid)->order('update','desc')->limit(6)->select();
+        $headart = Headart::order('update','desc')->limit(6)->select();
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
@@ -235,7 +235,7 @@ class Index extends Controller
         $this->assign('message', $message);
 
         //类目信息
-        $cateart1 =  Cateart::where('aid', $aid)->order('update','desc')->limit(10)->select();
+        $cateart1 =  Cateart::order('update','desc')->limit(10)->select();
         $cateart = array();
         foreach ($cateart1 as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
@@ -292,7 +292,7 @@ class Index extends Controller
         $ids = $cat->getAllChildcateIds($cid);
 
         //信息列表
-        $cateart = Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit(6)->select();
+        $cateart = Cateart::whereIn('cid',$ids)->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -307,7 +307,7 @@ class Index extends Controller
         $this->assign('cateart', $cateart);
 
         //置顶信息
-        $cateartzd = Cateart::whereIn('cid',$ids)->where('aid', $aid)->where('recommend',1)->order('update','desc')->limit(6)->select();
+        $cateartzd = Cateart::whereIn('cid',$ids)->where('recommend',1)->order('update','desc')->limit(6)->select();
         foreach ($cateartzd as $k=>$item) {
             $cateartzd[$k]['update'] = time_tran($item['update']);
 
@@ -341,12 +341,12 @@ class Index extends Controller
         $this->checkCookie();
         $aid = $this->aid;
         if($cid == 0) {
-            $cateart =  Cateart::whereOr('aid', $aid)->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+            $cateart =  Cateart::order('update','desc')->limit($pid*$this->size,$this->size)->select();
         }else{
             $cat = new Category();
             $ids = $cat->getAllChildcateIds($cid);
 
-            $cateart =  Cateart::whereIn('cid',$ids)->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, $this->size)->select();
+            $cateart =  Cateart::whereIn('cid',$ids)->order('update','desc')->limit($pid*$this->size, $this->size)->select();
         }
 
         $data = array();
@@ -410,7 +410,7 @@ class Index extends Controller
 
 
         //更多信息
-        $cateart = Cateart::where('aid', $aid)->order('update','desc')->limit(6)->select();
+        $cateart = Cateart::order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -446,9 +446,9 @@ class Index extends Controller
 
         if($sid==0)
         {
-            $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->order('update','desc')->limit($this->size)->select();
+            $headart = Headart::order('update','desc')->limit($this->size)->select();
         }else{
-            $headart = Headart::whereOr('aid', $aid)->whereOr('aid', 0)->where('sid', $sid)->order('update','desc')->limit($this->size)->select();
+            $headart = Headart::where('sid', $sid)->order('update','desc')->limit($this->size)->select();
         }
 
 
@@ -475,7 +475,7 @@ class Index extends Controller
         $aid = $this->aid;
 
 
-        $headart = Headart::whereOr('aid', $aid)->whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+        $headart = Headart::whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->size, 10)->select();
         $data = array();
         foreach ($headart as $k=>$item) {
             $data[$k]['update'] = time_tran($item['update']);
