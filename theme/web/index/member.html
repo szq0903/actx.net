@@ -29,15 +29,15 @@
 </style>
 <div class="viewport">
     <div class="user-information">
-        <div class="user-img"><img src="{$member.headimgurl}"></div>
-        <p class="user-name">{$member.nickname}</p>
+        <div class="user-img">{if empty($member.headimgurl)}<img src="/theme/web/images/avatar.png">{else}<img src="{$member.headimgurl}">{/if}</div>
+        <p class="user-name">{if !empty($member.nickname)}{$member.nickname}{/if}</p>
         <p class="user-level"></p>
     </div>
 
     <div class="user-money cf">
-        <a href="javascript:void(0)" class="yue"><strong>{$member.money}</strong><span>余额</span></a>
-        <a href="javascript:void(0)" class="jifen"><strong>{$member['browse']}</strong><span>浏览次数</span></a>
-        <a href="javascript:void(0)" class="yinyuan"><strong>{$member['sun']}</strong><span>消费金额</span></a>
+        <a href="javascript:void(0)" class="yue"><strong>{if empty($member.money)}0{else}{$member.money}{/if}</strong><span>余额</span></a>
+        <a href="javascript:void(0)" class="jifen"><strong>{if empty($member.browse)}0{else}{$member['browse']}{/if}</strong><span>浏览次数</span></a>
+        <a href="javascript:void(0)" class="yinyuan"><strong>{if empty($member.sun)}0{else}{$member['sun']}{/if}</strong><span>消费金额</span></a>
     </div>
 
     <div class="user-order cf" style="display: none">
@@ -60,7 +60,7 @@
     </div>
 
     <div class="user-common">
-        <a class="infor-center" href="/web/index/auth">商家认证<div class="infor-centernum">{if $member.status == 1}<span class="pink">已认证</span>{else}<span>未认证</span>{/if}</div><em></em></a>
+        <a class="infor-center" href="/web/index/auth">商家认证<div class="infor-centernum">{if empty($member.status) || $member.status == 0}<span>未认证</span>{else}<span class="pink">已认证</span>{/if}</div><em></em></a>
         <div class="hr"></div>
         <a class="yintai-tel" href="/web/index/headart">发布头条<em></em></a>
         <div class="hr"></div>
