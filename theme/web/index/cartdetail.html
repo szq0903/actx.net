@@ -143,8 +143,8 @@
 
 		<div class="footbar">
 			<div class="footBtn">
-				<div class="footer-follow-btn"><i></i>关注我们</div>
-				<div class="phone-module"><div class="info-btn" ><i></i>代理留言</div></div>
+				<div class="footer-follow-btn">企业认证</div>
+				<div class="phone-module"><div class="info-btn" >代理留言</div></div>
 			</div>
 		</div>
 
@@ -178,11 +178,12 @@
 		$(".code-close").click(function(){
 			$(this).parent().parent().addClass("hide").removeClass("show");
 		});
-		
-		
-		$(".footer-follow-btn").eq(0).click(function(){
-			$(".code-module").addClass("show");
-		});
+
+
+        //企业认证
+        $(".footer-follow-btn").click(function(){
+            window.location.href = "/web/index/auth";
+        });
 
         //代理留言
         $(".info-btn").click(function(){
@@ -191,7 +192,7 @@
 
 		//打开站长二维码
 		$(".follow-module .follow-btn").eq(0).click(function(){
-			$(".code-module").addClass("show");
+			//$(".code-module").addClass("show");
 		});
 		//发布文章
 		$(".follow-btn.post-btn").click(function(){
