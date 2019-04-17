@@ -550,13 +550,11 @@ class Index extends Controller
         }
 
 
-
         //初始化表单
         $form = new Form();
         $formhtml = array();
         foreach ($field as $val)
         {
-
 
             if($val['fieldname'] == 'aid')
             {
@@ -641,6 +639,126 @@ class Index extends Controller
         $this->assign('formhtml',$formhtml);
         return view('message');
     }
+
+    //游客留言
+    public function guestbook()
+    {
+        //预定义模块
+        $mould= Mould::get(['table'=>'guestbook']);
+        $field = Field::where(['mid'=>$mould->id])->order('rank')->select();
+
+        //处理select
+        $category = array();
+        $psort = new Category();
+        $le = 3;
+        $psort->getTreeLevel(0,$category, '  ',$le);
+        $this->assign('category',$category);
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $message           = new Message();
+            foreach ($field as $val)
+            {
+                $message->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+            }
+            $message->mid = 1;
+            $message->update = time();
+            $message->save();
+            $this->success('添加成功！');
+        }
+
+
+        //初始化表单
+        $form = new Form();
+        $formhtml = array();
+        foreach ($field as $val)
+        {
+
+            if($val['fieldname'] == 'aid')
+            {
+                $name = $val['fieldname'];
+                $val['fieldname'] = '';
+                $temp['aid'] = 370829104;//370829104疃里镇
+                $arr=array();
+                $area = new Area;
+                $area->getAreaTypeArr($arr,$temp['aid']);
+
+                //地区
+                //省
+                $area1 = Area::all(['level'=>1,'parent_id'=>0]);
+                $areadb1 = array();
+                foreach ($area1 as $v)
+                {
+                    $areadb1[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb1;
+                $ahtml1 = $form->fieldToForm($val,'form-control','area1',$arr[1]);
+
+                //市
+                $area2 = Area::all(['level'=>2,'parent_id'=>$arr[1]]);
+                $areadb2 = array();
+                foreach ($area2 as $v)
+                {
+                    $areadb2[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb2;
+                $ahtml2 = $form->fieldToForm($val,'form-control','area2',$arr[2]);
+
+                //县
+                $area3 = Area::all(['level'=>3,'parent_id'=>$arr[2]]);
+                $areadb3 = array();
+                foreach ($area3 as $v)
+                {
+                    $areadb3[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb3;
+                $ahtml3 = $form->fieldToForm($val,'form-control','area3',$arr[3]);
+
+                //镇
+                $area4 = Area::all(['level'=>4,'parent_id'=>$arr[3]]);
+                $areadb4 = array();
+                foreach ($area4 as $v)
+                {
+                    $areadb4[$v['id']] = $v['name'];
+                }
+                $val['vdefault'] = $areadb4;
+                $ahtml4 = $form->fieldToForm($val,'form-control','area4',$arr[4]);
+
+
+                $arr['html'] ='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml1;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml2;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml3;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .='<div class="col-sm-3">';
+                $arr['html'] .= $ahtml4;
+                $arr['html'] .= '</div>';
+
+                $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
+
+            }elseif ($val['fieldname'] == 'cid' || $val['fieldname'] == 'mid'){
+                continue;
+            } else {
+                $arr['html'] = $form->fieldToForm($val,'form-control');
+            }
+
+            $arr['itemname'] = $val['itemname'];
+            $arr['fieldname'] = $val['fieldname'];
+
+            $formhtml[] = $arr;
+        }
+        $this->assign('formhtml',$formhtml);
+        return view('');
+    }
+
 
     //商家通讯录
     public function bookslist($type=-1)

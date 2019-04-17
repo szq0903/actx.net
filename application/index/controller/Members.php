@@ -98,15 +98,14 @@ class Members extends Controller
 		//处理图片大小
 		//$file = file_get_contents($member->headimgurl);
 		//$member['imagesize'] = strlen($file);
-		$header_array = get_headers($member->headimgurl, true);
-		$member['imagesize'] = $header_array['Content-Length'];
+
+		$member['imagesize'] = getsize($member->headimgurl);
 
 		if($member->zj <> '')
         {
             if(stripos($member->zj, 'http') !== false)
             {
-                $zj_array = get_headers($member->zj, true);
-                $member['zjimagesize'] = $zj_array['Content-Length'];
+                $member['zjimagesize'] = getsize($member->zj);
             }else{
                 $member['zjimagesize'] = filesize(getcwd().$member->zj);
             }
@@ -118,11 +117,14 @@ class Members extends Controller
 
 
 		//初始化乡镇
-		$temp['aid'] = $member['aid'];//370829104疃里镇
+		$temp['aid'] = empty($member['aid']) ? 370829104:$member['aid'];//370829104疃里镇
+
 
 		$arr=array();
 		$area = new Area;
 		$area->getAreaTypeArr($arr,$temp['aid']);
+
+
 
 		$this->assign('area',$arr);
 		//地区

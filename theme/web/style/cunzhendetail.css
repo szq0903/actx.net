@@ -1659,6 +1659,16 @@ div, textarea {
 	background: url(../images/qrcode-ico.png) 30% .34375rem #f1a829 no-repeat;
 	background-size: 10% auto
 }
+.footBtn .info-btn i {
+	display: inline-block;
+	width: .53125rem;
+	height: .53125rem;
+	vertical-align: middle;
+	margin-right: 2px;
+	background: url(../images/info_ico.png) no-repeat;
+	background-size: .53125rem auto
+}
+
 .toast_wrap {
 	position: absolute;
 	width: 4.66667rem;

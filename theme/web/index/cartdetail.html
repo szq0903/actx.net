@@ -142,6 +142,7 @@
 		<div class="footbar">
 			<div class="footBtn">
 				<div class="footer-follow-btn"><i></i>关注我们</div>
+				<div class="phone-module"><div class="info-btn" ><i></i>游客留言</div></div>
 			</div>
 		</div>
 
@@ -180,6 +181,12 @@
 		$(".footer-follow-btn").eq(0).click(function(){
 			$(".code-module").addClass("show");
 		});
+
+        //发布留言
+        $(".info-btn").click(function(){
+            window.location.href = "/web/index/townpostcate/aid/{$area.id}";
+        });
+
 		//打开站长二维码
 		$(".follow-module .follow-btn").eq(0).click(function(){
 			$(".code-module").addClass("show");
@@ -220,7 +227,7 @@
 		//更多文章点击
 		$(".detail-ul li").click(function(){
 			var id = $(this).data('id');
-			window.location.href = "/web/index/detail/aid/{$area.id}/id/"+id;
+			window.location.href = "/web/index/cartdetail/aid/{$area.id}/id/"+id;
 		});
 		
 		//关闭评论
