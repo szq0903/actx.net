@@ -89,7 +89,13 @@ class Catearts extends Controller
             $cateart          = new Cateart();
             foreach ($this->field as $val)
             {
-                $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                if($val['fieldname'] == 'keywords')
+                {
+                    $lsv = Request::instance()->post($val['fieldname']);
+                    $cateart->$val['fieldname'] = str_replace("，",",",$lsv);
+                }else{
+                    $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                }
             }
             $cateart->mid = 0;
             $cateart->update = time();
@@ -239,7 +245,14 @@ class Catearts extends Controller
                 {
                     continue;
                 }
-                $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                if($val['fieldname'] == 'keywords')
+                {
+                    $lsv = Request::instance()->post($val['fieldname']);
+                    $cateart->$val['fieldname'] = str_replace("，",",",$lsv);
+                }else{
+                    $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                }
+
             }
 
             $cateart->save();

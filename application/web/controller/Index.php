@@ -411,7 +411,7 @@ class Index extends Controller
 
 
         //更多信息
-        $cateart = Cateart::order('update','desc')->limit(6)->select();
+        $cateart = Cateart::where('cid',$temp['cid'])->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
