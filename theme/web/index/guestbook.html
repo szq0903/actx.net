@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>游客留言</title>
+    <title>代理留言</title>
     <link href="/template/css/style.default.css" rel="stylesheet">
     <link href="/template/css/jquery.datatables.css" rel="stylesheet">
     <link href="/template/css/prettyPhoto.css" rel="stylesheet">
@@ -68,7 +68,7 @@
             <select class="form-control" id="category" name="cid">
                 <option value="0">选择类目管理</option>
                 {volist name="category" id="vo"}
-                {if $vo.level > 0}
+                {if $vo.level <> 0}
                 <optgroup label='{$vo.name}'></optgroup>
                 {else}
                 <option value="{$vo.id}">{$vo.name}</option>

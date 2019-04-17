@@ -1,6 +1,7 @@
 <?php
 namespace app\web\controller;
 use app\index\model\Book;
+use app\index\model\Guestbook;
 use think\Controller;
 use think\Request;
 use think\Route;
@@ -640,7 +641,7 @@ class Index extends Controller
         return view('message');
     }
 
-    //游客留言
+    //代理留言
     public function guestbook()
     {
         //预定义模块
@@ -657,14 +658,13 @@ class Index extends Controller
         //是否为提交表单
         if (Request::instance()->isPost())
         {
-            $message           = new Message();
+            $guestbook     = new Guestbook();
             foreach ($field as $val)
             {
-                $message->$val['fieldname'] = Request::instance()->post($val['fieldname']);
+                $guestbook->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
-            $message->mid = 1;
-            $message->update = time();
-            $message->save();
+            $guestbook->update = time();
+            $guestbook->save();
             $this->success('添加成功！');
         }
 
@@ -973,6 +973,97 @@ class Index extends Controller
         return view('messagesdetail');
     }
 
+    //代理留言
+    public function guestbooklist()
+    {
+
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //获取会员信息
+        $mid = $this->getMidByOpenid();
+        $member = Member::get(['id' => $mid]);
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $guestbook = Guestbook::where('cid',$member['cid'])->order('update','desc')->limit($this->size)->select();
+
+        foreach ($guestbook as $k=>$val)
+        {
+            $guestbook[$k]['update'] = time_tran($val['update']);
+        }
+
+        $this->assign('list', $guestbook);
+        return view('');
+    }
+
+    //加载周边留言
+    public function guestbookAjax($pid)
+    {
+        $this->checkCookie();
+
+        //获取会员信息
+        $mid = $this->getMidByOpenid();
+        $member = Member::get(['id' => $mid]);
+
+        $guestbook = Guestbook::where('cid',$member['cid'])->order('update','desc')->limit($pid*$this->size,$this->size)->select();
+
+        $data = array();
+        foreach ($guestbook as $k=>$val)
+        {
+            $data[$k]['update'] = time_tran($val['update']);
+            $data[$k]['id'] = $val['id'];
+            $data[$k]['name'] = $val['name'];
+            $data[$k]['aid'] = $val['aid'];
+            $data[$k]['description'] = $val['description'];
+        }
+        echo json_encode($data);
+    }
+
+    //商家通讯录详情
+    public function guestbookdetail($id=0)
+    {
+        $this->checkCookie();
+        $aid = $this->aid;
+
+        //处理地区
+        $area = Area::get($aid);
+        $this->assign('area', $area);
+
+        //代理二维码
+        $agent = Agent::get(['aid' => $aid]);
+        $this->assign('agent', $agent);
+
+        $temp = Guestbook::get($id);
+        //判断类目是否存在
+        if(empty($temp))
+        {
+            $this->error('要查看的周边留言不存在');
+        }
+
+        //获取会员信息
+        $mid = $this->getMidByOpenid();
+
+        //检查用户余额是否为空
+        $member = Member::get(['id' => $mid]);
+        if($member['money'] <= 0)
+        {
+            $this->error('您的余额不足，请充值后再试！');
+        }
+
+        $temp['update'] = time_tran($temp['update']);
+        $this->assign('temp', $temp);
+
+        return view('');
+    }
+
+
     //认证
     public function auth()
     {
@@ -1209,7 +1300,8 @@ class Index extends Controller
     //用户中心
     public function member()
     {
-        $mid  = $this->getMidByOpenid();
+        //$mid  = $this->getMidByOpenid();
+        $mid  = 1;
         $member = Member::get(['id' => $mid]);
 
         $member['browse'] = MoneyLog::where('mid',$mid)->where('money','<',"0")->count();
