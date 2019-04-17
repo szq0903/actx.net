@@ -275,7 +275,8 @@ class Catearts extends Controller
             {
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
-                $temp['aid'] = $cateart->getData('aid');//370829104疃里镇
+                $aid = $cateart->getData('aid');
+                $temp['aid'] = empty($aid) ? 370829104:$aid;//370829104疃里镇
                 $arr=array();
                 $area = new Area;
                 $area->getAreaTypeArr($arr,$temp['aid']);
