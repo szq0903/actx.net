@@ -7,7 +7,7 @@ use app\index\model\Sort;
 use app\index\model\Area;
 use app\index\model\Category;
 use app\index\model\Headsort;
-use app\index\model\Money_log;
+use app\index\model\MoneyLog;
 
 /**
  * 会员管理
@@ -181,7 +181,7 @@ class Members extends Controller
         {
             $member->money = $member->money + Request::instance()->post('addmoney');
             $member->save();
-            $mlog =   new Money_log;
+            $mlog =   new MoneyLog;
             $mlog->mid = $id;
             $mlog->money = '+'.Request::instance()->post('addmoney');
             $mlog->msg = '充值增加余额';
