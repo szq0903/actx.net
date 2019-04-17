@@ -426,7 +426,7 @@ class Index extends Controller
         $this->assign('cateart', $cateart);
 
 
-        return view('cartdetail');
+        return view('');
     }
 
 
@@ -1300,8 +1300,7 @@ class Index extends Controller
     //用户中心
     public function member()
     {
-        //$mid  = $this->getMidByOpenid();
-        $mid  = 1;
+        $mid  = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
 
         $member['browse'] = MoneyLog::where('mid',$mid)->where('money','<',"0")->count();
