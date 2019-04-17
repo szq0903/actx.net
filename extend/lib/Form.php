@@ -105,9 +105,9 @@ class Form {
 			{
 			    if($k == $key)
                 {
-                    $str.="<option value='$key' selected>$value</option>";
+                    $str.="<option value='$k' selected>$value</option>";
                 }else{
-                    $str.="<option value='$key'>$value</option>";
+                    $str.="<option value='$k'>$value</option>";
                 }
 			}
 		}
