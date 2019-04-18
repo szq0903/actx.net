@@ -59,7 +59,6 @@ class Index extends Controller
             $aid = $this->aid;
         }
 
-
         Cookie::set('aid',$aid);
         //处理地区
         $area = Area::get($aid);
@@ -68,7 +67,6 @@ class Index extends Controller
         //系统配置
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
-
         $headart = Headart::order('update','desc')->limit(6)->select();
 
         foreach ($headart as $k=>$item) {
@@ -93,6 +91,27 @@ class Index extends Controller
         $this->assign('title','系统首页-'.$this->title);
 
         return view('index');
+    }
+    public function getindexAjax($page)
+    {
+        $data = array();
+        $headart = Headart::order('update','desc')->limit($page*$this->size,$this->size)->select();
+        foreach ($headart as $k=>$item) {
+            $data[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+            $data[$k]['imgs'] = $match[1];
+            $data[$k]['imgs_num'] = count($match[1]);
+            $data[$k]['title'] = $item['title'];
+            $data[$k]['click'] = $item['click'];
+            $data[$k]['id'] = $item['id'];
+        }
+
+        echo json_encode($data);
     }
 
     public function searchs()
@@ -503,7 +522,7 @@ class Index extends Controller
         $this->checkCookie();
         $agent = Agent::get(['aid'=>$this->aid]);
         $this->assign('agent', $agent);
-        $headart = Headart::get(['id' => $id, 'aid'=>$this->aid]);
+        $headart = Headart::get(['id' => $id]);
 
 
         //判断模型是否存在
