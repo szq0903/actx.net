@@ -121,7 +121,7 @@
                             var html = ''
 
                             if (val.imgs_num >= 3) {
-                                html += '<a class="data-item  multiple-img-item" href="'+val.url+'">\n' +
+                                html += '<a class="data-item  multiple-img-item"   data-infoid="'+val.id+'">\n' +
                                     '\t<h3 class="item-title">'+val.title+'</h3>\n' +
                                     '    <div class="item-imgs">'
                                 html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
@@ -129,12 +129,12 @@
                                 html += '<div class="img-item"><img class="lazy" src="'+ val.imgs[2]+'" style="opacity: 1;"></div>'
 
                             }else if (val.imgs_num >0){
-                                html += '<a class="data-item  single-img-item" href="'+val.url+'">\n' +
+                                html += '<a class="data-item  single-img-item" data-infoid="'+val.id+'">\n' +
                                     '\t<h3 class="item-title">'+val.title+'</h3>\n' +
                                     '\t<div class="item-imgs">\n' +
                                     '        <div class="img-item"><img class="lazy" src="'+ val.imgs[0]+'" style="opacity: 1;"></div>'
                             }else{
-                                html += '<a class="data-item  default-item" href="'+val.url+'">\n' +
+                                html += '<a class="data-item  default-item" data-infoid="'+val.id+'">\n' +
                                     '    <h3 class="item-title">'+val.title+'</h3>'+
                                     '\t<div class="item-imgs">\n'
                             }
@@ -145,7 +145,6 @@
                                 '        <span class="media-time">'+ val.update +'</span>\n' +
                                 '    </div>\n' +
                                 '</a>'
-
                             $(".data-wrap").append(html);
 
                         });

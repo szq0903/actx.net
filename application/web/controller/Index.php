@@ -67,7 +67,7 @@ class Index extends Controller
         //系统配置
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
-        $headart = Headart::order('update','desc')->limit(6)->select();
+        $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->order('update','desc')->limit(6)->select();
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
@@ -94,8 +94,10 @@ class Index extends Controller
     }
     public function getindexAjax($page)
     {
+        $this->checkCookie();
+        $aid = $this->aid;
         $data = array();
-        $headart = Headart::order('update','desc')->limit($page*$this->size,$this->size)->select();
+        $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->order('update','desc')->limit($page*$this->size,$this->size)->select();
         foreach ($headart as $k=>$item) {
             $data[$k]['update'] = time_tran($item['update']);
             $match = array();
@@ -466,9 +468,9 @@ class Index extends Controller
 
         if($sid==0)
         {
-            $headart = Headart::order('update','desc')->limit($this->size)->select();
+            $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->order('update','desc')->limit($this->size)->select();
         }else{
-            $headart = Headart::where('sid', $sid)->order('update','desc')->limit($this->size)->select();
+            $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->where('sid', $sid)->order('update','desc')->limit($this->size)->select();
         }
 
 
@@ -495,7 +497,7 @@ class Index extends Controller
         $aid = $this->aid;
 
 
-        $headart = Headart::whereOr('sid', $hid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+        $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->where('sid', $hid)->order('update','desc')->limit($pid*$this->size, 10)->select();
         $data = array();
         foreach ($headart as $k=>$item) {
             $data[$k]['update'] = time_tran($item['update']);

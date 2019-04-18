@@ -92,6 +92,7 @@ class Headarts extends Controller
             {
                 $headart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
             }
+            $headart->aid = '-1';
             $headart->mid = 0;
             $headart->update = time();
             $headart->save();
@@ -123,6 +124,8 @@ class Headarts extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control','','3');
             }elseif($val['fieldname'] == 'aid')
             {
+                continue;
+                /*
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
                 $temp['aid'] = 370829104;//370829104疃里镇
@@ -189,7 +192,7 @@ class Headarts extends Controller
                 $arr['html'] .= '</div>';
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                */
             }elseif($val['fieldname'] == 'body'){
                 //开放链接
                 $val['islink'] = 1;
@@ -234,7 +237,7 @@ class Headarts extends Controller
 
             foreach ($this->field as $val)
             {
-                if($val['ishide'] ==1)//隐藏时跳过本次
+                if($val['ishide'] ==1 || $val['fieldname'] == 'aid')//隐藏时跳过本次
                 {
                     continue;
                 }
@@ -270,6 +273,8 @@ class Headarts extends Controller
 
             }elseif($val['fieldname'] == 'aid')
             {
+                continue;
+                /*
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
                 $temp['aid'] = $headart->getData('aid');//370829104疃里镇
@@ -336,7 +341,7 @@ class Headarts extends Controller
                 $arr['html'] .= '</div>';
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                */
             }elseif ($val['fieldname'] == 'recommend')
             {
                 $arr = explode(',',$val['vdefault']);
