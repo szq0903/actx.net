@@ -106,9 +106,7 @@
 <div class="xx_list">
     <div class="swiper-container2" data-cid="0" data-pid="1">
         <div class="swiper-wrapper">
-            <div class="refresh">释放刷新</div>
-
-
+            <div class="refresh" style="display: none">释放刷新</div>
             {volist name="cateart" id="vo"}
             <div class="swiper-slide">
                 <li class="tginfo-item" data-tginfoid="{$vo.id}" data-type="0">
@@ -127,8 +125,7 @@
                 </li>
             </div>
             {/volist}
-
-            <div class="loadmore">加载更多</div>
+            <div class="loadmore" style="display: none">更多信息</div>
         </div>
         <div class="swiper-scrollbar2"></div>
     </div>

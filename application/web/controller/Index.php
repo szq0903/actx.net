@@ -49,7 +49,7 @@ class Index extends Controller
         }
     }
 
-	public function index()
+	public function index($sid=0)
     {
 
         $aid = Request::instance()->param('aid');
@@ -64,10 +64,20 @@ class Index extends Controller
         $area = Area::get($aid);
         $this->assign('area', $area);
 
+        $headsort = Headsort::all();
+        $this->assign('headsort', $headsort);
+        $this->assign('sid', $sid);
+
         //系统配置
         $sysinfo = Sysinfo::get(1);
         $this->assign('sysinfo', $sysinfo);
-        $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->order('update','desc')->limit(6)->select();
+
+        if($sid==0)
+        {
+            $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->order('update','desc')->limit($this->size)->select();
+        }else{
+            $headart = Headart::whereOr('aid','-1')->whereOr('aid',$aid)->where('sid', $sid)->order('update','desc')->limit($this->size)->select();
+        }
 
         foreach ($headart as $k=>$item) {
             $headart[$k]['update'] = time_tran($item['update']);
