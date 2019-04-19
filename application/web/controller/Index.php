@@ -1242,7 +1242,7 @@ class Index extends Controller
         $member = Member::get(['id' => $mid]);
         if(empty($member['hid']))
         {
-            $this->error('头条栏目没有授权，请联系站长开通！');
+            $this->error('类目信息没有授权，请联系站长开通！');
         }
 
         if($member['money'] <= 0)
