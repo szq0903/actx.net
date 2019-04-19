@@ -29,7 +29,7 @@
 					<div class="follow-btn post-btn">发布</div>
 					<div class="follow-module">
 						<div class="follow-btn">+ 关注</div>
-						<div class="code-module hide">
+						<div class="er_box code-module hide">
 							<div class="code-con">
 								<span class="code-close"></span>
 								<div class="code-detail">
@@ -126,16 +126,20 @@
 				{/volist}
 			</ul>
 		</div>
-		
 
-		<div class="code-module hide">
+
+		<div class="zj_box code-module hide">
 			<div class="code-con">
 				<span class="code-close"></span>
 				<div class="code-detail">
-					<h3 class="code-title">长按或扫一扫二维码，关注爱臣推广{$area.name}</h3>
+					{if $temp['status'] == 0}
+					<h3 class="code-title">该企业没有通过认证</h3>
+					{else}
+					<h3 class="code-title">该企业已经通过认证</h3>
 					<span class="code-img">
-						<img src="{$agent.qcode}" alt="本站二维码">
+						<img src="{$temp['zj']}" alt="本站还没有站长请联系站长">
 					</span>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -182,7 +186,8 @@
 
         //企业认证
         $(".footer-follow-btn").click(function(){
-            window.location.href = "/web/index/auth";
+            //window.location.href = "/web/index/auth";
+            $(".zj_box").addClass("show");
         });
 
         //代理留言
@@ -192,7 +197,7 @@
 
 		//打开站长二维码
 		$(".follow-module .follow-btn").eq(0).click(function(){
-			//$(".code-module").addClass("show");
+			$(".er_box").addClass("show");
 		});
 		//发布文章
 		$(".follow-btn.post-btn").click(function(){

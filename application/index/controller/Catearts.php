@@ -98,6 +98,7 @@ class Catearts extends Controller
                 }
             }
             $cateart->mid = 0;
+            $cateart->aid = -1;
             $cateart->update = time();
             $cateart->save();
             $this->success('添加成功！');
@@ -130,6 +131,8 @@ class Catearts extends Controller
                 $arr['html'] = $form->fieldToForm($val,'form-control','','3');
             }elseif($val['fieldname'] == 'aid')
             {
+                continue;
+                /*
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
                 $temp['aid'] = 370829104;//370829104疃里镇
@@ -196,7 +199,7 @@ class Catearts extends Controller
                 $arr['html'] .= '</div>';
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                */
             }elseif($val['fieldname'] == 'body'){
                 //开放链接
                 $val['islink'] = 1;
@@ -241,7 +244,7 @@ class Catearts extends Controller
         {
             foreach ($this->field as $val)
             {
-                if($val['ishide'] ==1)//隐藏时跳过本次
+                if($val['ishide'] ==1 || $val['fieldname'] == 'aid')//隐藏时跳过本次
                 {
                     continue;
                 }
@@ -286,6 +289,8 @@ class Catearts extends Controller
 
             }elseif($val['fieldname'] == 'aid')
             {
+                continue;
+                /*
                 $name = $val['fieldname'];
                 $val['fieldname'] = '';
                 $aid = $cateart->getData('aid');
@@ -353,7 +358,7 @@ class Catearts extends Controller
                 $arr['html'] .= '</div>';
 
                 $arr['html'] .= '<input type="hidden" name="'.$name.'" value="'.$arr[4].'" id="area">';
-
+                */
             }elseif ($val['fieldname'] == 'recommend')
             {
                 $arr = explode(',',$val['vdefault']);

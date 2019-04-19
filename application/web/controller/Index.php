@@ -141,8 +141,9 @@ class Index extends Controller
         $keys = trim(Request::instance()->param('keys'));
         $this->assign('keys', $keys);
 
+
         //信息列表
-        $cateart = Cateart::where('keywords','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit(10)->select();
+        $cateart = Cateart::whereOr('aid','-1')->whereOr('aid', $aid)->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
 
         $data = getCateArtList($cateart);
         $this->assign('cateart', $data);
@@ -425,6 +426,25 @@ class Index extends Controller
         $temp->click ++;
         $temp->save();
 
+        $member =  Member::get($temp->getData('mid'));
+
+        //判断发布信息的企业是否存在
+        if(empty($member))
+        {
+            $this->error('发布信息的企业不存在');
+        }
+
+        if($member['status'] == 0)
+        {
+            $temp['status'] = 0;
+        }else{
+            $temp['status'] = $member['status'];
+            $temp['zj'] = $member['zj'];
+        }
+
+
+
+
         if($type==0)
         {
             //检查用户余额并扣除浏览单价浏览单价
@@ -441,8 +461,9 @@ class Index extends Controller
         $this->assign('temp', $temp);
 
 
+
         //更多信息
-        $cateart = Cateart::where('cid',$temp['cid'])->order('update','desc')->limit(6)->select();
+        $cateart = Cateart::where('cid',$temp->getData('cid'))->order('update','desc')->limit(6)->select();
         foreach ($cateart as $k=>$item) {
             $cateart[$k]['update'] = time_tran($item['update']);
             $match = array();
