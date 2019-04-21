@@ -188,6 +188,15 @@ a:hover{
     line-height: .16rem;
     margin-right: .266666rem;
 }
+.data-wrap .item-media .recommend {
+    display: block;
+    padding: 0 .03rem;
+    color: #ff552e;
+    font-size: .12rem;
+    line-height: .15rem;
+    border: 1px solid #ff552e;
+    border-radius: .04rem;
+}
 .data-wrap .item-media .pv_scan {
     float: left;
 }
@@ -838,6 +847,7 @@ a:hover{
     font-size: .18rem;
 }
 .tginfo-item {
+    width: 100%;
     position: relative;
     margin: 0 .15rem 0 .2rem;
     display: -webkit-box;

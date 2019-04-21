@@ -126,6 +126,52 @@
 
 
     <div class="data-wrap">
+        {volist name="headartzd" id="vo"}
+        {if $vo.imgs_num >= 3}
+        <a class="data-item  multiple-img-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-imgs">
+                {volist name="vo['imgs']" id="sub" length='3'}
+                <div class="img-item"><img class="lazy" src="{$sub}" style="opacity: 1;"></div>
+                {/volist}
+            </div>
+            <div class="item-media">
+                <span class="recommend">推荐</span>
+                <span class="author" style="display:none">{$vo.title}</span>
+                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {if $vo.imgs_num < 3 && $vo.imgs_num > 0}
+        <a class="data-item  single-img-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-imgs">
+                <div class="img-item"><img class="lazy" src="{$vo.imgs.0}" style="opacity: 1;"></div>
+            </div>
+            <div class="item-media">
+                <span class="recommend">推荐</span>
+                <span class="author">{$vo.title}</span>
+                <div class="pv_scan" style="display:none">
+                    <span class="scan_icon"></span>
+                    <span class="scan_count">{$vo.click}</span>
+                </div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {if $vo.imgs_num == 0}
+        <a class="data-item  default-item" data-infoid="{$vo.id}">
+            <h3 class="item-title">{$vo.title}</h3>
+            <div class="item-media">
+                <span class="recommend">推荐</span>
+                <div class="pv_scan"><span class="scan_icon"></span><span class="scan_count">{$vo.click}</span></div>
+                <span class="media-time">{$vo.update}</span>
+            </div>
+        </a>
+        {/if}
+        {/volist}
+
 
         {volist name="headart" id="vo"}
         {if $vo.imgs_num >= 3}

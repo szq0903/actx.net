@@ -91,8 +91,34 @@ class Index extends Controller
             $headart[$k]['imgs'] = $match[1];
             $headart[$k]['imgs_num'] = count($match[1]);
         }
-
         $this->assign('headart', $headart);
+
+
+        //置顶信息
+        $h = new Headart;
+
+        if($sid==0)
+        {
+            $headartzd = $h->whereOr('aid','-1')->whereOr('aid',$aid)->where('recommend',1)->order('update','desc')->limit($this->size)->select();
+        }else{
+            $headartzd = $h->whereOr('aid','-1')->whereOr('aid',$aid)->where('sid', $sid)->where('recommend',1)->order('update','desc')->limit($this->size)->select();
+        }
+
+
+
+        foreach ($headartzd as $k=>$item) {
+            $headartzd[$k]['update'] = time_tran($item['update']);
+            $match = array();
+            preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$item['body'],$match);
+            foreach ($match[1] as $key=>$val)
+            {
+                $match[1][$key] = str_replace('"',"",$val);
+            }
+
+            $headartzd[$k]['imgs'] = $match[1];
+            $headartzd[$k]['imgs_num'] = count($match[1]);
+        }
+        $this->assign('headartzd', $headartzd);
 
 
         $request = Request::instance();
@@ -1191,6 +1217,7 @@ class Index extends Controller
             $headart           = new Headart();
             foreach ($field as $val)
             {
+
                 if ($val['fieldname'] == 'sid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
                     continue;
                 }else{
@@ -1263,6 +1290,10 @@ class Index extends Controller
             {
                 if ($val['fieldname'] == 'cid' || $val['fieldname'] == 'mid' || $val['fieldname'] == 'aid' || $val['fieldname'] == 'click' || $val['fieldname'] == 'rank' || $val['fieldname'] == 'recommend'){
                     continue;
+                }elseif($val['fieldname'] == 'keywords')
+                {
+                    $lsv = Request::instance()->post($val['fieldname']);
+                    $cateart->$val['fieldname'] = str_replace("，",",",$lsv);
                 }else{
                     $cateart->$val['fieldname'] = Request::instance()->post($val['fieldname']);
                 }
