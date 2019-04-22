@@ -167,10 +167,10 @@ class Index extends Controller
         $keys = trim(Request::instance()->param('keys'));
         $this->assign('keys', $keys);
 
-
+        $c = new Cateart;
         //信息列表
-        $cateart = Cateart::whereOr('aid','-1')->whereOr('aid', $aid)->where('title','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
-
+        $cateart = $c->whereOr('aid','-1')->whereOr('aid', $aid)->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
+        //echo $c->getLastSql();
         $data = getCateArtList($cateart);
         $this->assign('cateart', $data);
 
@@ -186,7 +186,7 @@ class Index extends Controller
         $keys = trim(Request::instance()->param('keys'));
         $this->assign('keys', $keys);
 
-        $cateart =  Cateart::where('title','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+        $cateart =  Cateart::where('keywords','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
 
         $data = getCateArtList($cateart);
 
@@ -503,7 +503,33 @@ class Index extends Controller
         }
         $this->assign('cateart', $cateart);
 
+        $sysinfo = Sysinfo::get(1);
 
+        $wx = array();
+        $wx['appid'] = $sysinfo['appid'];
+        //生成签名的时间戳
+        $wx['timestamp'] = time();
+        //生成签名的随机串
+        $wx['noncestr'] = 'Wm3WZYTPz0wzccnW';
+        //jsapi_ticket是公众号用于调用微信JS接口的临时票据。正常情况下，jsapi_ticket的有效期为7200秒，通过access_token来获取。
+        $wx['jsapi_ticket'] = $this->wx_get_jsapi_ticket();
+
+        //分享的地址，注意：这里是指当前网页的URL，不包含#及其后面部分，曾经的我就在这里被坑了，所以小伙伴们要小心了
+        $wx['url'] = 'http://www.aichentx.com/web/index/cartdetail/aid/'.$aid .'/id/'.$id.'/type/0';
+        $string = sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", $wx['jsapi_ticket'], $wx['noncestr'], $wx['timestamp'], $wx['url']);
+
+        //生成签名
+        $wx['signature'] = sha1($string);
+
+        /*
+        注意事项
+        签名用的noncestr和timestamp必须与wx.config中的nonceStr和timestamp相同。
+        签名用的url必须是调用JS接口页面的完整URL。
+        出于安全考虑，开发者必须在服务器端实现签名的逻辑。
+        */
+
+
+        $this->assign('wx', $wx);
         return view('');
     }
 
@@ -1267,7 +1293,7 @@ class Index extends Controller
         //获取会员信息
         $mid = $this->getMidByOpenid();
         $member = Member::get(['id' => $mid]);
-        if(empty($member['hid']))
+        if(empty($member['cid']))
         {
             $this->error('类目信息没有授权，请联系站长开通！');
         }
@@ -2074,5 +2100,62 @@ class Index extends Controller
             $mid = $meb->id;
         }
         return $mid;
+    }
+
+
+    //curl获取请求文本内容
+    function get_curl_contents($url, $method ='https', $data = array()) {
+        if ($method == 'POST') {
+            //使用crul模拟
+            $ch = curl_init();
+            //禁用http
+            //允许请求以文件流的形式返回
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_DNS_CACHE_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_URL, $url);
+
+            $result = curl_exec($ch); //执行发送
+
+            curl_close($ch);
+
+        }else {
+            //使用crul模拟
+            $ch = curl_init();
+
+            //允许请求以文件流的形式返回
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            //禁用https
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $result = curl_exec($ch); //执行发送
+            curl_close($ch);
+        }
+        return $result;
+    }
+
+    //获取微信公从号access_token
+    function wx_get_token() {
+        $sysinfo = Sysinfo::get(1);
+        $AppID = $sysinfo['appid'];//AppID(应用ID)
+        $AppSecret = $sysinfo['appsecret'];//AppSecret(应用密钥)
+        $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$AppID.'&secret='.$AppSecret;
+        $res = $this->get_curl_contents($url);
+        $res = json_decode($res, true);
+        //这里应该把access_token缓存起来，至于要怎么缓存就看各位了，有效期是7200s
+        return $res['access_token'];
+    }
+
+    //获取微信公从号ticket
+    function wx_get_jsapi_ticket() {
+
+        $url = sprintf("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi", $this->wx_get_token());
+        $res = $this->get_curl_contents($url);
+        $res = json_decode($res, true);
+        //这里应该把access_token缓存起来，至于要怎么缓存就看各位了，有效期是7200s
+        return $res['ticket'];
+
     }
 }

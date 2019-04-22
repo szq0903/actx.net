@@ -73,7 +73,10 @@
                         </td>
                         
                         <td>{:date('Y-m-d',$vo.addtime)}</td>
-                        <td><a class="fa fa-edit" href="{:url('/agent/members/edit',['id'=>$vo.id])}"></a> </td>
+                        <td>
+                            <a class="fa fa-gears" title="开通" href="{:url('agent/members/setAuth',['id'=>$vo.id])}" data-toggle="modal" data-target=".bs-example-modal-photo"></a>
+                            <a class="fa fa-edit" href="{:url('/agent/members/edit',['id'=>$vo.id])}"></a>
+                        </td>
                       </tr>
                       {/volist}
                      
@@ -90,7 +93,14 @@
   </div><!-- mainpanel -->
 
 
+<div id="myModal" class="modal fade bs-example-modal-photo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
+
+        </div>
+    </div>
+</div>
 
 
 {include file="Public/footer_base" /}
@@ -102,6 +112,9 @@
   jQuery(document).ready(function(){
 	 
     jQuery("a[data-rel^='prettyPhoto']").prettyPhoto();
+    $("#myModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
   });
   
 </script>

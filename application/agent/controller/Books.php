@@ -141,6 +141,7 @@ class Books extends Controller
                 continue;
             }elseif($val['fieldname'] == 'shopimg')
             {
+                $val['url'] = '/agent/Catearts/addimg/f/upshopimg.html';
                 $arr['html'] = $form->fieldToForm($val,'form-control','shopimg');
             }elseif($val['fieldname'] == 'body'){
                 $arr['html'] = $form->fieldToForm($val,'form-control','body');
@@ -224,6 +225,7 @@ class Books extends Controller
                 $arr['html'] = makeradio($arr,$val['fieldname'],'col-sm-3',$headart->getData('type'));
             }elseif($val['fieldname'] == 'shopimg')
             {
+                $val['url'] = '/agent/Catearts/addimg/f/upshopimg.html';
                 $val['vdefault'] = $headart[$val['fieldname']];
                 $arr['html'] = $form->fieldToForm($val,'form-control','shopimg');
             }elseif($val['fieldname'] == 'body'){

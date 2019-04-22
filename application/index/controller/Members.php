@@ -217,6 +217,8 @@ class Members extends Controller
             $member->hid = Request::instance()->post('hid');
             $member->cid = Request::instance()->post('cid');
             $member->islink = Request::instance()->post('islink');
+            //平台开通固定为疃里镇
+            $member->aid = 370829104;
             $member->save();
             $this->success('开通权限成功！');
         }

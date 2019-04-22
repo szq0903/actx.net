@@ -258,11 +258,18 @@ class Catearts extends Controller
         return $this->fetch();
     }
 
-    public function addimg() {
+    public function addimg($f) {
 
-        if(!empty(request() -> file('image')))
+        if(!empty(request() -> file($f)))
         {
-            $file = request() -> file('image');
+            $file = request() -> file($f);
+        }
+
+        if(!isset($file))
+        {
+            // 上传失败获取错误信息
+            echo "{\"code\":-1, \"error\":\"Invalid file format\"}";
+            exit;
         }
 
         // 移动到框架应用根目录/public/uploads/ 目录下
@@ -271,14 +278,14 @@ class Catearts extends Controller
 
         if($info){
             $re =array(
-                'status'=> 1,
+                'code'=> 0,
                 'message'=> '上传成功',
-                'url'=>DS ."public" . DS . 'uploads'. DS .'images' . DS .$info->getSaveName()
+                'data'=>DS ."public" . DS . 'uploads'. DS .'images' . DS .$info->getSaveName()
             );
             echo json_encode($re);
         }else{
             // 上传失败获取错误信息
-            echo "{\"status\":0, \"msg\":\"服务器空间不足，上传失败\"}";
+            echo "{\"code\":-1, \"error\":\"Invalid file format\"}";
         }
     }
 

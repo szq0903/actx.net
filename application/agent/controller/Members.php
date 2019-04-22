@@ -5,6 +5,9 @@ use think\Request;
 use app\agent\model\Member;
 use app\agent\model\Sort;
 use app\agent\model\Area;
+use app\index\model\Headsort;
+use app\index\model\Category;
+use think\Session;
 
 
 /**
@@ -30,13 +33,14 @@ class Members extends Controller
 	 */
 	public function  index($id=0){
 
+        $aid = Session::get('aid','agent');
 		if (Request::instance()->isPost())
 		{
 			$nickname = trim(Request::instance()->post('nickname'));
 			$list = Member::where('nickname','like','%'.$nickname.'%')->order('addtime')->paginate(10);
 
 		}else{
-			$list = Member::order('addtime')->paginate(10);
+			$list = Member::whereOr('aid',$aid)->whereOr('aid',null)->order('addtime')->paginate(10);
 		}
 
 		// 查询数据集
@@ -147,6 +151,7 @@ class Members extends Controller
 	 */
 	public function add($parent_id=0,$level=1) {
 
+        $aid = session('aid','','agent');
 		//是否为提交表单
 		if (Request::instance()->isPost())
 		{
@@ -157,6 +162,7 @@ class Members extends Controller
 			$member->headimgurl = Request::instance()->post('headimgurl');
 			$member->phone    	= Request::instance()->post('phone');
 			$member->addtime  = strtotime(Request::instance()->post('addtime'));
+            $member->aid    	= $aid;
 			$member->save();
 			$this->success('添加成功！');
 		}
@@ -167,8 +173,6 @@ class Members extends Controller
 		$this->assign('sortlist',$sortarr);
 
 
-
-		$aid = session('aid','','agent');
 		//$aid = 370829104;
 
 		$area = Area::get($aid);
@@ -190,5 +194,46 @@ class Members extends Controller
 
 		return $this->fetch('edit');
 	}
+
+    public function setAuth($id)
+    {
+        $member= Member::get($id);
+
+        //判断会员是否存在
+        if(empty($member))
+        {
+            $this->error('要修改的会员不存在');
+        }
+
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $member->hid = Request::instance()->post('hid');
+            $member->cid = Request::instance()->post('cid');
+            $member->islink = Request::instance()->post('islink');
+            //代理平台开通固定为自身乡镇
+            $aid = session('aid','','agent');
+            $member->aid = $aid;
+            $member->save();
+            $this->success('开通权限成功！');
+        }
+
+        $headsort = Headsort::order('rank')->select();
+        $this->assign('headsort',$headsort);
+
+        //处理select
+        $category = array();
+        $psort = new Category();
+        $le = 3;
+        $psort->getTreeLevel(0,$category, '  ',$le);
+        $this->assign('category',$category);
+
+        //为添加会员做准备
+        $this->assign('temp',$member);
+        $this->assign('title','修改会员-'.$this->title);
+        $request = Request::instance();
+        $this->assign('act', $request->controller());
+        return view('setAuth');
+    }
 
 }
