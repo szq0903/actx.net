@@ -169,7 +169,7 @@ class Index extends Controller
 
 
         //信息列表
-        $cateart = Cateart::whereOr('aid','-1')->whereOr('aid', $aid)->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
+        $cateart = Cateart::whereOr('aid','-1')->whereOr('aid', $aid)->where('title','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
 
         $data = getCateArtList($cateart);
         $this->assign('cateart', $data);
@@ -186,7 +186,7 @@ class Index extends Controller
         $keys = trim(Request::instance()->param('keys'));
         $this->assign('keys', $keys);
 
-        $cateart =  Cateart::where('keywords','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
+        $cateart =  Cateart::where('title','like','%'.$keys.'%')->where('aid', $aid)->order('update','desc')->limit($pid*$this->size, 10)->select();
 
         $data = getCateArtList($cateart);
 
