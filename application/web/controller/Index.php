@@ -484,6 +484,16 @@ class Index extends Controller
         }
 
         $temp['update'] = time_tran($temp['update']);
+
+        $match = array();
+        preg_match_all('/<img.+src=\"?(.+\.(jpg|gif|bmp|bnp|png|jpeg))\"?.+>/isU',$temp['body'],$match);
+        foreach ($match[1] as $key=>$val)
+        {
+            $match[1][$key] = str_replace('"',"",$val);
+        }
+        $temp['imgs'] = $match[1];
+        $temp['imgs_num'] = count($match[1]);
+        $temp['info'] = htmltotext($temp['body'],50);
         $this->assign('temp', $temp);
 
 
@@ -509,13 +519,23 @@ class Index extends Controller
         $wx['appid'] = $sysinfo['appid'];
         //生成签名的时间戳
         $wx['timestamp'] = time();
+
         //生成签名的随机串
         $wx['noncestr'] = 'Wm3WZYTPz0wzccnW';
         //jsapi_ticket是公众号用于调用微信JS接口的临时票据。正常情况下，jsapi_ticket的有效期为7200秒，通过access_token来获取。
         $wx['jsapi_ticket'] = $this->wx_get_jsapi_ticket();
 
         //分享的地址，注意：这里是指当前网页的URL，不包含#及其后面部分，曾经的我就在这里被坑了，所以小伙伴们要小心了
+
         $wx['url'] = 'http://www.aichentx.com/web/index/cartdetail/aid/'.$aid .'/id/'.$id.'/type/0';
+        $lz = strlen($wx['url']);
+        $lx =strlen('http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]);
+        if($lz <$lx)
+        {
+            header("Location: ".$wx['url']);
+        }
+
+
         $string = sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", $wx['jsapi_ticket'], $wx['noncestr'], $wx['timestamp'], $wx['url']);
 
         //生成签名
@@ -2148,13 +2168,21 @@ class Index extends Controller
         return $res['access_token'];
     }
 
-    //获取微信公从号ticket
+    //获取微信公众号ticket
     function wx_get_jsapi_ticket() {
 
-        $url = sprintf("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi", $this->wx_get_token());
-        $res = $this->get_curl_contents($url);
-        $res = json_decode($res, true);
-        //这里应该把access_token缓存起来，至于要怎么缓存就看各位了，有效期是7200s
+        if (isset($_COOKIE["ticket"]))
+        {
+            $res['ticket'] = $_COOKIE["ticket"];
+        }else{
+            $url = sprintf("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=%s&type=jsapi", $this->wx_get_token());
+            $res = $this->get_curl_contents($url);
+            $res = json_decode($res, true);
+            //这里应该把access_token缓存起来，至于要怎么缓存就看各位了，有效期是7200s
+            setcookie("ticket", $res['ticket'], time()+7200);
+        }
+
+
         return $res['ticket'];
 
     }

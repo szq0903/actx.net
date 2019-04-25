@@ -1,0 +1,191 @@
+{include file="Public/head_base" /}
+
+{include file="Public/menu" /}
+<script src="/template/js/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="/zx-editor/css/index.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-polyfills/0.1.42/polyfill.min.js"></script>
+<!--exif获取照片参数插件-->
+<script src="/zx-editor/libs/exif.min.js"></script>
+<!--debug-->
+<script src="/zx-editor/libs/zx-debug.min.js"></script>
+<!--编辑器-->
+<script src="/zx-editor/js/zx-editor.min.js"></script>
+<style>
+    .zxeditor-container.fixed .zxeditor-content-wrapper {
+        position: inherit;
+    }
+    .zxeditor-container .zxeditor-toolbar-wrapper {
+        position: inherit;
+    }
+    .zx-eidtor-container {border: 1px solid #d3d7db;}
+    .zxeditor-container {
+        background: #ffffff;
+    }
+</style>
+
+<div class="mainpanel">
+
+    {include file="Public/headerbar" /}
+
+    <div class="pageheader">
+        <h2><i class="fa fa-table"></i> {$mould.name}管理 <a class="btn btn-danger" href="{$url['add']}">添加{$mould.name}</a></h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">当前位置:</span>
+            <ol class="breadcrumb">
+                <li><a href="{$url['index']}">{$mould.name}管理</a></li>
+                <li class="active">{$mould.name}管理</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="contentpanel">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-btns">
+                    <a href="" class="panel-close">×</a>
+                    <a href="" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">{$mould.name}编辑</h4>
+
+            </div>
+            <div class="panel-body panel-body-nopadding" style="display: block;">
+
+                <form method="post" name="myForm" class="form-horizontal form-bordered">
+
+                    {volist name="formhtml" id="vo" mod="2"}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">{$vo['itemname']}：</label>
+                        <div class="col-sm-6"  {if $vo['itemname']=='内容'}style="position: initial"{/if} st>
+                            {$vo['html']}
+                        </div>
+                    </div>
+                    {/volist}
+
+                    <div class="panel-footer" style="display: block;">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+
+                                <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+                                <button class="btn btn-default" type="reset">取消</button>
+                            </div>
+                        </div>
+                    </div><!-- panel-footer -->
+            </div>
+
+            </form>
+
+        </div><!-- panel-body -->
+
+
+        <!-- row -->
+    </div><!-- contentpanel -->
+
+</div><!-- mainpanel -->
+</section>
+
+
+<script src="/template/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/template/js/jquery-ui-1.10.3.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/modernizr.min.js"></script>
+<script src="/template/js/jquery.sparkline.min.js"></script>
+<script src="/template/js/toggles.min.js"></script>
+<script src="/template/js/retina.min.js"></script>
+<script src="/template/js/jquery.cookies.js"></script>
+
+<!--<script src="/template/js/flot/jquery.flot.min.js"></script>
+<script src="/template/js/flot/jquery.flot.resize.min.js"></script>
+<script src="/template/js/flot/jquery.flot.spline.min.js"></script>-->
+<script src="/template/js/morris.min.js"></script>
+<script src="/template/js/raphael-2.1.0.min.js"></script>
+<script src="/template/js/custom.js"></script>
+<!--<script src="/template/js/dashboard.js"></script>-->
+
+<link rel="stylesheet" href="/eleditor/layout/base.css?v=1.8.9">
+<style>
+    #contentEditor{
+        width: 100%;
+        min-height: 300px;
+        box-sizing: border-box;
+        padding: 10px;
+        color: #444;
+        background: #ffffff;
+        border: 1px solid #d3d7db;
+    }
+    ul {
+        padding: 0px;
+    }
+    .Eleditor-controller {z-index: 100;}
+</style>
+
+
+<script>
+    jQuery(document).ready(function() {
+
+        "use strict";
+
+        $("#area1").change(function(){
+            selectarea(2,$("#area1").val());
+        });
+        $("#area2").change(function(){
+            selectarea(3,$("#area2").val());
+        });
+
+        $("#area3").change(function(){
+            selectarea(4,$("#area3").val());
+        });
+
+        $("#area4").change(function(){
+            $("#area").val($(this).val())
+        });
+
+        function selectarea(type,supid){
+
+            $.get("/magents/getajaxarea/type/"+type+"/supid/"+supid,function(data,status){
+                var html='';
+                for(var i=0;i<+data.length;i++)
+                {
+                    html +='<option value=\"'+data[i].id+'\">'+data[i].name+'</option>';
+                }
+                $("#area"+(type)).html(html);
+                if(type==2){
+                    if(html==''){
+                        $("#area"+(type+1)).html(html);
+                        $("#area").val(supid);
+                    }else{
+                        selectarea(3,data[0].id);
+                    }
+
+                }
+                if(type==3)
+                {
+                    if(html==''){
+                        $("#area").val(supid)
+                    }else{
+                        $("#area").val([data[0].id])
+                        selectarea(4,data[0].id)
+                    }
+                }
+                if(type==4)
+                {
+                    if(html==''){
+                        $("#area").val(supid)
+                    }else{
+                        $("#area").val([data[0].id])
+                        //selectarea(3,data[0].id)
+                    }
+                }
+            });
+        }
+    });
+
+    $("form").submit(function() {
+        var _content = contentEditor.getContent();
+        $("#body").val(_content);
+        $("form").submit()
+    });
+</script>
+
+</body>
+</html>

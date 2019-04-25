@@ -39,7 +39,7 @@
 
     			<li {if $act=='Clear'}class="active"{/if}><a href="{:url('/agent/clear')}"><i class="fa fa-trash-o"></i> <span>清理缓存</span></a></li>
                 {volist name="menu" id="vo"}
-                {if $vo.table <> 'headsort' && $vo.table <> 'category' && $vo.table <> 'money_log' && $vo.table <> 'mail' && $vo.table <> 'cateart'}
+                {if $vo.table <> 'headsort' && $vo.table <> 'category' && $vo.table <> 'money_log' && $vo.table <> 'cateart'}
                 <li {if $act== parseName($vo.table.'s',1)}class="active"{/if}>
                 <a href="{:url('/agent/'.$vo.table.'s')}"><i class="fa {$vo.icon}"></i> <span>{$vo.name}</span></a>
                 </li>
