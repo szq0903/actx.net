@@ -59,7 +59,7 @@ class Index extends Controller
             $aid = $this->aid;
         }
 
-        Cookie::set('aid',$aid);
+        Cookie::set('aid',$aid,60*60*24*7);
         //处理地区
         $area = Area::get($aid);
         $this->assign('area', $area);
@@ -169,7 +169,8 @@ class Index extends Controller
 
         $c = new Cateart;
         //信息列表
-        $cateart = $c->whereOr('aid','-1')->whereOr('aid', $aid)->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
+        //$cateart = $c->whereOr('aid','-1')->whereOr('aid', $aid)->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
+        $cateart = $c->where('keywords','like','%'.$keys.'%')->order('update','desc')->limit(10)->select();
         //echo $c->getLastSql();
         $data = getCateArtList($cateart);
         $this->assign('cateart', $data);
@@ -207,7 +208,7 @@ class Index extends Controller
             $aid = $this->aid;
         }
 
-		Cookie::set('aid',$aid);
+		Cookie::set('aid',$aid,60*60*24*7);
 
         //系统配置
         $sysinfo = Sysinfo::get(1);
@@ -527,7 +528,12 @@ class Index extends Controller
 
         //分享的地址，注意：这里是指当前网页的URL，不包含#及其后面部分，曾经的我就在这里被坑了，所以小伙伴们要小心了
 
-        $wx['url'] = 'http://www.aichentx.com/web/index/cartdetail/aid/'.$aid .'/id/'.$id.'/type/0';
+        if($type==1)
+        {
+            $wx['url'] = 'http://www.aichentx.com/web/index/cartdetail/aid/'.$aid .'/id/'.$id.'/type/1';
+        }else{
+            $wx['url'] = 'http://www.aichentx.com/web/index/cartdetail/aid/'.$aid .'/id/'.$id.'/type/0';
+        }
         $lz = strlen($wx['url']);
         $lx =strlen('http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]);
         if($lz <$lx)

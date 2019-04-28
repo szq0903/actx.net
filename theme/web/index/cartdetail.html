@@ -270,21 +270,22 @@
         timestamp: '{$wx["timestamp"]}', // 必填，生成签名的时间戳
         nonceStr: '{$wx["noncestr"]}', // 必填，生成签名的随机串
         signature: '{$wx["signature"]}',// 必填，签名，见附录1
-        jsApiList: ['checkJsApi', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        jsApiList: ['checkJsApi', 'onMenuShareAppMessage','onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
 
 
 
     wx.ready(function () {
         wx.checkJsApi({
-            jsApiList: ['checkJsApi', 'onMenuShareAppMessage'],
+            jsApiList: ['checkJsApi', 'onMenuShareAppMessage','onMenuShareTimeline'],
             success: function (res) {
                 console.log(res)
             }
         });
 
-
+        {if $temp.imgs_num > 0}
         var imgurl = 'http://www.aichentx.com{$temp["imgs"][0]}';
+		{/if}
         var title = '{$temp.title}';
         var desc = '爱臣推广以最短的时间帮助更多得人快速实现创业，爱臣推广商业信息平台能够满足所有想创业和正在创业人的需求。';
         var url = '{$wx["url"]}';  //分享的文章地址
@@ -295,6 +296,19 @@
             imgUrl: imgurl, // 分享图标
             success: function () {
                 // 设置成功
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        // 朋友圈
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: url, // 分享链接
+            imgUrl: imgurl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数

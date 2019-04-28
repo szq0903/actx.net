@@ -262,7 +262,7 @@ class Books extends Controller
             $this->error('要修改的'.$this->mould->name.'不存在');
         }else{
             $headart ->delete();
-            $this->success('删除'.$this->mould->name.'成功！',url('index/'.$this->mould->table.'s/index'));
+            $this->success('删除'.$this->mould->name.'成功！');
         }
         $this->assign('title','删除'.$this->mould->name.'-'.$this->title);
         $request = Request::instance();
