@@ -38,6 +38,9 @@ return [
         'books'    => 'index/books',
         'mails'    => 'index/mails',
         'complaints'    => 'index/complaints',
+        'lotterys'    => 'index/lotterys',
+        'lottery_prizes'    => 'index/lottery_prizes',
+
         'uploads'   => 'index/uploads'
 
 

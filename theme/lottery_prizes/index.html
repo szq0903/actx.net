@@ -1,0 +1,62 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 大转盘奖品管理 <a class="btn btn-danger" href="{:url('index/lottery_prizes/add',['lid'=>$lid])}">添加大转盘奖品</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="{:url('index/lottery_prizes/index',['lid'=>$lid])}">大转盘奖品管理</a></li>
+          <li class="active">大转盘奖品管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>排序</th>
+                        <th>名字</th>
+                        <th>数量</th>
+                        <th>机率</th>
+                        <th>操作</th>
+                    </tr>
+
+                    <tbody>
+                        {volist name="list" id="vo" mod="2"}
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.orderid}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.num}</td>
+                            <td>{$vo.winning_rate}%</td>
+                            <td class="table-action">
+                                <a href="{:url('index/lottery_prizes/edit',['id'=>$vo.id,'lid'=>$lid])}"><i class="fa fa-pencil"></i></a>
+                                <a href="" class="delete-row"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                        {/volist}
+                     
+                    </tbody>
+                </table>
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+{include file="Public/footer_base" /}

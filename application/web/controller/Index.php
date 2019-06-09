@@ -254,7 +254,14 @@ class Index extends Controller
 			{
 				$arr = explode(",",$val['picjson']);
 				$arr = array_filter($arr);
-				$article[$key]['img']=$arr[1];
+
+				if(isset($arr[1]))
+                {
+                    $article[$key]['img']=$arr[1];
+                }else{
+                    $article[$key]['img']='';
+                }
+
 			}else{
 				$article[$key]['img']='';
 			}

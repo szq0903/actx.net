@@ -234,20 +234,20 @@ class Form {
 	 */
 	public function htmlarea($field,$class='',$id=''){
 		$class=$class=='' ? $class : "class='$class'";
-		$id=$id=='' ? $id : "id='$id'";
+		//$id= $id=='' ? $id : '';
 
         if(empty($field['url']))
         {
             $field['url'] = "/uploads/addimg/f/img.html";
         }
 
-		$html = '<div class="zx-eidtor-container" id="editorContainer"></div>';
+		$html = '<div class="zx-eidtor-container" id="editorContainer'.$id.'"></div>';
         $html .= '<input type="hidden" name="'.$field['fieldname'].'" value=\''.$field['vdefault'].'\' class="zx-eidtor">';
         $html .= '<a href="#" class="submit active" onclick="handleSubmitClick()">完成编辑</a>';
         $html .= "<script>
 
 // 初始化ZX编辑器
-var zxEditor = new ZxEditor('#editorContainer', {
+var zxEditor = new ZxEditor('#editorContainer{$id}', {
             fixed: true,
   // demo有顶部导航栏，高度44
   //top: 44,

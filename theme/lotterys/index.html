@@ -1,0 +1,140 @@
+{include file="Public/head_base" /}
+
+	{include file="Public/menu" /}
+
+	<div class="mainpanel">
+    
+    {include file="Public/headerbar" /}
+        
+    <div class="pageheader">
+      <h2><i class="fa fa-table"></i> 大转盘管理 <a class="btn btn-danger" href="{:url('index/lotterys/add')}">添加大转盘</a></h2>
+      <div class="breadcrumb-wrapper">
+        <span class="label">当前位置:</span>
+        <ol class="breadcrumb">
+          <li><a href="/lotterys">大转盘管理</a></li>
+          <li class="active">大转盘管理</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div class="contentpanel">
+      
+      <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-success table-striped mb10">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>标题</th>
+                        <th>起止时间</th>
+                        <th>手机</th>
+                     	<th>添加时间</th>
+                     	<th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                     {volist name="list" id="vo" mod="2"}
+                     {eq name="mod" value="0"}
+                  	 <tr class="gradeA odd">
+                  	 {else/}
+                  	 <tr class="gradeA even">
+                     {/eq}
+                        <td>{$vo.id}</td>
+                        <td>{$vo.title}</td>
+                        <td>{:date('Y-m-d',$vo.startime)}-{:date('Y-m-d',$vo.endtime)}</td>
+                        <td>{$vo.tel}</td>
+                        <td>{:date('Y-m-d',$vo.addtime)}</td>
+                        <td>
+                            <a class="fa fa-edit" href="{:url('index/lotterys/edit',['id'=>$vo.id])}"></a>
+                            <a class="fa fa-gears" title="开通" href="{:url('index/lottery_prizes/index',['lid'=>$vo.id])}"></a>
+                            <a class="fa fa-trash-o" href="{:url('index/lotterys/del',['id'=>$vo.id])}"></a>
+                        </td>
+                      </tr>
+                      {/volist}
+                     
+                    </tbody>
+                </table>
+                {$list->render()}
+            </div><!-- table-responsive -->
+        </div> 
+        <!-- col-md-12 -->
+        
+      </div><!-- row --> 
+    </div><!-- contentpanel -->
+    
+  </div><!-- mainpanel -->
+
+<div id="myModal" class="modal fade bs-example-modal-photo" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+
+        </div>
+    </div>
+</div>
+
+
+{include file="Public/footer_base" /}
+<script>
+    jQuery(document).ready(function() {
+
+        $("#myModal").on("hidden.bs.modal", function() {
+            $(this).removeData("bs.modal");
+        });
+
+		$("#area1").change(function(){
+			selectarea(2,$("#area1").val());
+		});
+		$("#area2").change(function(){
+			selectarea(3,$("#area2").val());
+		});
+		
+		$("#area3").change(function(){
+			selectarea(4,$("#area3").val());
+		});
+		
+		$("#area4").change(function(){
+			$("#area").val($(this).val())
+		});
+		
+		function selectarea(type,supid){
+			
+			$.get("/magents/getajaxarea/type/"+type+"/supid/"+supid,function(data,status){
+				var html='';
+				for(var i=0;i<+data.length;i++)
+				{
+					html +='<option value=\"'+data[i].id+'\">'+data[i].name+'</option>';
+				}
+				$("#area"+(type)).html(html);
+				if(type==2){
+					if(html==''){	
+						$("#area"+(type+1)).html(html);
+						$("#area").val(supid);
+					}else{	
+						selectarea(3,data[0].id);	
+					}
+						
+				}
+				if(type==3)
+				{
+					if(html==''){	
+						$("#area").val(supid)
+					}else{	
+						$("#area").val([data[0].id])
+						selectarea(4,data[0].id)	
+					}
+				}
+				if(type==4)
+				{
+					if(html==''){	
+						$("#area").val(supid)
+					}else{	
+						$("#area").val([data[0].id])
+						//selectarea(3,data[0].id)	
+					}
+				}
+			});
+		}
+	});
+</script>
