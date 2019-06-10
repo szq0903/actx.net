@@ -32,18 +32,17 @@
                         <th>机率</th>
                         <th>操作</th>
                     </tr>
-
                     <tbody>
                         {volist name="list" id="vo" mod="2"}
                         <tr>
                             <td>{$vo.id}</td>
                             <td>{$vo.orderid}</td>
                             <td>{$vo.name}</td>
-                            <td>{$vo.num}</td>
+                            <td>{$vo.num}(中奖{$vo.surplus}  剩余{$vo.num -$vo.surplus})</td>
                             <td>{$vo.winning_rate}%</td>
-                            <td class="table-action">
+                            <td>
                                 <a href="{:url('index/lottery_prizes/edit',['id'=>$vo.id,'lid'=>$lid])}"><i class="fa fa-pencil"></i></a>
-                                <a href="" class="delete-row"><i class="fa fa-trash-o"></i></a>
+                                <a href="{:url('index/lottery_prizes/del',['id'=>$vo.id,'lid'=>$lid])}" class="delete-row"><i class="fa fa-trash-o"></i></a>
                             </td>
                         </tr>
                         {/volist}

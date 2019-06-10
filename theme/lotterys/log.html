@@ -26,9 +26,10 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>标题</th>
-                        <th>起止时间</th>
-                        <th>手机</th>
+                        <th>姓名</th>
+                          <th>手机</th>
+                        <th>奖品</th>
+                          <th>兑奖</th>
                      	<th>添加时间</th>
                      	<th>操作</th>
                       </tr>
@@ -41,15 +42,13 @@
                   	 <tr class="gradeA even">
                      {/eq}
                         <td>{$vo.id}</td>
-                        <td>{$vo.title}</td>
-                        <td>{:date('Y-m-d',$vo.startime)}-{:date('Y-m-d',$vo.endtime)}</td>
-                        <td>{$vo.tel}</td>
+                        <td>{$vo.lotterysign.name}</td>
+                         <td>{$vo.lotterysign.tel}</td>
+                         <td>{$vo.lotteryprize.name}</td>
+                         <td>{$vo.status}</td>
                         <td>{:date('Y-m-d',$vo.addtime)}</td>
                         <td>
                             <a class="fa fa-edit" href="{:url('index/lotterys/edit',['id'=>$vo.id])}"></a>
-                            <a class="fa fa-gears" title="奖品" href="{:url('index/lottery_prizes/index',['lid'=>$vo.id])}"></a>
-                            <a class="fa fa-list-alt" title="抽奖记录" href="{:url('index/lotterys/log',['lid'=>$vo.id])}"></a>
-                            <a class="fa fa-trash-o" href="{:url('index/lotterys/del',['id'=>$vo.id])}"></a>
                         </td>
                       </tr>
                       {/volist}

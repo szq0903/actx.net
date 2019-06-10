@@ -79,11 +79,17 @@
                             <input type="text" placeholder="全名" name="allname" value="{if isset($temp['allname'])}{$temp['allname']}{/if}" class="form-control">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">数量：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="数量" name="num" value="{if isset($temp['num'])}{$temp['num']}{/if}" class="form-control">
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">中奖机率：</label>
                         <div class="col-sm-6">
-                            <input type="text" placeholder="中奖机率" name="winning_rate" value="{if isset($temp['winning_rate'])}{winning_rate['num']}{/if}" class="form-control">
+                            <input type="text" placeholder="中奖机率" name="winning_rate" value="{if isset($temp['winning_rate'])}{$temp['winning_rate']}{/if}" class="form-control">
                             <div class="help-block">这里写入的是百分比，如50%，在上面填写50。所有奖品的中奖机率加再来要等于100%。</div>
                         </div>
                     </div>
@@ -153,34 +159,26 @@
             initialPreviewFileType: 'image',//图像是默认的，可以在下面的配置中重写
             purifyHtml: true,//默认情况下会纯化HTML数据以进行预览
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-        {
-            if isset($temp['img'])}
-        initialPreview: [
-            "<img src='{$temp['img']}'  class='kv-preview-data file-preview-image' style='width:auto;height:160px;'/>",
-        ],
-            initialPreviewConfig
-    :
-        [
-            {
-                caption: "{$temp['img']}",
-                size: {$temp['imagesize']},
-                width: "120px",
-                url: '/magents/delimg.html',
-                key: {$key+1},
-                extra: {imgpath: '{$temp['img']}'}
-            },
-        ],
-            initialCaption
-    :
-        '{$temp[\'img\']}'
-        {
-            /if}
+            {if isset($temp['img'])}
+            initialPreview: [
+                "<img src='{$temp['img']}'  class='kv-preview-data file-preview-image' style='width:auto;height:160px;'/>",
+            ],
+            initialPreviewConfig:[
+                {
+                    caption: "{$temp['img']}",
+                    size: {$temp['imagesize']},
+                    width: "120px",
+                    url: '/magents/delimg.html',
+                    key: {$key+1},
+                    extra: {imgpath: '{$temp['img']}'}
+                },
+            ],
+            initialCaption:'{$temp[\'img\']}'
+            {/if}
 
-        }
-    ).
-        on("fileuploaded", function (event, data, previewId, index) {
+        }).on("fileuploaded", function (event, data, previewId, index) {
             var imgs = $('#qcode').val();
-            imgs += "," + data.response.data;
+            imgs =data.response.data;
             $('#qcode').val(imgs);
             $(".file-caption-name").attr("title", imgs);
             var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + imgs;
