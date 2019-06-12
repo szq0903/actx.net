@@ -48,6 +48,7 @@
                         <td>
                             <a class="fa fa-edit" href="{:url('index/lotterys/edit',['id'=>$vo.id])}"></a>
                             <a class="fa fa-gears" title="奖品" href="{:url('index/lottery_prizes/index',['lid'=>$vo.id])}"></a>
+                            <a class="fa fa-users" title="报名记录" href="{:url('index/lotterys/signlist',['lid'=>$vo.id])}"></a>
                             <a class="fa fa-list-alt" title="抽奖记录" href="{:url('index/lotterys/log',['lid'=>$vo.id])}"></a>
                             <a class="fa fa-trash-o" href="{:url('index/lotterys/del',['id'=>$vo.id])}"></a>
                         </td>

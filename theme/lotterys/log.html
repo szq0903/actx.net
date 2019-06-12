@@ -48,7 +48,7 @@
                          <td>{$vo.status}</td>
                         <td>{:date('Y-m-d',$vo.addtime)}</td>
                         <td>
-                            <a class="fa fa-edit" href="{:url('index/lotterys/edit',['id'=>$vo.id])}"></a>
+                            <a class="fa fa-gift" title="兑奖" href="{:url('index/lotterys/cash',['id'=>$vo.id])}" data-toggle="modal" data-target=".bs-example-modal-photo"></a>
                         </td>
                       </tr>
                       {/volist}
@@ -82,59 +82,5 @@
         $("#myModal").on("hidden.bs.modal", function() {
             $(this).removeData("bs.modal");
         });
-
-		$("#area1").change(function(){
-			selectarea(2,$("#area1").val());
-		});
-		$("#area2").change(function(){
-			selectarea(3,$("#area2").val());
-		});
-		
-		$("#area3").change(function(){
-			selectarea(4,$("#area3").val());
-		});
-		
-		$("#area4").change(function(){
-			$("#area").val($(this).val())
-		});
-		
-		function selectarea(type,supid){
-			
-			$.get("/magents/getajaxarea/type/"+type+"/supid/"+supid,function(data,status){
-				var html='';
-				for(var i=0;i<+data.length;i++)
-				{
-					html +='<option value=\"'+data[i].id+'\">'+data[i].name+'</option>';
-				}
-				$("#area"+(type)).html(html);
-				if(type==2){
-					if(html==''){	
-						$("#area"+(type+1)).html(html);
-						$("#area").val(supid);
-					}else{	
-						selectarea(3,data[0].id);	
-					}
-						
-				}
-				if(type==3)
-				{
-					if(html==''){	
-						$("#area").val(supid)
-					}else{	
-						$("#area").val([data[0].id])
-						selectarea(4,data[0].id)	
-					}
-				}
-				if(type==4)
-				{
-					if(html==''){	
-						$("#area").val(supid)
-					}else{	
-						$("#area").val([data[0].id])
-						//selectarea(3,data[0].id)	
-					}
-				}
-			});
-		}
 	});
 </script>

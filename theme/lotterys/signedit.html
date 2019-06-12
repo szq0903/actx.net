@@ -1,0 +1,91 @@
+{include file="Public/head_base" /}
+
+{include file="Public/menu" /}
+
+<div class="mainpanel">
+
+    {include file="Public/headerbar" /}
+
+    <div class="pageheader">
+        <h2><i class="fa fa-table"></i> 报名管理</h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">当前位置:</span>
+            <ol class="breadcrumb">
+                <li><a href="{:url('index/lotterys/signlist',['lid'=>$lid])}">报名管理</a></li>
+                <li class="active">报名管理</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="contentpanel">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-btns">
+                    <a href="" class="panel-close">×</a>
+                    <a href="" class="minimize">−</a>
+                </div>
+                <h4 class="panel-title">报名编辑</h4>
+
+            </div>
+            <div class="panel-body panel-body-nopadding" style="display: block;">
+
+                <form method="post" name="myForm" class="form-horizontal form-bordered">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">姓名：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="姓名" name="name" value="{if isset($temp['name'])}{$temp['name']}{/if}" class="form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">手机号：</label>
+                        <div class="col-sm-6">
+                            <input type="text" placeholder="手机号" name="tel" value="{if isset($temp['tel'])}{$temp['tel']}{/if}" class="form-control">
+                        </div>
+                    </div>
+
+
+                    <div class="panel-footer" style="display: block;">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit">提交</button>&nbsp;
+                                <button class="btn btn-default" type="reset">取消</button>
+                            </div>
+                        </div>
+                    </div><!-- panel-footer -->
+
+                </form>
+
+            </div><!-- panel-body -->
+
+        <!-- row -->
+        </div>
+    </div>
+        <!-- contentpanel -->
+
+</div><!-- mainpanel -->
+
+
+<script src="/template/js/jquery-1.11.1.min.js"></script>
+<script src="/template/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/template/js/bootstrap.min.js"></script>
+<script src="/template/js/modernizr.min.js"></script>
+<script src="/template/js/jquery.sparkline.min.js"></script>
+<script src="/template/js/toggles.min.js"></script>
+<script src="/template/js/retina.min.js"></script>
+<script src="/template/js/jquery.cookies.js"></script>
+
+
+<script src="/template/js/jquery-ui-1.10.3.min.js"></script>
+<!--<script src="/template/js/select2.min.js"></script>-->
+
+<script src="/template/js/custom.js"></script>
+
+
+</body>
+</html>
+
+

@@ -56,8 +56,8 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">头部图片：</label>
                         <div class="col-sm-6">
-                            <input id="qcode" name="picjson" value="{if isset($temp['picjson'])}{$temp['picjson']}{/if}" type="hidden">
-                            <input id="file-zh" name="upqcode" value="{if isset($temp['picjson'])}{$temp['picjson']}{/if}" type="file" multiple>
+                            <input id="qcode" name="toppic" value="{if isset($temp['toppic'])}{$temp['toppic']}{/if}" type="hidden">
+                            <input id="file-zh" name="upqcode" value="{if isset($temp['toppic'])}{$temp['toppic']}{/if}" type="file" multiple>
                         </div>
                     </div>
 
@@ -74,9 +74,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
 
-                                <input type="text" class="form-control" name="startime"
-                                       value="{if isset($temp['startime'])}{$temp['startime']}{/if}"
-                                       placeholder="mm/dd/yyyy" id="datepicker">
+                                <input type="text" class="form-control" name="startime" value="{if isset($temp['startime'])}{$temp['startime']}{/if}" placeholder="mm/dd/yyyy" id="datepicker">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
 
@@ -87,7 +85,7 @@
                         <div class="col-sm-6">
                             <div class="input-group">
 
-                                <input type="text" class="form-control" name="endtime" alue="{if isset($temp['endtime'])}{$temp['endtime']}{/if}" placeholder="mm/dd/yyyy" id="datepicker1">
+                                <input type="text" class="form-control" name="endtime" value="{if isset($temp['endtime'])}{$temp['endtime']}{/if}" placeholder="mm/dd/yyyy" id="datepicker1">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             </div>
 
@@ -177,56 +175,6 @@
         jQuery('#datepicker1').datepicker();
         jQuery('#datepicker2').datepicker();
 
-        $("#area1").change(function () {
-            selectarea(2, $("#area1").val());
-        });
-        $("#area2").change(function () {
-            selectarea(3, $("#area2").val());
-        });
-
-        $("#area3").change(function () {
-            selectarea(4, $("#area3").val());
-        });
-
-        $("#area4").change(function () {
-            $("#area").val($(this).val())
-        });
-
-        function selectarea(type, supid) {
-
-            $.get("/magents/getajaxarea/type/" + type + "/supid/" + supid, function (data, status) {
-                var html = '';
-                for (var i = 0; i < +data.length; i++) {
-                    html += '<option value=\"' + data[i].id + '\">' + data[i].name + '</option>';
-                }
-                $("#area" + (type)).html(html);
-                if (type == 2) {
-                    if (html == '') {
-                        $("#area" + (type + 1)).html(html);
-                        $("#area").val(supid);
-                    } else {
-                        selectarea(3, data[0].id);
-                    }
-
-                }
-                if (type == 3) {
-                    if (html == '') {
-                        $("#area").val(supid)
-                    } else {
-                        $("#area").val([data[0].id])
-                        selectarea(4, data[0].id)
-                    }
-                }
-                if (type == 4) {
-                    if (html == '') {
-                        $("#area").val(supid)
-                    } else {
-                        $("#area").val([data[0].id])
-                        //selectarea(3,data[0].id)
-                    }
-                }
-            });
-        }
 
         $("#sid").change(function () {
             var d = {"sid": $(this).val()};
@@ -250,7 +198,7 @@
     $('#file-zh').fileinput({
         language: 'zh',
         uploadUrl: '/magents/addimg.html',
-        allowedFileExtensions: ['jpg', 'png', 'gif'],
+        allowedFileExtensions: ['jpg', 'png', 'gif','mp3'],
         showUploadedThumbs: true,
         previewFileType: 'any',
         dropZoneEnabled: false,
@@ -260,27 +208,27 @@
         purifyHtml: true,//默认情况下会纯化HTML数据以进行预览
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
 
-        initialPreview: [
-
-            "<img src='/template/img/lottery/01.jpg'  class='kv-preview-data file-preview-image' style='width:auto;height:160px;'/>",
-        ],
-        initialPreviewConfig: [
-
-            {
-                caption: "/template/img/lottery/01.jpg",
-                size: 26700,
-                width: "120px",
-                url: '/magents/delimg.html',
-                key: 1,
-                extra: {imgpath: '/template/img/lottery/01.jpg'}
-            },
-        ],
-        initialCaption: '/template/img/lottery/01.jpg'
+    {if isset($temp['toppic'])}
+    initialPreview: [
+        "<img src='{$temp['toppic']}'  class='kv-preview-data file-preview-image' style='width:auto;height:160px;'/>",
+    ],
+        initialPreviewConfig:[
+        {
+            caption: "{$temp['toppic']}",
+            size: {$temp['imagesize']},
+            width: "120px",
+            url: '/magents/delimg.html',
+            key: {$key+1},
+            extra: {imgpath: '{$temp['toppic']}'}
+        },
+    ],
+        initialCaption:'{$temp['toppic']}'
+    {/if}
 
 
     }).on("fileuploaded", function (event, data, previewId, index) {
         var imgs = $('#qcode').val();
-        imgs += data.response.data;
+        imgs =data.response.data;
         $('#qcode').val(imgs);
         $(".file-caption-name").attr("title", imgs);
         var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + imgs;
