@@ -269,6 +269,10 @@ class Magents extends Controller
         {
             $file = request() -> file('upzj');
         }
+        if(!empty(request() -> file('upmusic')))
+        {
+            $file = request() -> file('upmusic');
+        }
 
 
 
@@ -276,7 +280,7 @@ class Magents extends Controller
 
 
 		// 移动到框架应用根目录/public/uploads/ 目录下
-		$file->validate(['size'=>1024*1024*2,'ext'=>'jpg,png,gif']);
+		$file->validate(['size'=>1024*1024*2,'ext'=>'jpg,png,gif,mp3']);
 		$info = $file->rule('md5')->move(ROOT_PATH . 'public' . DS . 'uploads'. DS .'images');
 
 		if($info){

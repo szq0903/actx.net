@@ -834,6 +834,7 @@
                 cat = defaultPreviewTypes[i];
                 isValid = ifSet(cat, self.fileTypeSettings, defaultFileTypeSettings[cat]);
                 vType = isValid(file.type, file.name) ? cat : '';
+
                 if (!isEmpty(vType)) {
                     return vType;
                 }
@@ -2157,6 +2158,7 @@
                 iData = window.DOMPurify.sanitize(iData);
             }
             if (chkTypes || chkMimes) {
+
                 content = self._generatePreviewTemplate(cat, iData, fname, file.type, previewId, false, file.size);
                 self._clearDefaultPreview();
                 $previewLive.append("\n" + content);
@@ -2294,6 +2296,7 @@
                         self._errorHandler(evt, caption);
                     };
                     reader.onload = function (theFile) {
+
                         self._previewFile(i, file, theFile, previewId, previewData);
                         self._initFileActions();
                     };

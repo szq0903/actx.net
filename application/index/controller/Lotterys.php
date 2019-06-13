@@ -114,6 +114,7 @@ class Lotterys extends Controller
 		{
             $lottery = $temp;
             $lottery->toppic    	= Request::instance()->post('toppic');
+            $lottery->music    	    = Request::instance()->post('music');
             $lottery->title    	    = Request::instance()->post('title');
             $lottery->startime    	= strtotime(Request::instance()->post('startime'));
             $lottery->endtime    	= strtotime(Request::instance()->post('endtime'));
@@ -135,6 +136,16 @@ class Lotterys extends Controller
 
         $temp['toppic'] = str_replace('\\','/',$temp['toppic']);
         $temp['imagesize'] = filesize(getcwd().$temp['toppic']);
+
+        if(empty($temp['music']))
+        {
+            unset($temp['music']);
+        }else{
+            $temp['music'] = str_replace('\\','/',$temp['music']);
+            $temp['musicsize'] = filesize(getcwd().$temp['music']);
+        }
+
+
 		$this->assign('temp',$temp);
 
 
@@ -175,6 +186,7 @@ class Lotterys extends Controller
 
 				$lottery                = new Lottery();
                 $lottery->toppic    	= Request::instance()->post('toppic');
+                $lottery->music    	    = Request::instance()->post('music');
                 $lottery->title    	    = Request::instance()->post('title');
                 $lottery->startime    	= strtotime(Request::instance()->post('startime'));
                 $lottery->endtime    	= strtotime(Request::instance()->post('endtime'));
