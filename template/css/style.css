@@ -1,0 +1,1860 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+     font-size: 16px;
+     -webkit-box-sizing: border-box;
+     box-sizing: border-box
+ }
+*, :after, :before {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit
+}
+body {
+    font-size: inherit;
+    font-family: "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fbf9fe;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%!important
+}
+h1, h2, h3, h4, h5, h6, input, textarea {
+    font-family: inherit
+}
+a {
+    color: #0059a6
+}
+a:focus, a:hover {
+    color: #004b8d
+}
+a.disabled, a[disabled], button.disabled, button[disabled] {
+    cursor: not-allowed;
+    opacity: .65
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: .5rem;
+    color: inherit
+}
+.activity .header>.stats>li>b, .activity table th, .table th {
+    font-weight: 400
+}
+.weui_media_box .weui_media_desc, .weui_media_box .weui_media_image {
+    line-height: 1.5;
+    font-size: .875rem
+}
+h1 {
+    font-size: 2.5rem
+}
+h2 {
+    font-size: 2rem
+}
+h3 {
+    font-size: 1.75rem
+}
+h4 {
+    font-size: 1.5rem
+}
+h5 {
+    font-size: 1.25rem
+}
+h6 {
+    font-size: 1rem
+}
+p {
+    margin-top: 0
+}
+.container {
+    display: block;
+    min-width: 320px;
+    margin-right: auto;
+    margin-left: auto
+}
+.container:after, .container:before {
+    content: " ";
+    display: table
+}
+.container:after {
+    clear: both
+}
+.lottery.lottery-editor input[type=text], .lottery.lottery-editor input[type=number], .lottery.lottery-editor textarea {
+    border: 1px dashed #d22a09;
+    border-radius: .2rem
+}
+.lottery.lottery-editor .dashed, .lottery.lottery-editor .dashed.reverse {
+    border: 1px dashed #d22a09
+}
+.lottery.lottery-editor .main {
+    background: #db4325;
+    max-width: 640px;
+    margin: 0 auto;
+    padding-bottom: 1.5rem
+}
+.lottery.lottery-editor .main .card .note i::before, .lottery.lottery-editor .main .card .tiper i::before {
+    margin-right: .5rem
+}
+.lottery.lottery-editor .main.uneditable {
+    padding-bottom: 0
+}
+.lottery.lottery-editor .main .banner {
+    width: 100%;
+    background: url(../images/lottery/banner-bg.jpg) no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    position: relative;
+    padding: 75% 49%
+}
+.lottery.lottery-editor .main .banner .banner-action-shadow {
+    top: 50%
+}
+.lottery.lottery-editor .main .banner .banner-title {
+    top: 58.054%;
+    left: 5%;
+    width: 90%;
+    height: 20.6%;
+    background: url(../images/lottery/banner-title-bg.png) no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    color: #d22a09;
+    font-size: 1.2rem;
+    padding: 2.5rem 1rem
+}
+.lottery.lottery-editor .main .banner .banner-title textarea {
+    color: inherit;
+    padding: .3rem;
+    line-height: 1.3
+}
+.lottery.lottery-editor .main .banner .banner-title-tiper {
+    top: 79.5%;
+    left: 5%;
+    text-align: center;
+    color: #ffeab0;
+    width: 90%;
+    font-size: .8rem
+}
+.lottery.lottery-editor .main .banner .banner-countdown {
+    top: 85.2%;
+    left: 0;
+    text-align: center;
+    color: #fff;
+    font-size: .8rem;
+    width: 100%
+}
+.lottery.lottery-editor .main .banner .banner-countdown input {
+    background: #ffcbc5;
+    color: #63180c;
+    width: 8rem;
+    padding: .5rem
+}
+.lottery.lottery-editor .main .card .tiper {
+    font-size: .8rem;
+    position: absolute;
+    top: 2rem;
+    left: 35%;
+    color: #ababab
+}
+.lottery.lottery-editor .main .card .note {
+    color: #ababab;
+    font-size: .8rem;
+    margin-bottom: .5rem
+}
+.lottery.lottery-editor .main .card .note.fl {
+    text-align: left
+}
+.lottery.lottery-editor .main .card .card-note {
+    padding-top: 0;
+    position: relative;
+    color: #ababab
+}
+.lottery.lottery-editor .main .card .hotline {
+    font-size: .8rem
+}
+.lottery.lottery-editor .main .card .hotline i.tel {
+    position: absolute;
+    left: 2rem;
+    top: 3.5rem;
+    color: #d22a09
+}
+.lottery.lottery-editor .main .card .hotline input {
+    padding-left: 2.5rem
+}
+.lottery.lottery-editor .main .card .card-body.uneditable {
+    padding-top: 2.5rem
+}
+.lottery.lottery-editor .main .card.accept .card-body {
+    padding-top: 3.5rem
+}
+.lottery.lottery-editor .main .card.accept .card-body.uneditable {
+    padding-top: 2.5rem
+}
+.lottery.lottery-editor .main .card.rule-setting .card-body {
+    text-align: center;
+    color: #333
+}
+.lottery.lottery-editor .main .card.rule-setting input[type=text], .lottery.lottery-editor .main .card.rule-setting input[type=number] {
+    width: 4rem;
+    text-align: center;
+    padding: .3rem;
+    margin: 0 .5rem
+}
+.lottery.lottery-editor .main .card.rule-setting .password {
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    color: #d22a09
+}
+.lottery.lottery-editor .main .card.rule-setting .password input {
+    width: 8rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .card-body {
+    color: #333
+}
+.lottery.lottery-editor .main .card.prizes-setting .action {
+    color: #d22a09;
+    padding-top: .5rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .action button {
+    width: 90%;
+    background: 0 0;
+    text-align: center
+}
+.lottery.lottery-editor .main .card.prizes-setting .action button.dashed {
+    font-size: 1rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .action button i::before {
+    margin-right: .5rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels {
+    margin-top: 2rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level {
+    margin-top: 1.7rem;
+    background: #f6eab2;
+    border-radius: 2rem;
+    position: relative;
+    padding: .5rem;
+    font-size: .8rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level input {
+    padding: .3rem;
+    width: 3rem;
+    margin: 0 .2rem;
+    color: #d22a09
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level button {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #fff215;
+    border: 0;
+    background-color: #a8812e;
+    border-radius: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer {
+    text-align: center;
+    border: 2px dashed #fbac23;
+    border-radius: inherit;
+    padding: 2.5rem .5rem 1rem;
+    overflow: hidden
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-body {
+    overflow: inherit
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .cell {
+    padding: 0
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .cell.cell-3 {
+    padding: 0 .5rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .cell.cell-5, .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .cell.cell-7.empty {
+    padding-top: 10%
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-title {
+    position: absolute;
+    background: url(../images/lottery/level-title.png) center top no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 700;
+    width: 60%;
+    left: 20%;
+    top: -1rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer input.prize-name {
+    width: 4rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img {
+    border-radius: 50%;
+    border: 2px solid #fbac23;
+    background: #fff;
+    padding: 50%;
+    position: relative
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img .file, .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img .mask, .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img img {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img .file {
+    font-size: 20px;
+    opacity: 0;
+    z-index: 4;
+    width: 100%;
+    height: 100%
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img img {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border-radius: 50%;
+    padding: 5%
+}
+.lottery.lottery-editor .footer .footer-body.joined, .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-bottom {
+    padding-top: .5rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img .mask {
+    z-index: 5;
+    background: rgba(0,0,0,.57);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    font-size: .8rem;
+    color: #fff
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .prize-img .mask i::before {
+    margin-right: .3rem
+}
+.lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-bottom .prize-text {
+    width: 80%;
+    margin: 0
+}
+.lottery.lottery-editor .main .tel .info {
+    position: relative;
+    z-index: 0
+}
+.lottery.lottery-editor .footer {
+    min-height: 5rem
+}
+.lottery.lottery-editor .footer .footer-header {
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/footer_top.png) left top no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100%;
+    height: .5rem
+}
+.lottery.lottery-editor .footer .footer-body {
+    background-color: #2c4a10
+}
+.lottery.lottery-editor .footer .footer-body .joined-info {
+    float: right;
+    color: #ffa800;
+    text-decoration: underline;
+    margin-right: 2rem
+}
+.lottery.lottery-editor .footer .footer-body .actions {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+.lottery.lottery-editor .footer .footer-body .actions>a {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    display: inline-block;
+    padding: .5rem;
+    width: 40%;
+    color: #fff;
+    background-color: #ffa800;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 1rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px #2b2929
+}
+.lottery.lottery-editor .footer .footer-body .actions>a.disabled {
+    opacity: .4
+}
+.lottery.lottery-editor .footer .footer-body .actions>a[disabled] {
+    cursor: not-allowed
+}
+.lottery.lottery-editor .footer .footer-body .actions>a:first-child {
+    background-color: #64cc00;
+    margin: 1rem 1rem 1rem 0
+}
+.lottery.lottery-editor .footer .footer-body .actions>a:first-child i {
+    color: inherit
+}
+.lottery.lottery-editor .footer .footer-body .actions>a.open {
+    background-color: #ff7169
+}
+.lottery.lottery-editor .footer .footer-body .actions>a>i {
+    margin-right: .5rem;
+    color: #fff
+}
+.lottery .main, .lottery .modal {
+    margin: 0 auto;
+    max-width: 640px
+}
+.mini-editor-container.lottery-uploader .image-previewer.reverse label, .mini-editor-container.lottery-uploader .uploader.reverse label, .uploader-container.lottery-uploader .image-previewer.reverse label, .uploader-container.lottery-uploader .uploader.reverse label {
+    border-color: #d22a09
+}
+.mini-editor-container.lottery-uploader .image-previewer.reverse label::after, .mini-editor-container.lottery-uploader .image-previewer.reverse label::before, .mini-editor-container.lottery-uploader .uploader.reverse label::after, .mini-editor-container.lottery-uploader .uploader.reverse label::before, .uploader-container.lottery-uploader .image-previewer.reverse label::after, .uploader-container.lottery-uploader .image-previewer.reverse label::before, .uploader-container.lottery-uploader .uploader.reverse label::after, .uploader-container.lottery-uploader .uploader.reverse label::before {
+    background-color: #d22a09
+}
+.mini-editor-container.lottery-uploader .image-previewer.reverse span, .mini-editor-container.lottery-uploader .uploader.reverse span, .uploader-container.lottery-uploader .image-previewer.reverse span, .uploader-container.lottery-uploader .uploader.reverse span {
+    color: #b21e01
+}
+.mini-editor-container.lottery-uploader a.action, .uploader-container.lottery-uploader a.action {
+    border: 1px dashed #d22a09;
+    color: #b21e01
+}
+.mini-editor-container.lottery-uploader i.icon, .uploader-container.lottery-uploader i.icon {
+    color: rgba(84,78,78,.74)
+}
+.imager-container.lottery-imager .imager .actions {
+    bottom: 0;
+    height: 4rem;
+    padding: .5rem 1rem
+}
+.imager-container.lottery-imager .imager .actions a.action {
+    border: 1px solid #ff9c00;
+    color: #fcac24;
+    background: 0 0
+}
+.imager-container.lottery-imager .imager .tiper {
+    bottom: .2rem
+}
+.imager-container.lottery-imager .imager .imager-selector {
+    bottom: 0
+}
+.join-customize-container.lottery-join-customize .note {
+    opacity: .8
+}
+.join-customize-container.lottery-join-customize font {
+    color: #333
+}
+.join-customize-container.lottery-join-customize input.disabled {
+    border-color: #e47f6b
+}
+.join-customize-container.lottery-join-customize .lock {
+    color: rgba(210,42,9,.75)
+}
+
+@media screen and (width:320px) {
+    .lottery.lottery-editor .main .banner .banner-countdown.uneditable {
+        left: 1.5%
+    }
+    .lottery.lottery-editor .main .card .card-body, .lottery.lottery-editor .main .card .card-note {
+        font-size: .8rem
+    }
+    .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-title {
+        line-height: 2rem
+    }
+}
+
+@media screen and (width:360px) {
+    .lottery.lottery-editor .main .card.prizes-setting .levels .level .level-layer .level-title {
+        line-height: 2.5rem
+    }
+}
+.lottery .weui_btn_primary {
+    background-color: #ff8400
+}
+.lottery .weui_btn_primary:active, .lottery .weui_btn_primary:focus {
+    background-color: #f99223
+}
+.lottery .main {
+    background: #db4325;
+    padding-bottom: 5rem
+}
+.lottery .main .banner {
+    width: 100%;
+    background: url(../images/lottery/banner-bg-index.jpg) no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    position: relative;
+    padding: 86.5% 50%
+}
+.lottery .main .banner .banner-title-box {
+    top: 55%;
+    font-size: 1.5rem;
+    color: #f9f9f9;
+    width: 96%;
+    left: 2%;
+    text-align: center
+}
+.lottery .main .banner .banner-countdown-box {
+    top: 67%;
+    font-size: .8rem;
+    color: #fff;
+    width: 96%;
+    left: 2%;
+    text-align: center;
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/countdown-bg.jpg) center no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    padding: 2rem 0;
+    letter-spacing: .1rem
+}
+.lottery .main .banner .banner-countdown-box b {
+    color: #31345e;
+    padding: .1875rem;
+    background: #fff;
+    border-radius: .3125rem;
+    width: 2rem;
+    display: inline-block;
+    margin: 0 .15rem
+}
+.lottery .main .banner .banner-countdown-box b:nth-of-type(1) {
+    padding: 0;
+    background: 0 0;
+    width: auto;
+    color: #f2b51e
+}
+.lottery .main .banner .banner-winning-box {
+    top: 82%;
+    width: 80%;
+    left: 10%;
+    border: 3px dashed #f9f9f9;
+    border-radius: .5rem;
+    background: #feb9aa;
+    padding: .5rem
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner {
+    background: #ffd5cf;
+    border-radius: inherit;
+    padding: 2.5rem .5rem;
+    position: relative;
+    font-size: .8rem;
+    overflow: hidden
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner .empty {
+    font-size: 1.5rem;
+    width: 90%;
+    height: 80%;
+    left: 5%;
+    top: 10%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: absolute;
+    color: #d1aca5
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner span {
+    display: inline-block;
+    position: absolute;
+    width: 14rem;
+    top: 0;
+    line-height: 2.5;
+    height: 1rem;
+    text-align: right
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner span b {
+    color: #db4c30;
+    float: left
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner span b.name {
+    display: inline-block;
+    width: 4rem;
+    height: 2rem;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner span strong {
+    color: #332b29;
+    padding: 0 .1rem;
+    float: left;
+    display: inline-block
+}
+.lottery .main .banner .banner-winning-box .winning-box-inner span img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    float: left
+}
+.lottery .main .banner .banner-action, .lottery .main .banner .banner-action-shadow, .lottery .main .banner .banner-countdown, .lottery .main .banner .banner-countdown-box, .lottery .main .banner .banner-title, .lottery .main .banner .banner-title-box, .lottery .main .banner .banner-title-tiper, .lottery .main .banner .banner-winning-box {
+    position: absolute
+}
+.lottery .main .banner .banner-action-shadow {
+    z-index: 0;
+    width: 70%;
+    height: 4rem;
+    top: 43%;
+    left: 15%;
+    border-radius: 100%;
+    margin: auto;
+    opacity: .05;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    background: #000
+}
+.lottery .main .banner .banner-action {
+    top: 5.5%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: url(../images/lottery/prize-bg-01.png) no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    z-index: 1;
+    margin-left: -150px;
+}
+.lottery .main .banner .banner-action.lighter {
+    background: url(../images/lottery/prize-bg-02.png) no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain
+}
+.lottery .main .banner .banner-action .action-point {
+    position: absolute;
+    left: 38%;
+    top: 34%;
+    width: 25%;
+    height: 25%;
+    background: url(../images/lottery/point.png) center no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain;
+    z-index: 3
+}
+.lottery .main .banner .banner-action .action-point.doing {
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/point-doing.png) center no-repeat;
+    -webkit-background-size: contain;
+    background-size: contain
+}
+.lottery .main .banner .banner-action .action-layer {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: relative
+}
+.lottery .main .banner .banner-action .action-layer ul li {
+    list-style: none
+}
+.lottery .main .banner .banner-action .action-layer .wheel-line, .lottery .main .banner .banner-action .action-layer .wheel-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden
+}
+.lottery .main .banner .banner-action .action-layer .wheel-line {
+    z-index: 1;
+    border-radius: 50%
+}
+.lottery .main .banner .banner-action .action-layer .wheel-line .wheel-litem {
+    position: absolute;
+    left: 151px;
+    top: 24px;
+    width: 1px;
+    height: 7rem;
+    background-color: #fabe97;
+    overflow: hidden;
+    -webkit-transform-origin: 50% 7.8rem;
+    -ms-transform-origin: 50% 7.8rem;
+    -o-transform-origin: 50% 7.8rem;
+    transform-origin: 50% 7.8rem
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list {
+    z-index: 2
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list .wheel-item {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #e4370e;
+    font-weight: 700;
+    text-shadow: 0 1px 1px rgba(255,255,255,.6)
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list .wheel-item .wheel-content {
+    position: relative;
+    display: block;
+    padding-top: 2.5rem;
+    margin: 0 auto;
+    text-align: center;
+    -webkit-transform-origin: 50% 9.5rem;
+    -ms-transform-origin: 50% 9.5rem;
+    -o-transform-origin: 50% 9.5rem;
+    transform-origin: 50% 9.5rem
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list .wheel-item .wheel-content p {
+    margin: 0;
+    padding: 0
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list .wheel-item .wheel-content .wheel-img img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 2px solid #fbac23;
+    margin: 0 auto;
+    padding: .1rem
+}
+.lottery .main .banner .banner-action .action-layer .wheel-list .wheel-item .wheel-content .wheel-text {
+    font-size: .75rem;
+    font-weight: lighter
+}
+.lottery .main .prize {
+    margin: 0 1rem 1rem;
+    color: #d22a09;
+    overflow: hidden;
+    font-size: .8rem
+}
+.lottery .main .prize .prize-item {
+    margin: 1rem 0;
+    overflow: hidden
+}
+.lottery .main .prize .prize-item .cell-2 {
+    margin-top: 5%
+}
+.lottery .main .prize .prize-item .prize-left {
+    background: #f6eab2;
+    border-radius: 1rem;
+    padding: .5rem
+}
+.lottery .main .prize .prize-item .prize-left .cell-12, .lottery .main .prize .prize-item .prize-left .cell-8 {
+    padding-left: 0
+}
+.lottery .main .prize .prize-item .prize-layer {
+    border: 2px dashed #fbac23;
+    padding: .5rem;
+    border-radius: inherit
+}
+.lottery .main .prize .prize-item .prize-name {
+    height: 30%
+}
+.lottery .main .prize .prize-item .prize-name .counter {
+    background: #fbac23;
+    border-radius: .3rem;
+    display: inline-block;
+    padding: .3rem;
+    color: #fff
+}
+.lottery .main .prize .prize-item .prize-name .cell-4 {
+    padding: 0;
+    text-align: right
+}
+.lottery .main .prize .prize-item .prize-img {
+    border-radius: 50%;
+    border: 2px solid #f6eab2;
+    background: #fff;
+    padding: 50%;
+    position: relative
+}
+.lottery .main .prize .prize-item .prize-img img {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border-radius: 50%;
+    padding: 5%;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+.lottery .main .tabs {
+    width: 100%;
+    height: 4.5rem;
+    overflow: hidden;
+    position: relative;
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/tab-left.jpg) center top no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100%;
+    margin-top: -.12rem
+}
+.lottery .main .tabs .tab {
+    position: absolute;
+    font-size: 1.2rem
+}
+.lottery .main .tabs .tab:nth-of-type(1) {
+    color: #fff;
+    left: 16%;
+    top: 22%
+}
+.lottery .main .tabs .tab:nth-of-type(2) {
+    color: #db4325;
+    right: 16%;
+    top: 27%
+}
+.lottery .main .tabs.right {
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/tab-right.jpg) center top no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100%
+}
+.lottery .main .tabs.right .tab:nth-of-type(1) {
+    color: #db4325;
+    left: 16%;
+    top: 26%
+}
+.lottery .main .tabs.right .tab:nth-of-type(2) {
+    color: #fff;
+    right: 19%;
+    top: 26%
+}
+.lottery .main .card {
+    border: 5px solid #ffa676;
+    border-radius: 1rem;
+    background: #fff;
+    position: relative;
+    margin: 1rem 1rem 1.5rem
+}
+.lottery .main .card .card-header {
+    position: absolute;
+    background: url(../images/lottery/card-title.png) center top no-repeat;
+    -webkit-background-size: 100% 100%;
+    background-size: 100%;
+    height: 3.5rem;
+    line-height: 2.5rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #d22a09;
+    font-weight: 700;
+    width: 70%;
+    left: 15%;
+    top: -1rem
+}
+.lottery .main .card .card-header input {
+    width: 7rem;
+    height: 1rem
+}
+.lottery .main .card .card-body, .lottery .main .card .card-note {
+    padding: 2.5rem 1rem 1rem;
+    font-size: 1rem;
+    color: #d8462a
+}
+.lottery .main .card.ranking table {
+    color: #d22a09
+}
+.lottery .main .card.ranking table td {
+    font-size: .8rem
+}
+.lottery .main .card.ranking table td.time {
+    color: #333
+}
+.lottery .main .card.my-winning .winning-item {
+    border-bottom: 1px solid #ffa676;
+    color: #000;
+    overflow: hidden;
+    padding: .5rem 0;
+    text-align: left;
+    font-size: .8rem
+}
+.lottery .main .card.my-winning .winning-item .cell-12, .lottery .main .card.my-winning .winning-item .cell-2 {
+    padding: 0
+}
+.lottery .main .card.my-winning .winning-item p {
+    margin: 0
+}
+.lottery .main .card.my-winning .winning-item .time {
+    color: #9e957d
+}
+.lottery .main .card.my-winning .winning-item a {
+    border-radius: 1rem;
+    padding: .2rem;
+    background: #db4325;
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    text-align: center
+}
+.lottery .main .card.my-winning .winning-item a.exchanged {
+    background: #a0a0a0
+}
+.lottery .main .myinfo {
+    margin: 2rem 1rem;
+    position: relative
+}
+.lottery .main .myinfo .myinfo-header {
+    width: 105%;
+    height: 3rem;
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/myinfo-header.png) center top no-repeat;
+    -webkit-background-size: 101% 101%;
+    background-size: 101%;
+    position: absolute;
+    top: -2rem;
+    left: -2%
+}
+.lottery .main .myinfo .myinfo-body {
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/myinfo-bg.png);
+    overflow: hidden;
+    border: 2px solid #ffd614;
+    border-radius: 0 0 1rem 1rem;
+    padding: .5rem;
+    font-size: .8rem
+}
+.lottery .main .myinfo .myinfo-body strong {
+    color: #d22a09
+}
+.lottery .main .myinfo .myinfo-body .left-count {
+    color: #9c9a9a;
+    text-align: center
+}
+.lottery .main .myinfo .myinfo-body .right {
+    text-align: right
+}
+.lottery .join-action {
+    padding: .5rem .5rem 2rem;
+    text-align: center;
+    overflow: hidden
+}
+.lottery .join-action a {
+    border-radius: 2rem;
+    background: #f3e145;
+    border-style: solid;
+    border-color: #861b06;
+    width: 80%;
+    display: inline-block;
+    height: 3rem;
+    line-height: 2.5rem;
+    color: #d22a09;
+    margin-bottom: .5rem;
+    border-width: 1px 2px 5px
+}
+.lottery .join-action .note {
+    color: #fff
+}
+.lottery .tel {
+    height: auto;
+    background: 0 0
+}
+.lottery .tel .info {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    line-height: 2.5rem;
+    background-color: #fff;
+    color: #d22a09;
+    font-size: .875rem;
+    padding: .625rem
+}
+.lottery .tel .info span {
+    font-size: 1rem
+}
+.lottery .tel .info span>a {
+    display: inline;
+    background: 0 0;
+    color: #EB300F;
+    text-indent: 0
+}
+.lottery .tel .info>a {
+    display: block;
+    width: 6.25rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-radius: .375rem;
+    color: #fff;
+    text-align: center;
+    text-indent: 1.5625rem;
+    background: url(../images/lottery/icon-tel.png) 15% center no-repeat #ff8400;
+    -webkit-background-size: 20% auto;
+    background-size: 20% auto;
+    float: right;
+    -webkit-animation: tada 3s infinite linear;
+    -o-animation: tada 3s infinite linear;
+    animation: tada 3s infinite linear
+}
+.lottery .tel .info .action-bar {
+    display: none
+}
+.lottery .tel .info .reminder {
+    height: 1.875rem;
+    line-height: 1.875rem;
+    background-color: rgba(0,0,0,.7);
+    position: relative;
+    margin: .625rem -.625rem -.625rem
+}
+.lottery .tel .info .reminder a {
+    display: inline-block;
+    width: auto;
+    line-height: 1.875rem;
+    color: #fff;
+    background: 0 0;
+    padding-left: 10px
+}
+.lottery .tel .info .reminder i {
+    color: #fff;
+    font-style: normal;
+    margin: 0 5px
+}
+.lottery .tel .info .reminder strong {
+    color: #ffdc00
+}
+.lottery .tel .info .reminder .reminder-close {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    min-width: 2.5rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer
+}
+.lottery .modal-join .modal-content {
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/join-modal-bg.jpg) center top no-repeat #fff;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    border-radius: 1.2rem
+}
+.lottery .modal-join .modal-body {
+    padding-top: 7rem
+}
+.lottery .modal-join .modal-close {
+    color: #fff
+}
+.lottery .modal-join fieldset {
+    border-width: 0
+}
+.lottery .modal-join fieldset p.iwjoin {
+    font-size: 1.5rem;
+    text-align: center;
+    color: #f75028;
+    margin-bottom: .5rem
+}
+.lottery .modal-join fieldset label {
+    padding-top: .3125rem;
+    padding-right: 0;
+    color: #333
+}
+.lottery .modal-join fieldset span {
+    color: #ff4853;
+    font-size: .875rem;
+    text-align: center;
+    display: block
+}
+.lottery .modal-join fieldset input {
+    font-size: 1rem;
+    width: 100%;
+    padding: .3rem 1rem;
+    border: .0625rem solid #ddd;
+    border-radius: .3125rem;
+    background: #f6f6f6
+}
+.lottery .modal-join fieldset input:focus {
+    border-color: #5ab8e8;
+    outline: 0
+}
+.lottery .modal-exchange, .lottery .modal-winning {
+    max-width: 640px;
+    position: absolute;
+    z-index: 1030;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%
+}
+.lottery .modal-exchange .modal-dialog, .lottery .modal-winning .modal-dialog {
+    max-width: inherit;
+    position: fixed;
+    z-index: 5000;
+    width: 90%;
+    top: 0;
+    left: 5%;
+    text-align: center;
+    overflow: hidden;
+    -o-animation: bounceInDown 1s linear;
+    animation: bounceInDown 1s linear;
+    -webkit-animation: bounceInDown 1s linear
+}
+.lottery .modal-exchange .modal-dialog.hiding, .lottery .modal-winning .modal-dialog.hiding {
+    -o-animation: bounceOutDown 1s linear;
+    animation: bounceOutDown 1s linear;
+    -webkit-animation: bounceOutDown 1s linear
+}
+.lottery .modal-exchange .modal-dialog.hidden, .lottery .modal-winning .modal-dialog.hidden {
+    display: none
+}
+.lottery .modal-exchange .modal-dialog .winning-dialog-header, .lottery .modal-winning .modal-dialog .winning-dialog-header {
+    overflow: hidden;
+    width: 100%;
+    padding-top: 82%;
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/winning-dialog-header.png) center top no-repeat;
+    -webkit-background-size: 100% auto;
+    background-size: 100% auto;
+    color: #fff;
+    position: relative
+}
+.lottery .modal-exchange .modal-dialog .winning-dialog-header h4, .lottery .modal-winning .modal-dialog .winning-dialog-header h4 {
+    position: absolute;
+    bottom: 9%;
+    width: 100%;
+    height: 2rem;
+    font-size: 1rem;
+    line-height: 2rem
+}
+.lottery .modal-exchange .modal-dialog .winning-dialog-content, .lottery .modal-winning .modal-dialog .winning-dialog-content {
+    width: 83%;
+    margin: -2rem auto 0 11%;
+    padding: 1.5rem 1rem 1rem;
+    color: #f17555;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 1rem
+}
+.lottery .modal-exchange .modal-dialog .winning-dialog-content .note, .lottery .modal-winning .modal-dialog .winning-dialog-content .note {
+    color: silver;
+    font-size: .8rem
+}
+.lottery .modal-exchange .modal-dialog a, .lottery .modal-winning .modal-dialog a {
+    width: 40%;
+    margin: 0 auto;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    background: #f3e145;
+    border-radius: 1rem;
+    border-bottom: 5px solid #f0c80d;
+    color: #ed522a;
+    display: inline-block;
+    font-weight: 700
+}
+.lottery .modal-exchange.modal-exchange .modal-exchange-header, .lottery .modal-winning.modal-exchange .modal-exchange-header {
+    position: fixed;
+    z-index: 5001;
+    top: 5rem;
+    width: 100%;
+    height: 6rem;
+    text-align: center;
+    line-height: 5rem;
+    background: url(http://cdn.s.shangjiadao.cn/source/images/lottery/exchange-header.png) center top no-repeat;
+    -webkit-background-size: 53% auto;
+    background-size: 53% auto;
+    color: #fff
+}
+.lottery .modal-exchange.modal-exchange .modal-exchange-line, .lottery .modal-winning.modal-exchange .modal-exchange-line {
+    position: fixed;
+    z-index: 5001;
+    top: 12.8%;
+    right: 15%;
+    width: 3px;
+    background: #fff;
+    height: 3rem
+}
+.lottery .modal-exchange.modal-exchange .modal-exchange-close, .lottery .modal-winning.modal-exchange .modal-exchange-close {
+    position: fixed;
+    z-index: 5001;
+    top: 10%;
+    width: 1.5rem;
+    right: 12%;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: rgba(102,73,3,.87);
+    background: #fff;
+    display: inline-block;
+    font-size: 1.5rem;
+    text-align: center;
+    line-height: 1.5rem
+}
+.lottery .modal-exchange.modal-exchange .modal-dialog, .lottery .modal-winning.modal-exchange .modal-dialog {
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    -o-animation: none;
+    animation: none;
+    -webkit-animation: none
+}
+.lottery .modal-exchange.modal-exchange .modal-dialog .modal-exchange-body, .lottery .modal-winning.modal-exchange .modal-dialog .modal-exchange-body {
+    background: #fff;
+    border-radius: 1rem;
+    border: 2px solid #ffd300;
+    padding: 2.5rem 1rem 1rem;
+    overflow: hidden;
+    color: #a3a3a2
+}
+.lottery .modal-exchange.modal-exchange .modal-dialog .modal-exchange-body input, .lottery .modal-winning.modal-exchange .modal-dialog .modal-exchange-body input {
+    width: 10rem;
+    height: 2rem;
+    line-height: 1.5rem;
+    background: #eee;
+    border: 1px solid #e3e3e3;
+    text-align: center;
+    overflow: hidden
+}
+.lottery .modal-exchange.modal-exchange .modal-dialog .modal-exchange-body p.password, .lottery .modal-winning.modal-exchange .modal-dialog .modal-exchange-body p.password {
+    overflow: hidden
+}
+.lottery .modal-exchange.modal-exchange .modal-dialog .modal-exchange-body a, .lottery .modal-winning.modal-exchange .modal-dialog .modal-exchange-body a {
+    border: none;
+    color: #fff;
+    background: #db4325
+}
+.lottery.sample .tel {
+    height: 4.75rem
+}
+.lottery.sample .tel .info {
+    padding-left: 0;
+    padding-right: 0;
+    text-indent: .625rem
+}
+.lottery.sample .tel .info>span {
+    text-indent: 0
+}
+.lottery.sample .tel .info>a {
+    text-indent: 1.5625rem;
+    margin-right: .625rem
+}
+.lottery.sample .tel .info .reminder {
+    display: none
+}
+.lottery.sample .tel .info .action-bar {
+    display: block;
+    width: 100%;
+    background-color: #04be02;
+    margin-bottom: -.625rem;
+    text-indent: 0;
+    text-align: center
+}
+.lottery.sample .tel .info .action-bar a {
+    display: block;
+    width: 100%;
+    background: #04be02;
+    color: #fff;
+    text-indent: 0;
+    margin-bottom: -.625rem;
+    margin-top: .625rem;
+    margin-right: -.625rem
+}
+
+@media screen and (width:320px) {
+    .lottery .main .myinfo .myinfo-header {
+        top: -1.8rem
+    }
+    .lottery .main .banner .banner-countdown-box {
+        font-size: .75rem
+    }
+    .lottery .main .banner .banner-winning-box {
+        top: 81%
+    }
+    .lottery .main .card .card-header {
+        line-height: 2rem
+    }
+    .lottery .main .tabs {
+        margin-top: -.15rem
+    }
+    .lottery .main .tabs .tab:nth-of-type(2) {
+        top: 20%
+    }
+    .lottery .main .tabs.right .tab:nth-of-type(1) {
+        top: 17%
+    }
+}
+
+@media screen and (width:360px) {
+    .lottery .main .banner .banner-action-shadow {
+        top: 44%
+    }
+    .lottery .main .tabs {
+        margin-top: -.15rem
+    }
+}
+
+@media only screen and (min-width:476px) {
+    .lottery .main .myinfo .myinfo-header {
+        top: -2.5rem
+    }
+    .lottery .main .banner .banner-action-shadow {
+        top: 44%
+    }
+    .lottery .main .tabs {
+        margin-top: -.5rem;
+        height: 6.5rem
+    }
+    .lottery .main .card .card-header {
+        line-height: 3rem
+    }
+    .lottery .main .card .card-body, .lottery .main .card .card-note {
+        padding-top: 3rem
+    }
+}
+
+@media only screen and (min-width:490px) {
+    .lottery .main .banner .banner-action-shadow {
+        display: none
+    }
+}
+.lottery-joiners table a {
+    cursor: pointer
+}
+.lottery-joiners table th {
+    font-weight: 700
+}
+.lottery-joiners table td, .lottery-joiners table th {
+    padding: 2px;
+    word-break: keep-all;
+    white-space: nowrap
+}
+.lottery-joiners .table-box {
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 1rem
+}
+.lottery-joiners .main .weui_loadmore_line {
+    border-top: 1px solid #E5E5E5;
+    margin-top: 2.4rem
+}
+.lottery-joiners .main .weui_loadmore_line .weui_loadmore__tips {
+    position: relative;
+    top: -.9rem;
+    padding: 0 .55rem;
+    background-color: #FFF;
+    color: #0059a6;
+    display: inline-block;
+    vertical-align: middle
+}
+.lottery-joiners .main .weui_loadmore {
+    width: 65%;
+    margin: 1.5rem auto 0;
+    line-height: 1.6rem;
+    font-size: 14px;
+    text-align: center
+}
+.lottery-joiners .main .edit-amount {
+    padding-top: .5rem;
+    text-align: center
+}
+.lottery-joiners .main .weui_navbar.nofixed {
+    top: 2.8rem
+}
+.lottery-joiners .main .weui_navbar .weui_navbar_item {
+    background: #f5f5f5;
+    color: #403e3e
+}
+.lottery-joiners .main .weui_navbar .weui_navbar_item.weui_bar_item_on {
+    background-color: #639CEB;
+    color: #fff
+}
+.lottery-joiners .main .line {
+    padding-top: 3rem
+}
+.lottery-joiners .exchanged {
+    color: #c3c3c3
+}
+.lottery-joiners .exchanged a {
+    color: #79adda
+}
+.lottery-joiners .weui_actionsheet_cell {
+    display: block;
+    font-size: .875rem
+}
+.lottery-joiners .weui_actionsheet_cell i {
+    padding-right: 5px
+}
+.lottery-joiners .notes {
+    line-height: 1.5rem;
+    font-size: .75rem;
+    padding: 0 .625rem;
+    margin: 0
+}
+.lottery-joiners .notes:first-of-type {
+    padding-top: .625rem
+}
+.lottery-joiners .notes:last-of-type {
+    padding-bottom: .625rem
+}
+.activity img {
+    display: block;
+    width: 100%
+}
+.activity table {
+    width: 100%
+}
+.activity table td[colspan] {
+    text-align: center
+}
+.activity .shake-btn {
+    animation: zoomRock .6s linear infinite alternate;
+    -webkit-animation: zoomRock .6s linear infinite alternate;
+    -moz-animation: zoomRock .6s linear infinite alternate;
+    -ms-animation: zoomRock .6s linear infinite alternate;
+    -o-animation: zoomRock .6s linear infinite alternate
+}
+.activity .header {
+    position: relative;
+    z-index: 10
+}
+.activity .header>.menu {
+    position: fixed;
+    top: .5rem;
+    right: .5rem
+}
+.activity .header>.menu>a {
+    font-size: .875rem;
+    line-height: 2rem;
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: .25rem;
+    color: #fff;
+    background-color: rgba(0,0,0,.5);
+    border-radius: 50%;
+    text-align: center
+}
+.activity .header>.menu>a+a {
+    margin-top: .5rem
+}
+.activity .header>.menu>a.small {
+    font-size: .75rem;
+    line-height: 1rem
+}
+.activity .header>.menu>a i.fa {
+    font-size: 1.5rem;
+    line-height: 1.5
+}
+.activity .header>.menu>a.qrcode {
+    width: 2.8rem;
+    height: 2.8rem;
+    padding: .45rem .2rem;
+    font-size: .75rem;
+    line-height: 1.3
+}
+.activity .header>.menu>a.qrcode.ani {
+    -o-animation: shake-hard 2s ease;
+    animation: shake-hard 2s ease;
+    -webkit-animation: shake-hard 2s ease
+}
+.activity .header>.stats {
+    font-size: .875rem;
+    position: absolute;
+    top: .5rem;
+    left: 1rem;
+    list-style: none
+}
+.activities .header, .home, .home .footer {
+    right: 0;
+    bottom: 0;
+    left: 0
+}
+.activity .header>.stats>li {
+    display: inline;
+    text-shadow: 0 0 .125rem #aaa
+}
+.activity .header>.stats>li+li {
+    margin-left: .5rem
+}
+.activity .header>.stats>li>b {
+    color: #ffdc00
+}
+.activity .banner {
+    position: relative;
+    text-align: center
+}
+.activity .banner .title {
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-shadow: 0 0 .1875rem rgba(255,255,255,.2)
+}
+.activity .banner .date {
+    font-size: .875rem;
+    margin-bottom: 0
+}
+.activity .banner .date>time {
+    font-size: .75rem;
+    color: #ffdc00
+}
+.activity .banner .date>span {
+    margin-right: .25rem;
+    margin-left: .25rem
+}
+.activities .main span.tiper .cell-1 i::before, .activity .footer .action-bar>a>i {
+    margin-right: .5rem
+}
+.activity .card p:last-child {
+    margin-bottom: 0
+}
+.activity .footer {
+    min-height: 2.5rem
+}
+.activity .footer .fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1011;
+    -webkit-box-shadow: 0 0 3px rgba(0,0,0,.1);
+    box-shadow: 0 0 3px rgba(0,0,0,.1)
+}
+.activity .footer .action-bar {
+    display: none;
+    width: 100%;
+    background-color: #fff
+}
+.activity .footer .action-bar>a {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+    display: table-cell;
+    padding: .5rem;
+    color: #0059a6;
+    background-color: #f7f7f7;
+    text-align: center;
+    cursor: pointer
+}
+.activity .footer .reminder, .activity .footer .reminder .reminder-close:focus, .activity .footer .reminder .reminder-close:hover {
+    background-color: rgba(0,0,0,.5)
+}
+.activity .footer .action-bar>a[disabled] {
+    cursor: not-allowed
+}
+.activity .footer .reminder {
+    position: relative
+}
+.home, .home .actions, .home .footer {
+    position: absolute
+}
+.activity .footer .reminder .reminder-link {
+    display: block;
+    padding: .5rem 1rem;
+    color: #fff
+}
+.activity .footer .reminder .reminder-link>i {
+    font-style: normal;
+    margin-left: .5rem;
+    margin-right: .5rem
+}
+.activity .footer .reminder .reminder-link>strong {
+    font-weight: 400;
+    color: #ffdc00
+}
+.activity .footer .reminder .reminder-close {
+    font-size: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    min-width: 2.5rem;
+    color: #fff;
+    text-align: center;
+    cursor: pointer
+}
+.activity.sample .footer .action-bar {
+    display: table
+}
+.activity.sample .footer .action-bar>a {
+    color: #fff;
+    background-color: #04be02
+}
+.activity.sample .footer .reminder {
+    display: none
+}
+.activity-editor textarea {
+    display: block
+}
+.activity-editor .dashed {
+    font-size: inherit;
+    line-height: 1.1;
+    width: 100%;
+    padding: .875rem;
+    color: inherit;
+    background-color: transparent;
+    border: 1px dashed #aaa;
+    text-align: inherit
+}
+.activity-editor .dashed::-moz-placeholder {
+    color:#aaa;
+    opacity:1
+}
+.activity-editor .dashed:-ms-input-placeholder {
+    color:#aaa;
+    opacity:1
+}
+.activity-editor .dashed::-webkit-input-placeholder {
+    color:#aaa;
+    opacity:1
+}
+.activity-editor .dashed.reverse {
+    color: #fff;
+    border-color: #fff
+}
+.activity-editor .dashed.reverse::-moz-placeholder {
+    color:#f6f6f6;
+    opacity:1
+}
+.activity-editor .dashed.reverse:-ms-input-placeholder {
+    color:#f6f6f6;
+    opacity:1
+}
+.activity-editor .dashed.reverse::-webkit-input-placeholder {
+    color:#f6f6f6;
+    opacity:1
+}
+.activity-editor .dashed[type=number] {
+    padding-right: 0
+}
+.activity-editor .banner .title textarea {
+    resize: none
+}
+.activity-editor .banner .date>input {
+    font-size: .75rem;
+    width: 6.875rem;
+    padding-right: 0;
+    padding-left: 0;
+    color: #ffdc00
+}
+.activity-editor .banner .note {
+    font-size: .75rem;
+    line-height: 1;
+    margin-top: .25rem;
+    margin-bottom: 0;
+    text-align: right
+}
+.activity-editor .about textarea, .activity-editor .prizes textarea, .home .actions {
+    margin-bottom: 1rem
+}
+.activity-editor .footer {
+    min-height: 4.625rem
+}
+.activity-editor .footer .container {
+    padding: 1rem;
+    background-color: #fff
+}
+.imager-container * {
+    padding: 0;
+    margin: 0
+}
+.imager-container .imager {
+    max-width: 640px;
+    max-height: 360px;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto
+}
+.imager-container .imager i.fa::before {
+    padding-right: .5rem
+}
+.imager-container .imager font, .imager-container .imager textarea.editable {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    display: inline-block;
+    width: 80%;
+    height: 6.5625rem;
+    font-size: 1.5rem;
+    word-wrap: break-word;
+    word-break: normal;
+    letter-spacing: .05rem
+}
+.imager-container .imager font.editable, .imager-container .imager textarea.editable.editable {
+    top: 17.5%
+}
+.imager-container .imager font.title, .imager-container .imager textarea.editable.title {
+    font-size: .8rem;
+    line-height: .65rem
+}
+.imager-container .imager font {
+    top: 27.5%
+}
+.imager-container .imager .actions {
+    position: absolute;
+    bottom: 2rem;
+    padding: 1rem;
+    width: 100%;
+    background-color: rgba(0,0,0,.55);
+    height: 5rem
+}
+.imager-container .imager .actions .action-layer {
+    position: relative
+}
+.imager-container .imager .actions a.action {
+    position: absolute;
+    width: 6rem;
+    height: 2rem;
+    line-height: 1rem;
+    padding: .5rem;
+    background-color: rgba(0,0,0,.55);
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5px;
+    z-index: 1
+}
+.imager-container .imager .actions a.action:nth-of-type(1) {
+    left: 20%
+}
+.imager-container .imager .actions a.action:nth-of-type(2) {
+    right: 20%
+}
+.imager-container .imager .actions a.action:nth-of-type(2) .upload-layer {
+    position: relative
+}
+.imager-container .imager .actions a.action:nth-of-type(2) .upload-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 50px;
+    opacity: 0
+}
+.imager-container .imager .tiper {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 13%;
+    font-size: .75rem;
+    color: rgba(255,255,255,.89)
+}
+.imager-container .imager .tiper i::before {
+    -o-animation: fadeInUp 2s infinite linear;
+    animation: fadeInUp 2s infinite linear;
+    -webkit-animation: fadeInUp 2s infinite linear
+}
+.imager-container .imager .imager-selector {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    overflow: auto;
+    background: #fff;
+    z-index: 2;
+    -o-animation: slideInUp 1s ease;
+    animation: slideInUp 1s ease;
+    -webkit-animation: slideInUp 1s ease
+}
+.imager-container .imager .imager-selector.hide {
+    -o-animation: slideOutDown .6s ease-out;
+    animation: slideOutDown .6s ease-out;
+    -webkit-animation: slideOutDown .6s ease-out
+}
+.imager-container .imager .imager-selector ul>li {
+    list-style: none;
+    float: left;
+    color: #000;
+    margin-right: .5rem
+}
+.imager-container .imager .imager-selector .categories {
+    padding: .2rem;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #fbf9fe;
+    height: 20%;
+    overflow: hidden;
+    position: relative
+}
+.imager-container .imager .imager-selector .categories.empty {
+    border-bottom: 0;
+    height: 2rem
+}
+.imager-container .imager .imager-selector .categories ul {
+    height: 100%;
+    width: 100%
+}
+.imager-container .imager .imager-selector .categories ul li {
+    padding: .25rem
+}
+.imager-container .imager .imager-selector .categories ul li a {
+    font-size: .875rem;
+    padding: .25rem;
+    color: #333
+}
+.imager-container .imager .imager-selector .categories ul li a.cur, .imager-container .imager .imager-selector .categories ul li a:active, .imager-container .imager .imager-selector .categories ul li a:focus, .imager-container .imager .imager-selector .categories ul li a:hover {
+    border: 1px solid #71a8f3;
+    border-radius: 10px;
+    color: #71a8f3
+}
+.imager-container .imager .imager-selector .categories .close {
+    position: absolute;
+    right: .75rem;
+    top: .4rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.45);
+    padding: .3rem .25rem .3rem .35rem;
+    color: #fff
+}
+.imager-container .imager .imager-selector .categories .close::before {
+    padding-right: .1rem
+}
+.imager-container .imager .imager-selector .imgbox {
+    padding: .5rem;
+    width: 100%;
+    overflow-x: auto
+}
+.imager-container .imager .imager-selector .imgbox ul {
+    height: 100%;
+    overflow: auto
+}
+.imager-container .imager .imager-selector .imgbox ul li {
+    max-width: 80px;
+    max-height: 80px;
+    overflow: hidden;
+    border: 1px solid #b0b0b0;
+    -webkit-box-shadow: 1px 1px 3px rgba(86,86,86,.21);
+    box-shadow: 1px 1px 3px rgba(86,86,86,.21);
+    border-radius: 5px
+}
+.imager-container .imager .imager-selector .imgbox ul li.cur {
+    border: 2px solid #5390e3
+}
+
+@media screen and (width:320px) {
+    .imager-container .imager .actions a.action:nth-of-type(1) {
+        left: 10%
+    }
+    .imager-container .imager .actions a.action:nth-of-type(2) {
+        right: 10%
+    }
+    .imager-container .imager .tiper {
+        right: 7%
+    }
+}
+
+@media screen and (min-width:415px) {
+    .imager-container .imager .actions {
+        bottom: 4rem
+    }
+    .imager-container .imager .tiper {
+        bottom: 4.5rem;
+        right: 16%;
+        font-size: .8rem
+    }
+}

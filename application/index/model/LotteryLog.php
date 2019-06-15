@@ -25,7 +25,7 @@ class LotteryLog extends Model
     }
     public function lotteryprize()
     {
-        return $this->belongsTo('lottery_prize','pid','id')->field('name');
+        return $this->belongsTo('lottery_prize','pid','id')->field('name,img');
     }
     public function getStatusAttr($value)
     {

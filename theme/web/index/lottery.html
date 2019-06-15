@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>幸运大转盘</title>
+    <meta name="description" content="简单高效的营销工具">
+    <link href="/theme/web/static/lottery/style.css?v1.3.0.1499741564171" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container activity lottery">
+    <header class="header uneditable">
+        <nav class="menu">
+            <a class="qrcode"> <font>活动<br>二维码</font></a>
+        </nav>
+        <ul class="stats">
+            <li><b>{$temp['click']}</b>人查看</li>
+            <li><b>{$partake}</b>次抽奖</li>
+            <li><b>{$sigs}</b>人报名</li>
+        </ul>
+    </header>
+    <div class="main">
+
+
+
+        <div class="imager-container lottery-imager" id="imager-container">
+            <div class="imager" style="max-width: 640px; max-height: none;">
+                <img src="{$temp['toppic']}">
+            </div>
+        </div>
+
+
+        <div class="banner">
+            <div class="banner-action" id="lottery-banner-wheel" style="left: 50%; top: 5.5%;">
+                <div class="action-point"></div>
+                <div class="action-layer" id="lottery-wheel-runner">
+                    <ul class="wheel-line">
+                        {volist name="prizes" id="val"}
+                        <li class="wheel-litem" style="transform: rotate({$val['orderid']*$jd + $jd/2}turn);"></li>
+                        {/volist}
+                    </ul>
+                    <div class="wheel-list">
+
+                        {volist name="prizes" id="val"}
+                        <div class="wheel-item">
+                            <div class="wheel-content" style="transform: rotate({$val['orderid']*$jd}turn);">
+                                <p class="wheel-img"> <img src="{$val['img']}"></p>
+                                <p class="wheel-text">{$val['name']}</p>
+                            </div>
+                        </div>
+                        {/volist}
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="banner-action-shadow"></div>
+            <div class="banner-title-box">{$temp['title']}</div>
+            <div class="banner-countdown-box">
+                <div class="countdown" data-date="1608393600000">活动<b>结束</b>倒计时<b data-days="">{$d}</b>天<b data-hours="">{$h}</b>时<b data-minutes="">{$m}</b>分<b data-seconds="">{$s}</b>秒</div>
+            </div>
+            <div class="banner-winning-box">
+                <div class="winning-box-inner" id="winning-scroller">
+
+                    {if is_array($zjlist)}
+                    {volist name="zjlist" id="val"}
+                    <span style="left: {php echo rand(-60,460)}px; top: {php echo rand(0,60)}px;">
+						<b class="name">{$val.name}</b>
+						<strong>抽中</strong><b></b>
+						<img src="{$val.img}">
+					</span>
+                    {/volist}
+                    {else}
+                    <div class="empty">还没人中奖耶~</div>
+                    {/if}
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- 标签选择-->
+        <div class="tabs">
+            <div class="tab">活动详情</div>
+            <div class="tab">我的中奖</div>
+        </div>
+
+        <style type="text/css">
+            .rightTabSelected {
+                display: none;
+            }
+        </style>
+        <!-- 我的报名信息-->
+        <div class="myinfo rightTabSelected">
+            <div class="myinfo-header" style="display: none;"> </div>
+            <div class="myinfo-body" style="display: none;">
+                <div class="cell-5">{{myinfo.name}}</div>
+                <div class="cell-7 right">{{myinfo.mobile}}</div>
+                <div class="cell-5">已中奖 <strong>{{myinfo.winning_count}}</strong> 个</div>
+                <div class="cell-7 right">还可以再中奖 <strong>{{myinfo.left_winning_count}}</strong> </div>
+                <div class="cell-12 left-count">今日还可以抽奖 <strong>{{myinfo.left_lottery_count}}</strong> </div>
+                <div class="cell-12 left-count">每个奖项仅可抽中一次 </div>
+            </div>
+        </div>
+        <!-- 报名交互-->
+        <!--<div class="join-action" v-if="!my.self" v-show="rightTabSelected">
+            <div class="cell-12"><a @click="click">马上报名开始抽奖</a></div>
+            <div class="cell-12 note">如已报过名还出现此按钮，请继续用原来的手机号再次报名找回页面</div>
+        </div>-->
+        <!-- 中奖记录-->
+        <div class="card my-winning rightTabSelected">
+            <div class="card-header">中奖记录</div>
+            <div class="card-body">
+
+            </div>
+        </div>
+
+        <!-- 活动规则-->
+        <div class="card leftTabSelected">
+            <div class="card-header">{$temp['rules_title']}</div>
+            <div class="card-body">{$temp['rules_content']}</div>
+            <div class="card-footer"></div>
+        </div>
+        <!-- 兑奖信息-->
+        <div class="card leftTabSelected">
+            <div class="card-header">{$temp['accept_title']}</div>
+            <div class="card-body">{$temp['accept_content']}</div>
+            <div class="card-footer"></div>
+        </div>
+        <!-- 机构介绍-->
+        <div class="card leftTabSelected">
+            <div class="card-header">{$temp['about_title']}</div>
+            <div class="card-body about">{$temp['about_content']}</div>
+            <div class="card-footer"></div>
+        </div>
+
+        <div class="card ranking" id="lottery-ranking-box" v-show="!rightTabSelected">
+            <div class="card-header">中奖榜单</div>
+            <div class="card-body">
+                <table>
+                    <thead></thead>
+                    <tbody >
+                    {volist name="zjlist" id="val"}
+                    <tr>
+                        <td>{$val['name']}</td>
+                        <td class="time">{$val['addtime']}</td>
+                        <td>抽中 {$val['pname']}</td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+                <waterfall-flow-loader v-if="loader" :url="loader.url" :params="loader.params" :listrows="10" :done="load" lazy></waterfall-flow-loader>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+
+    </div>
+    <div class="tel">
+        <div class="info">
+            咨询热线：<span></span>
+            <a class="fr" href="tel://{$temp['tel']}">一键拨号</a>
+        </div>
+    </div>
+    <template v-if="activity">
+        <div class="tel">
+            <div class="info">
+                咨询热线：<span></span>
+                <a class="fr" href="tel://">一键拨号</a>
+                <div class="action-bar"><a href="#!/activity/lottery/new">马上制作</a></div>
+                <div class="reminder" style="display: none;">
+                    <a class="reminder-link" href="http://mp.weixin.qq.com/s/t6Tpd-Zv2IXEG4NB0QMaKA">我也要制作发布营销活动<i>&raquo;</i><strong>商家岛</strong></a>
+                    <a class="reminder-close" title="关闭" @click="toggleReminder">&times;</a>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+
+    <!-- 我要报名对话框-->
+    <div class="modal fade modal-join out in" style="display: none">
+        <form method="post" class="modal-content" role="form">
+            <div class="modal-header"><button class="modal-close" type="button">×</button></div>
+            <div class="modal-body">
+                <fieldset class="grid">
+                    <p class="iwjoin">我要报名</p><span>所填信息不会公开，仅用于活动兑奖。</span>
+
+                </fieldset>
+                <fieldset class="grid">
+                    <div class="cell-12"><input name="name" type="text" placeholder="请输入姓名" required=""></div>
+                </fieldset>
+                <fieldset class="grid">
+                    <div class="cell-12"><input name="mobile" type="tel" title="请输入手机号码" maxlength="11" pattern="^1[34578]{1}[0-9]{9}$" placeholder="请输入手机号码" required=""></div>
+                </fieldset>
+            </div>
+            <div class="modal-footer"><button class="weui_btn weui_btn_primary" type="submit">提交</button></div>
+        </form>
+
+    </div>
+
+
+    <!-- 中奖结果公示对话框-->
+    <div class="modal-winning hiddenWinningDialog" id="zj" style="display: none;">
+        <div class="weui_mask"></div>
+        <div class="modal-dialog hidingWinningDialog">
+            <div class="winning-dialog-header"> <h4>中奖啦</h4></div>
+            <div class="winning-dialog-content">
+                <p>恭喜你抽中【{{activity.prizes.levels[lottery.winning_level]['name']}}】【{{activity.prizes.levels[lottery.winning_level]['text']}}】，真是好运气 :)</p>
+                <p class="note">请在【我的中奖】中进行查看</p>
+                <template v-else><p>好遗憾没中奖，据说有好友支持，中奖率更高。</p></template>
+                <a  href="javascript:" id="closezj">知道啦</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 兑奖对话框-->
+    <div class="modal-exchange" v-if="exchange.visible" style="display: none;">
+        <div class="weui_mask"></div>
+        <div class="modal-exchange-header">兑奖操作</div>
+        <div class="modal-exchange-line"></div>
+        <div class="modal-exchange-close" @click="hideExchange">&times;</div>
+        <div class="modal-dialog">
+            <div class="modal-exchange-body">
+                <p>将页面出示给商家</p>
+                <p>输入兑奖密码完成兑奖</p>
+                <p class="password"><input id="modal-exchange-password" type="password" maxlength="6" placeholder="请输入兑奖密码" v-model="exchange.pwd"></p>
+                <p><a @click="goExchange" v-text="[exchange.submitting ? '兑奖中...' : '兑奖']"> </a></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 二维码分享对话框-->
+    <div class="weui_dialog_container weui_dialog_alert" id="weui_dialog_box2" style="display: none;">
+        <div class="weui_mask"></div>
+        <div class="weui_dialog masked" style="width: 100%;">
+            <div class="weui_dialog_hd">
+                <strong class="weui_dialog_title dialog_title"></strong>
+                <a class="title_colse" href="javascript:void(0)"> <i class="fa fa-remove"></i></a>
+            </div>
+            <div class="weui_dialog_bd" style="text-align: center; width: 102%; overflow: auto; height: 630px;">
+                <p style="font-size: 1.2rem;color: #fff;text-align: left;text-indent: 11%;">① 长按图片保存</p>
+                <p style="font-size: 1.2rem;color: #fff;text-align: left;text-indent: 11%;">② 图片发圈通知朋友来帮忙</p>
+                <p style="width: 100%;height: 260px;position:relative;margin: 0 auto;">
+                    <img id="dialog_qrocde_demo" style="left:0;top:0;z-index:10;width:80%; display: initial;" src="/theme/web/static/lottery/images/loading.gif">
+                </p>
+            </div>
+            <div class="weui_dialog_ft">
+                <a class="weui_btn_dialog default btn_cancel" style="display: none;">取消</a>
+                <a class="weui_btn_dialog default btn_confirm" style="display: none;">确定</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- 错误提醒-->
+<div class="weui_dialog_container weui_dialog_alert" id="weui_dialog_box1" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title dialog_title">温馨提示</strong></div>
+        <div class="weui_dialog_bd" style="text-align: left;"><p>①报名前可先联系商家，确认活动真实性以及记录联系方式哦。</p><p>②如发现虚假活动，请在华恋宝公众号回复我们</p></div>
+        <div class="weui_dialog_ft"><a class="weui_btn_dialog default btn_cancel" style="display: none;">取消</a><a class="weui_btn_dialog default btn_confirm" id="zhidao">我知道了</a></div>
+    </div>
+</div>
+
+<div class="weui_dialog_container weui_dialog_alert" id="weui_dialog_box2" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title dialog_title">报名成功</strong></div>
+        <div class="weui_dialog_bd" style="text-align: center;">点击“确定”即可去抽奖</div>
+        <div class="weui_dialog_ft"><a class="weui_btn_dialog default btn_cancel" style="display: none;">取消</a><a class="weui_btn_dialog default btn_confirm" id="queding">确定</a></div>
+    </div>
+
+</div>
+
+
+<div class="weui_dialog_container weui_dialog_alert" id="weui_dialog_box3" style="display: none;">
+    <div class="weui_mask"></div>
+    <div class="weui_dialog">
+        <div class="weui_dialog_hd"><strong class="weui_dialog_title dialog_title">温馨提示</strong></div>
+        <div class="weui_dialog_bd body" style="text-align: left;"><p>①报名前可先联系商家，确认活动真实性以及记录联系方式哦。</p><p>②如发现虚假活动，请在华恋宝公众号回复我们</p></div>
+        <div class="weui_dialog_ft"><a class="weui_btn_dialog default btn_cancel" style="display: none;">取消</a><a class="weui_btn_dialog default btn_confirm" id="queding1">确定</a></div>
+    </div>
+</div>
+
+<message title="温馨提示" :detail="{ link: { name: '404why', query: {mobile: activityMobile} }, text: '点击查看原因' }" content="该活动不存在或已被删除"></message>
+
+<script src="/theme/web/static/lottery/js/jquery.min.js"></script>
+<script src="/theme/web/static/lottery/js/countdown.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".action-point").click(function(){
+            $("#weui_dialog_box1").css("display","block");
+        });
+
+
+        $("#zhidao").click(function(){
+            $("#weui_dialog_box1").css("display","none");
+            $(".modal.fade.modal-join.out.in").css("display","-webkit-box");
+        });
+        $("button.modal-close").click(function(){
+            $(".modal.fade.modal-join.out.in").css("display","none");
+        });
+
+        $(".winning-dialog-content").on("click" , '#closezj',function(){
+            $("#zj").css("display","none")
+        });
+
+        $(".tab").eq(0).click(function(){
+            $(".rightTabSelected").css("display","none");
+            $(".leftTabSelected").css("display","block");
+            $(".tabs").removeClass("right");
+        });
+
+        $(".tab").eq(1).click(function(){
+            $(".leftTabSelected").css("display","none");
+            $(".rightTabSelected").css("display","block");
+            $(".tabs").addClass("right");
+        });
+        /*
+        $(".music").click(function(){
+            var audio = $(".audio")[0];
+            var au= $(".audio");
+
+            if (audio.paused){
+                audio.play();
+                $(this).addClass("on");
+                $(this).removeClass("off");
+                au.addClass("on");
+                au.removeClass("off");
+            }
+            else{
+                audio.pause();
+                $(this).addClass("off");
+                $(this).removeClass("on");
+                au.addClass("off");
+                au.removeClass("on");
+            }
+
+        });*/
+        //二维码
+        $(".qrcode").click(function(){
+            alert('还没有报名请报名后分享！');
+        })
+        $(".title_colse").click(function(){
+            $("#weui_dialog_box2").hide();
+        });
+        $("#queding").click(function(){
+            $("#weui_dialog_box2").hide();
+        });
+        $("#queding1").click(function(){
+            $("#weui_dialog_box3").hide();
+        });
+
+
+        wheelLightChange();
+
+        winningScroller();
+        rcoundown();
+    });
+
+    function wheelLightChange() {
+        setTimeout(function() {
+            var e = $("#lottery-banner-wheel");
+            setInterval(function() {
+                return e.hasClass("lighter") ? void e.removeClass("lighter") : void e.addClass("lighter")
+            },400)
+        },1500);
+    }
+
+    function wheelRunnerStyle() {
+
+
+        //ajax 获取中奖信息
+
+
+
+    }
+
+
+    function winningScroller() {
+        var e = $("#winning-scroller");
+        var t = e.width();
+        var i = (e.height(), e.find("span"));
+        var o = i.length;
+        var n = 8;
+        if (i.length) {
+            var a = function() {
+                var e = 0;
+                o = 0;
+                i.each(function(i, n) {
+                    var a = $(this);
+                    r = 224;
+                    s = t - r;
+                    c = i % 2 == 0 ? 0 : i % 3 == 0 ? 36 : 20;
+                    u = i % 2 == 0 ? 6e3: 8e3;
+                    i % 2 == 0 ? (u += 2e3 * e, e++) : (u += 2500 * o, o++);
+                    s = t + Math.ceil(50 * Math.random()) * i;
+                    a.css({
+                        left: s + "px",
+                        top: c + "px",
+                    }).stop().animate({
+                            left: "-" + r + "px"
+                        },
+                        u,
+                        function() {}
+                    )
+                })
+            };
+            setInterval(function() {
+                    a();
+                },
+                11e3 - .85 * (n - o) * 1e3
+            );
+            a();
+        }
+    }
+
+    function rcoundown(){
+        var endtime = $(".countdown").data("date");
+
+        //当前时间戳
+        var nowtime = Date.parse(new Date());
+
+        setInterval(function () {
+            var nowtime = Date.parse(new Date());
+            var time = endtime - nowtime;
+            var day = parseInt(time / 1000 / 60 / 60 / 24);
+            var hour = parseInt(time / 1000 / 60 / 60 % 24);
+            var minute = parseInt(time / 1000 / 60 % 60);
+            var seconds = parseInt(time / 1000 % 60);
+
+            $("[data-seconds]").html(seconds);
+            if(seconds==59)
+            {
+                $("[data-minutes]").html(minute);
+            }
+            if(minute==59)
+            {
+                $("[data-minutes]").html(minute);
+            }
+            if(hour==23)
+            {
+                $("[data-days]").html(day);
+            }
+        }, 1000);
+    }
+</script>
+</body>
+</html>

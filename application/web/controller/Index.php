@@ -24,6 +24,10 @@ use app\index\model\Mould;
 use app\index\model\Complaint;
 use app\index\model\MoneyLog;
 use app\index\model\Message;
+use app\index\model\Lottery;
+use app\index\model\LotteryPrize;
+use app\index\model\LotterySign;
+use app\index\model\LotteryLog;
 use lib\Form;
 
 
@@ -2199,4 +2203,88 @@ class Index extends Controller
         return $res['ticket'];
 
     }
+
+
+    public function lottery($id)
+    {
+        $temp = Lottery::get($id);
+        if(empty($temp))
+        {
+            $this->error('您要删除的抽奖不存在！');
+        }
+
+        $prizes = LotteryPrize::all(['lid'=>$id]);
+
+        //奖项
+        $gs = count($prizes);
+        $jd = sprintf("%.6f", 1/$gs);
+        $this->assign('jd',$jd);
+
+        if($temp['endtime'] < time())
+        {
+            echo  "<script>   
+						 window.alert('活动已关闭');
+						 history.go(-1);    
+					   </script>";
+            exit;
+        }
+        //倒计时
+        $temp['djs'] = $temp['endtime'] - time();
+        $d = floor($temp['djs']/(60*60*24));
+        $h = floor(($temp['djs']-($d*60*60*24))/(60*60));
+        $m = floor(($temp['djs']-($d*60*60*24)-($h*60*60))/60);
+        $s = $temp['djs']-($d*60*60*24)-($h*60*60)-($m*60);
+        $startime = date("Y-m-d H:i" ,$temp['startime']);
+        $endtime = date("Y-m-d H:i" ,$temp['endtime']);
+        $this->assign('d',$d);
+        $this->assign('h',$h);
+        $this->assign('m',$m);
+        $this->assign('s',$s);
+        $this->assign('startime',$startime);
+        $this->assign('endtime',$endtime);
+
+        //抽奖次数
+        $partake = LotteryLog::where('lid',$id)->count();
+        $this->assign('partake',$partake);
+
+        //报名人数
+        $sigs = LotterySign::where('lid',$id)->count();
+        $this->assign('sigs',$sigs);
+
+        //中奖榜单
+        $zjlist = LotteryLog::where('lid',$id)->select();
+        foreach($zjlist as $key=>$value)
+        {
+            $name = $value->lotterysign['name'];
+
+            $zjlist[$key]['name'] = mb_substr($name,0,1,'utf-8').'*'.mb_substr($name,2,mb_strlen($name)-3,'utf-8');     // substr_replace($lssign['name'],"*",2);
+            $zjlist[$key]['pname'] = $value->lotteryprize['name'];
+            $zjlist[$key]['img'] = $value->lotteryprize['img'];
+        }
+        $this->assign('zjlist',$zjlist);
+
+
+        //我的中奖
+        $openid = 'optl7w15gMO_YaPneXGGaxwu6vRo';
+        $mzjlist = LotteryLog::where('lid',$id)->where('openid',$openid)->select();
+        foreach($mzjlist as $key=>$value)
+        {
+
+            $name = $value->lotterysign['name'];
+
+            $mzjlist[$key]['name'] = mb_substr($name,0,1,'utf-8').'*'.mb_substr($name,2,mb_strlen($name)-3,'utf-8');     // substr_replace($lssign['name'],"*",2);
+            $mzjlist[$key]['pname'] = $value->lotteryprize['name'];
+            $mzjlist[$key]['img'] = $value->lotteryprize['img'];
+            $mzjlist[$key]['addtime'] = date("Y-m-d H:i:s",$value['addtime']);
+
+        }
+
+
+
+        $this->assign('prizes',$prizes);
+        $this->assign('temp',$temp);
+        return view();
+    }
+
+
 }
