@@ -9,6 +9,9 @@
     <title>幸运大转盘</title>
     <meta name="description" content="简单高效的营销工具">
     <link href="/theme/web/static/lottery/style.css?v1.3.0.1499741564171" rel="stylesheet">
+    <link href="/theme/web/static/lottery/animate.min.css?v1.3.0.1499741564171" rel="stylesheet">
+    <link href="/theme/web/static/lottery/weui.min.css?v1.3.0.1499741564171" rel="stylesheet">
+
 </head>
 
 <body>
@@ -24,6 +27,10 @@
             <li><b>{$sigs}</b>人报名</li>
         </ul>
     </header>
+
+    <div class="musician uneditable" ><a class="music on" id="musician-music"></a>
+        <audio class="audio" id="musician-audio" preload="metadata" src="{$temp['music']}" loop="loop"></audio>
+    </div>
     <div class="main">
 
 
@@ -118,6 +125,21 @@
             <div class="card-header">中奖记录</div>
             <div class="card-body">
 
+                {volist name="mzjlist" id="val"}
+                <div class="winning-item" v-for="item in myLottery.winning">
+                    <div class="cell-10">
+                        <p>{$val['name']}：{$val['pname']}</p>
+                        <p class="time">中奖时间：{$val['addtime']}</p>
+                    </div>
+                    <div class="cell-2">
+                        {if $val['status']=='是'}
+                        <a class="exchanged">已兑奖</a>
+                        {else}
+                        <a>未兑奖</a>
+                        {/if}
+                    </div>
+                </div>
+                {/volist}
             </div>
         </div>
 
@@ -189,14 +211,14 @@
             <div class="modal-header"><button class="modal-close" type="button">×</button></div>
             <div class="modal-body">
                 <fieldset class="grid">
-                    <p class="iwjoin">我要报名</p><span>所填信息不会公开，仅用于活动兑奖。</span>
+                    <p class="iwjoin">我要报名11</p><span>所填信息不会公开，仅用于活动兑奖。</span>
 
                 </fieldset>
                 <fieldset class="grid">
                     <div class="cell-12"><input name="name" type="text" placeholder="请输入姓名" required=""></div>
                 </fieldset>
                 <fieldset class="grid">
-                    <div class="cell-12"><input name="mobile" type="tel" title="请输入手机号码" maxlength="11" pattern="^1[34578]{1}[0-9]{9}$" placeholder="请输入手机号码" required=""></div>
+                    <div class="cell-12"><input name="tel" type="text" title="请输入手机号码" maxlength="11" pattern="^1[34578]{1}[0-9]{9}$" placeholder="请输入手机号码" required=""></div>
                 </fieldset>
             </div>
             <div class="modal-footer"><button class="weui_btn weui_btn_primary" type="submit">提交</button></div>
@@ -297,13 +319,22 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".action-point").click(function(){
+
+            {if empty($signid)}
             $("#weui_dialog_box1").css("display","block");
+            {else}
+            wheelRunnerStyle();
+            {/if}
+
         });
 
 
         $("#zhidao").click(function(){
             $("#weui_dialog_box1").css("display","none");
+
+            console.log($(".modal.fade.modal-join.out.in"));
             $(".modal.fade.modal-join.out.in").css("display","-webkit-box");
+            console.log($(".modal.fade.modal-join.out.in"));
         });
         $("button.modal-close").click(function(){
             $(".modal.fade.modal-join.out.in").css("display","none");
@@ -359,12 +390,36 @@
             $("#weui_dialog_box3").hide();
         });
 
+        $("#musician-music").click(function () {
+            playMusic('musician-audio');
+            if($(this).hasClass('on'))
+            {
+                $(this).removeClass('on')
+            }else {
+                $(this).addClass('on')
+            }
+        })
 
         wheelLightChange();
 
         winningScroller();
         rcoundown();
+
+        //playMusic('musician-audio');
     });
+
+    function playMusic(id) {
+        var audioEle = document.getElementById(id);
+        //audioEle.load();
+        if (audioEle.paused){ /*如果已经暂停*/
+            audioEle.play();   //播放
+
+        }else {
+            audioEle.pause();  //暂停
+        }
+    }
+
+
 
     function wheelLightChange() {
         setTimeout(function() {
@@ -379,7 +434,46 @@
 
 
         //ajax 获取中奖信息
+        {if !empty($signid)}
+        $.get("/web/index/luck/lid/{$temp['id']}/signid/{$signid}",function(re,status){
+            var da = JSON.parse(re)
+            if(da.status == 1)
+            {
+                var html ='<p>恭喜你抽中【'+da.data.name+'】【'+da.data.allname+'】，真是好运气 :)</p><p class="note">请在【我的中奖】中进行查看</p><a  href="javascript:" id="closezj">知道啦</a>' ;
 
+                $(".winning-dialog-content").html(html);
+
+                var e = $("#lottery-wheel-runner");
+                var t = $(".wheel-list").children(".wheel-item").length;
+                var i = 3;
+                var o = 7200;
+                var Winning = da.data.orderid;
+                Winning++;
+                var angle=0
+                if( angle > o )
+                {
+                    angle=360/t*(t-Winning+1);
+                }else{
+                    angle=360/t*(t-Winning+1)+o;
+                }
+                e.css("transition","all 8s ease-in-out");
+                e.css("transform","rotate("+angle+"deg)");
+                setTimeout(function(){
+                    $("#zj").css("display","block");
+                    //var e = $("#lottery-wheel-runner");
+                    //e.css("transition","");
+                    //e.css("transform","");
+                },9000);
+            }else{
+                var html =da.msg;
+                $("#weui_dialog_box3 .weui_dialog .weui_dialog_bd.body").html(html)
+                $("#weui_dialog_box3").show();
+            }
+
+            //$("#dialog_qrocde_demo").attr('src',re);
+        });
+
+        {/if}
 
 
     }

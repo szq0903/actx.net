@@ -2205,12 +2205,26 @@ class Index extends Controller
     }
 
 
-    public function lottery($id)
+    public function lottery($id,$signid = 0)
     {
         $temp = Lottery::get($id);
         if(empty($temp))
         {
-            $this->error('您要删除的抽奖不存在！');
+            $this->error('您要查看的抽奖不存在！');
+        }
+        $openid = 'openid';
+        //是否为提交表单
+        if (Request::instance()->isPost())
+        {
+            $lotterysign = new LotterySign;
+            $lotterysign->name = Request::instance()->post('name');
+            $lotterysign->lid = $id;
+            $lotterysign->openid = $openid;
+            $lotterysign->tel = Request::instance()->post('tel');
+            $lotterysign->addtime = time();
+            $lotterysign->save();
+
+            header('Location: /web/index/lottery/id/'.$id.'/signid/'.$lotterysign->id);exit;
         }
 
         $prizes = LotteryPrize::all(['lid'=>$id]);
@@ -2265,26 +2279,143 @@ class Index extends Controller
 
 
         //我的中奖
-        $openid = 'optl7w15gMO_YaPneXGGaxwu6vRo';
+        $openid = 'openid';
         $mzjlist = LotteryLog::where('lid',$id)->where('openid',$openid)->select();
         foreach($mzjlist as $key=>$value)
         {
-
             $name = $value->lotterysign['name'];
-
             $mzjlist[$key]['name'] = mb_substr($name,0,1,'utf-8').'*'.mb_substr($name,2,mb_strlen($name)-3,'utf-8');     // substr_replace($lssign['name'],"*",2);
             $mzjlist[$key]['pname'] = $value->lotteryprize['name'];
             $mzjlist[$key]['img'] = $value->lotteryprize['img'];
             $mzjlist[$key]['addtime'] = date("Y-m-d H:i:s",$value['addtime']);
 
         }
+        $this->assign('mzjlist',$mzjlist);
 
 
-
+        $this->assign('signid',$signid);
         $this->assign('prizes',$prizes);
         $this->assign('temp',$temp);
         return view();
     }
 
+
+    //抽奖内容
+    public function luck($lid,$signid=0){
+        $openid = 'openid';
+        //判断是不是已经报名了
+        $sign = LotterySign::get(['id'=>$signid,'lid'=>$lid,'openid'=>$openid]);
+        if(empty($sign))
+        {
+            $data['status'] = 0;
+            $data['msg'] = '您的报名不存在。请联系管理员！';
+            echo json_encode($data);exit;
+        }
+
+
+        //判断是不是已经抽过奖了
+        $is_sign = LotteryLog::get(['sid'=>$signid,'lid'=>$lid,'openid'=>$openid]);
+
+        if(is_array($is_sign))
+        {
+            $data['status'] = 0;
+            $data['msg'] = '已经抽过奖了。感谢你的参与！';
+            echo json_encode($data);exit;
+        }
+
+        $result = LotteryPrize::all(['lid'=>$lid]);
+        $winning_rate = LotteryPrize::where(['lid'=>$lid])->sum('winning_rate');
+
+        if($winning_rate<>100)
+        {
+            $data['status'] = 0;
+            $data['msg'] = '奖品的中奖机率不等于100%，请联系管理员调整中奖机率！';
+            echo json_encode($data);exit;
+        }
+
+
+
+        $over_rate = 0;
+        $proarr=array();
+        if(is_array($result))
+        {
+            foreach($result as $val)
+            {
+                //查询奖品数量是否还有
+                $overprize = LotteryLog::Where('pid',$val['id'])->where('sid',$signid)->count();
+                if($val['num'] > $overprize)
+                {
+                    $proarr[$val['id']] = $val['winning_rate'];
+                }else{
+                    //数量发完时把中奖率集中起来
+                    $over_rate += $val['winning_rate'];
+                }
+            }
+        }
+
+        //奖品发光时
+        if(count($proarr) < 0)
+        {
+            $data['status'] = 0;
+            $data['msg'] = '所有奖品都已发光。感谢你的参与！';
+            echo json_encode($data);exit;
+        }
+
+
+
+        //把集中的中奖率加到剩下的中奖率最大的奖品里
+        $key = array_search(max($proarr),$proarr);
+        $proarr[$key] += $over_rate;
+
+        $luck = $this->get_rand($proarr);
+
+        foreach($result as $val)
+        {
+            if($luck == $val['id'])
+            {
+                $listdb = $val;
+            }
+        }
+        if(!empty($listdb))
+        {
+            $data['status'] = 1;
+            $data['data'] = $listdb;
+
+            //插入抽奖记录
+            $lotterylog = new LotteryLog;
+            $lotterylog->lid    = $lid;
+            $lotterylog->sid     = $signid;
+            $lotterylog->addtime = time();
+            $lotterylog->openid  = $openid;
+            $lotterylog->pid	  = $listdb['id'];
+            $lotterylog->status  = 0;
+            $lotterylog->save();
+            echo json_encode($data);
+        }else{
+            $data['status'] = 0;
+            $data['msg'] = '请联系商家确定活动！';
+            echo json_encode($data);
+        }
+        exit;
+    }
+
+    //经典的概率算法，
+    public function get_rand($proArr) {
+        $result = '';
+        //概率数组的总概率精度
+        $proSum = array_sum($proArr);
+        //概率数组循环
+        foreach ($proArr as $key => $proCur) {
+            $randNum = mt_rand(1, $proSum);
+            if ($randNum <= $proCur) {
+                $result = $key;
+                break;
+            } else {
+                $proSum -= $proCur;
+            }
+        }
+        unset ($proArr);
+        return $result;
+    }
 
 }
