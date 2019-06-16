@@ -2314,8 +2314,8 @@ class Index extends Controller
 
 
         //判断是不是已经抽过奖了
-        $is_sign = LotteryLog::get(['sid'=>$signid,'lid'=>$lid,'openid'=>$openid]);
-
+        $is_sign = LotteryLog::order('addtime','desc')->where('sid',$signid)->where('lid',$lid)->where('openid',$openid)  ->find();
+        print_r($is_sign);
         if(is_array($is_sign))
         {
             $data['status'] = 0;

@@ -206,3 +206,17 @@ function htmltotext($string, $length)
     }
     return join('', $info[0]);
 }
+
+
+/**
+ * 获取今天的开始和结束时间
+ * @return mixed
+ */
+function getTodayTime()
+{
+    $str = date("Y-m-d", time()) . " 0:0:0";
+    $data["star"] = strtotime($str);
+    $str = date("Y-m-d", time()) . " 24:00:00";
+    $data["end"] = strtotime($str);
+    return $data;
+}
