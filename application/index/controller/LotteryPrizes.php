@@ -90,8 +90,18 @@ class LotteryPrizes extends Controller
 		//获取上级奖品
 		$this->assign('temp',$LotteryPrize);
 
+
         $LotteryPrize['img'] = str_replace('\\','/',$LotteryPrize['img']);
-        $LotteryPrize['imagesize'] = filesize(getcwd().$LotteryPrize['img']);
+        if(file_exists(getcwd().$LotteryPrize['img']))
+        {
+            $LotteryPrize['imagesize'] = filesize(getcwd().$LotteryPrize['img']);
+        }
+        else
+        {
+            $LotteryPrize['img']='/theme/web/static/lottery/images/01.jpg';
+            $LotteryPrize['imagesize'] = 876;
+        }
+
 
 		$this->assign('title','修改奖品-'.$this->title);
 		$request = Request::instance();
@@ -139,10 +149,9 @@ class LotteryPrizes extends Controller
 		//获取上级奖品信息
         $prizes = LotteryPrize::where('lid',$lid)->count();
         $prizes = $prizes%5 +1;
-        $temp['img']='/template/img/lottery/p'.$prizes.'.png';
+        $temp['img']='/theme/web/static/lottery/p'.$prizes.'.png';
         $temp['imagesize'] = 876;
 		$this->assign('temp',$temp);
-
 		return $this->fetch('edit');
 	}
 

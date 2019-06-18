@@ -304,7 +304,6 @@ function handleSubmitClick{$id}() {
   })
 }
 
-
 //获取文章数据
 function getArticleData{$id}() {
     var data = {
