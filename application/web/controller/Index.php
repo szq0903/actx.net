@@ -552,12 +552,10 @@ class Index extends Controller
             header("Location: ".$wx['url']);
         }
 
-
         $string = sprintf("jsapi_ticket=%s&noncestr=%s&timestamp=%s&url=%s", $wx['jsapi_ticket'], $wx['noncestr'], $wx['timestamp'], $wx['url']);
 
         //生成签名
         $wx['signature'] = sha1($string);
-
         /*
         注意事项
         签名用的noncestr和timestamp必须与wx.config中的nonceStr和timestamp相同。
@@ -2212,7 +2210,19 @@ class Index extends Controller
         {
             $this->error('您要查看的抽奖不存在！');
         }
-        $openid = 'openid';
+
+        $mid = $this->getMidByOpenid();
+        $member = Member::get($mid);
+        $openid = $member['openid'];
+
+
+        $lsign = LotterySign::get(['lid'=>$id,'openid'=>$openid]);
+
+        if(!empty($lsign) && $signid == 0)
+        {
+            header('Location: /web/index/lottery/id/'.$id.'/signid/'.$lsign->id);exit;
+        }
+
         //是否为提交表单
         if (Request::instance()->isPost())
         {
@@ -2279,7 +2289,6 @@ class Index extends Controller
 
 
         //我的中奖
-        $openid = 'openid';
         $mzjlist = LotteryLog::where('lid',$id)->where('openid',$openid)->select();
         foreach($mzjlist as $key=>$value)
         {
@@ -2302,7 +2311,10 @@ class Index extends Controller
 
     //抽奖内容
     public function luck($lid,$signid=0){
-        $openid = 'openid';
+
+        $mid = $this->getMidByOpenid();
+        $member = Member::get($mid);
+        $openid = $member['openid'];
         //判断是不是已经报名了
         $sign = LotterySign::get(['id'=>$signid,'lid'=>$lid,'openid'=>$openid]);
         if(empty($sign))
@@ -2315,12 +2327,18 @@ class Index extends Controller
 
         //判断是不是已经抽过奖了
         $is_sign = LotteryLog::order('addtime','desc')->where('sid',$signid)->where('lid',$lid)->where('openid',$openid)  ->find();
-        print_r($is_sign);
-        if(is_array($is_sign))
+
+        $todaytime = getTodayTime();
+
+        //抽过奖时
+        if(!empty($is_sign))
         {
-            $data['status'] = 0;
-            $data['msg'] = '已经抽过奖了。感谢你的参与！';
-            echo json_encode($data);exit;
+            if($is_sign['addtime'] > $todaytime['star'])
+            {
+                $data['status'] = 0;
+                $data['msg'] = '今天已经抽过奖了。感谢你的参与！';
+                echo json_encode($data);exit;
+            }
         }
 
         $result = LotteryPrize::all(['lid'=>$lid]);
@@ -2399,6 +2417,14 @@ class Index extends Controller
         exit;
     }
 
+    public function makeimg($lid,$signid=0)
+    {
+        $sysinfo = Sysinfo::get(1);
+        $path = $sysinfo['invitation'];
+        $path = str_replace('\\','/',$path);
+        $img_src = "data:image/jpg;base64," . base64_encode(file_get_contents(getcwd().$path));
+        exit($img_src);
+    }
     //经典的概率算法，
     public function get_rand($proArr) {
         $result = '';

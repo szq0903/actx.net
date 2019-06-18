@@ -61,6 +61,7 @@ class Sysinfos extends Controller
             $sysinfo->p_number = Request::instance()->post('p_number');
             $sysinfo->shopprice = Request::instance()->post('shopprice');
             $sysinfo->headline = Request::instance()->post('headline');
+            $sysinfo->invitation = Request::instance()->post('invitation');
 			$sysinfo->save();
 			$this->success('修改成功！');
 
@@ -77,7 +78,9 @@ class Sysinfos extends Controller
         $fielder['vdefault'] = $sysinfo['er'];
         $html['er'] = $form->fieldToForm($fielder,'form-control','er');
 
-
+        $fielder = Field::get(['mid'=>1,'fieldname'=>'invitation']);
+        $fielder['vdefault'] = $sysinfo['invitation'];
+        $html['invitation'] = $form->fieldToForm($fielder,'form-control','invitation');
 
         $this->assign('html',$html);
 

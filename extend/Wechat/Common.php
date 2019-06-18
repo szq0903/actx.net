@@ -18,8 +18,8 @@ class Common{
     //微信证书key
     const  WX_KEY = '';
 
-    public $appid = '';//公众号appid
-    public $appsecret = '';//公众号appsecret
+    public $appid = 'wx5959ed292499b96b';//公众号appid
+    public $appsecret = '6e0a889f79f1ec0bb73f1cd9dbbe168a';//公众号appsecret
     public $access_token = ''; //公众号access_token
     public $wechat_config ;
 

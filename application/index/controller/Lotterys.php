@@ -134,8 +134,18 @@ class Lotterys extends Controller
         $temp['startime']=date('m/d/Y',$temp['startime']);
         $temp['endtime']=date('m/d/Y',$temp['endtime']);
 
+
         $temp['toppic'] = str_replace('\\','/',$temp['toppic']);
-        $temp['imagesize'] = filesize(getcwd().$temp['toppic']);
+        if(file_exists(getcwd().$temp['toppic']))
+        {
+            $temp['imagesize'] = filesize(getcwd().$temp['toppic']);
+        }
+        else
+        {
+            $temp['toppic']='/theme/web/static/lottery/images/01.jpg';
+            $temp['imagesize'] = 876;
+
+        }
 
         if(empty($temp['music']))
         {
@@ -228,7 +238,7 @@ class Lotterys extends Controller
 		//获取上级抽奖信息
         $temp=array();
 
-        $temp['toppic']='/template/img/lottery/01.jpg';
+        $temp['toppic']='/theme/web/static/lottery/images/01.jpg';
         $temp['imagesize'] = 876;
 
 		$this->assign('temp',$temp);

@@ -11,6 +11,8 @@
     <link href="/theme/web/static/lottery/style.css?v1.3.0.1499741564171" rel="stylesheet">
     <link href="/theme/web/static/lottery/animate.min.css?v1.3.0.1499741564171" rel="stylesheet">
     <link href="/theme/web/static/lottery/weui.min.css?v1.3.0.1499741564171" rel="stylesheet">
+    <link href="/theme/web/static/lottery/font-awesome.min.css?v1.3.0.1499741564171" rel="stylesheet">
+
 
 </head>
 
@@ -19,7 +21,7 @@
 <div class="container activity lottery">
     <header class="header uneditable">
         <nav class="menu">
-            <a class="qrcode"> <font>活动<br>二维码</font></a>
+            <a class="qrcode"> <font>活动<br>邀请函</font></a>
         </nav>
         <ul class="stats">
             <li><b>{$temp['click']}</b>人查看</li>
@@ -262,7 +264,7 @@
     <div class="weui_dialog_container weui_dialog_alert" id="weui_dialog_box2" style="display: none;">
         <div class="weui_mask"></div>
         <div class="weui_dialog masked" style="width: 100%;">
-            <div class="weui_dialog_hd">
+            <div class="weui_dialog_hd" style="padding: 4.2em 0 .5em;">
                 <strong class="weui_dialog_title dialog_title"></strong>
                 <a class="title_colse" href="javascript:void(0)"> <i class="fa fa-remove"></i></a>
             </div>
@@ -286,7 +288,7 @@
     <div class="weui_mask"></div>
     <div class="weui_dialog">
         <div class="weui_dialog_hd"><strong class="weui_dialog_title dialog_title">温馨提示</strong></div>
-        <div class="weui_dialog_bd" style="text-align: left;"><p>①报名前可先联系商家，确认活动真实性以及记录联系方式哦。</p><p>②如发现虚假活动，请在华恋宝公众号回复我们</p></div>
+        <div class="weui_dialog_bd" style="text-align: left;"><p>转发朋友圈邀请函参与抽奖</p></div>
         <div class="weui_dialog_ft"><a class="weui_btn_dialog default btn_cancel" style="display: none;">取消</a><a class="weui_btn_dialog default btn_confirm" id="zhidao">我知道了</a></div>
     </div>
 </div>
@@ -318,10 +320,17 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".action-point").click(function(){
 
+
+        var index = 0;
+        $(".action-point").click(function(){
             {if empty($signid)}
-            $("#weui_dialog_box1").css("display","block");
+            if(index == 1)
+            {
+                $(".modal.fade.modal-join.out.in").css("display","-webkit-box");
+            }else {
+                $("#weui_dialog_box1").css("display","block");
+            }
             {else}
             wheelRunnerStyle();
             {/if}
@@ -332,9 +341,7 @@
         $("#zhidao").click(function(){
             $("#weui_dialog_box1").css("display","none");
 
-            console.log($(".modal.fade.modal-join.out.in"));
-            $(".modal.fade.modal-join.out.in").css("display","-webkit-box");
-            console.log($(".modal.fade.modal-join.out.in"));
+
         });
         $("button.modal-close").click(function(){
             $(".modal.fade.modal-join.out.in").css("display","none");
@@ -378,10 +385,16 @@
         });*/
         //二维码
         $(".qrcode").click(function(){
-            alert('还没有报名请报名后分享！');
+
+            $.get("/web/index/makeimg/lid/{$temp['id']}/signid/{$signid}",function(re,status){
+                $("#dialog_qrocde_demo").attr('src',re);
+            });
+            $("#weui_dialog_box2").show();
+
         })
         $(".title_colse").click(function(){
             $("#weui_dialog_box2").hide();
+            index = 1
         });
         $("#queding").click(function(){
             $("#weui_dialog_box2").hide();
@@ -405,7 +418,7 @@
         winningScroller();
         rcoundown();
 
-        //playMusic('musician-audio');
+        playMusic('musician-audio');
     });
 
     function playMusic(id) {
