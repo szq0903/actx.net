@@ -232,12 +232,14 @@
         initialCaption:'{$temp['toppic']}'
     {/if}
     }).on("fileuploaded", function (event, data, previewId, index) {
+
         var imgs = $('#qcode').val();
         imgs =data.response.data;
         $('#qcode').val(imgs);
-        $(".file-caption-name").attr("title", imgs);
+        $(".file-caption-name").eq(0).attr("title", imgs);
+        console.log(imgs);
         var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + imgs;
-        $(".file-caption-name").html(html);
+        $(".file-caption-name").eq(0).html(html);
 
     });
     $('#file-zh').on('filepredelete', function (event, key, jqXHR, data) {
@@ -246,12 +248,13 @@
         var result = splitFirst.join('');
         $('#qcode').val(result);
 
-        $(".file-caption-name").attr("title", result);
+        $(".file-caption-name").eq(0).attr("title", result);
         var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + result;
-        $(".file-caption-name").html(html);
-        // console.log('Key = ' + key);
-        // console.log(jqXHR);  
-        //console.log(data); 
+
+        $(".file-caption-name").eq(0).html(html);
+        //console.log('Key = ' + key);
+        //console.log(jqXHR);
+        //console.log(data);
     });
 
 
@@ -298,9 +301,9 @@
         var imgs = $('#music').val();
         imgs = data.response.data;
         $('#music').val(imgs);
-        $(".file-caption-name").attr("title", imgs);
+        $(".file-caption-name").eq(1).attr("title", imgs);
         var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + imgs;
-        $(".file-caption-name").html(html);
+        $(".file-caption-name").eq(1).html(html);
 
     });
     $('#file-zh-music').on('filepredelete', function (event, key, jqXHR, data) {
@@ -309,11 +312,11 @@
         var result = splitFirst.join('');
         $('#music').val(result);
 
-        $(".file-caption-name").attr("title", result);
+        $(".file-caption-name").eq(1).attr("title", result);
         var html = '<i class=\"glyphicon glyphicon-file kv-caption-icon\"></i>' + result;
-        $(".file-caption-name").html(html);
-        // console.log('Key = ' + key);
-        // console.log(jqXHR);
+        $(".file-caption-name").eq(1).html(html);
+        //console.log('Key = ' + key);
+        //console.log(jqXHR);
         //console.log(data);
     });
 </script>
