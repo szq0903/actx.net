@@ -268,7 +268,7 @@ class Lotterys extends Controller
 
 	public function log($lid)
     {
-        $temp = LotteryLog::get($lid);
+        $temp = Lottery::get($lid);
         if(empty($temp))
         {
             $this->error('您要编辑的抽奖不存在！');

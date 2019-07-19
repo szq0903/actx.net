@@ -62,6 +62,7 @@ class Sysinfos extends Controller
             $sysinfo->shopprice = Request::instance()->post('shopprice');
             $sysinfo->headline = Request::instance()->post('headline');
             $sysinfo->invitation = Request::instance()->post('invitation');
+            $sysinfo->lottery_id = Request::instance()->post('lottery_id');
 			$sysinfo->save();
 			$this->success('修改成功！');
 

@@ -197,6 +197,15 @@
                       {$html['invitation']}
                   </div>
               </div>
+
+              <div class="form-group">
+                  <label class="col-sm-3 control-label">抽奖id：</label>
+                  <div class="col-sm-6">
+                      <input type="text" placeholder="抽奖id" name="lottery_id" value="{if isset($temp['lottery_id'])}{$temp['lottery_id']}{/if}" class="form-control">
+                      <span class="help-block">这里添写大转盘管理的id ,显示在首页的天天抽奖。会自动成生的活动的链接</span>
+                  </div>
+              </div>
+
             <div class="panel-footer" style="display: block;">
 				 <div class="row">
 					<div class="col-sm-6 col-sm-offset-3">
